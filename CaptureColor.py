@@ -1764,10 +1764,12 @@ def resetArmForRun6Testing():
 
 print("Battery voltage: " + str(hub.battery.voltage())) 
 _initialize()
-driverWithFewerArms()
-#doRunWithTiming(_run4)
-#doRunWithTiming(_testGyroBeforeRobotGame)
-#driverWithFewerArms()
+
+
+
+
+
+
 raise SystemExit
 #endregion
 
