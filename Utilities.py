@@ -3,12 +3,14 @@ from pybricks.pupdevices import Motor, ColorSensor
 from pybricks.parameters import Direction, Port
 from pybricks.robotics import GyroDriveBase, DriveBase
 
+
+# Here are the final ports for all the motors and sensors.
+# Please don't change these
 left_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE)
 right_motor = Motor(Port.E)
-left_med_motor = Motor(Port.B)
+left_med_motor = Motor(Port.B) 
 right_med_motor = Motor(Port.D)
 
-# Need to confirm
 left_color = ColorSensor(Port.A)
 right_color = ColorSensor(Port.F)
 
