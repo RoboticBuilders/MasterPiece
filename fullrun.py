@@ -103,11 +103,23 @@ def rightSide():
 def test():
     left_med_motor.run_angle(1000, 3600)
     right_med_motor.run_angle(1000, 3600)
+
+def virtualrealityspinny():
+    drive_base.straight(130)
+    drive_base.turn(-90)
+    drive_base.straight(40)
+    drive_base.turn(45)
+    drive_base.straight(135)
+    drive_base.settings(turn_rate = 50)
+    drive_base.turn(20)
+    left_med_motor.run_angle(speed = 400, rotation_angle = 100)
+    
 #endregion
 
 # region calls 
 #rightSide()
+virtualrealityspinny()
 #craftCreatorAndVirtualRealityArtist()
-left_med_motor.run_angle(1000, 20000)
+#left_med_motor.run_angle(1000, 20000)
 #test()
 #endregion
