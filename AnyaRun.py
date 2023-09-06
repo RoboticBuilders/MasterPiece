@@ -19,15 +19,15 @@ def AnyaRun():
     # goStraight(MM_PER_INCH*0.5)
     # wait(5000)
     turnToAngle(absoluteAngle=0,oneWheelTurn=True)
-    wait(5000)
-    goStraight(_MM_PER_INCH*10, straightSpeed=800, straightAcceleration=DEFAULT_ACCELERATION*2)
-    wait(5000)
-    goStraight(_MM_PER_INCH*-9, straightSpeed=1000, straightAcceleration=DEFAULT_ACCELERATION*2)
+    # wait(5000)
+    goStraight(MM_PER_INCH*10, straightSpeed=800, straightAcceleration=DEFAULT_ACCELERATION*2)
+    # wait(5000)
+    goStraight(MM_PER_INCH*-9, straightSpeed=1000, straightAcceleration=DEFAULT_ACCELERATION*2)
     # wait(5000)
     turnToAngle(45)
     # wait(5000)
-    goStraight(_MM_PER_INCH*10, straightSpeed=800, straightAcceleration=DEFAULT_ACCELERATION*2)
-    wait(5000)
+    goStraight(MM_PER_INCH*10, straightSpeed=800, straightAcceleration=DEFAULT_ACCELERATION*2)
+    # wait(5000)
     left_med_motor.run_angle(speed=-1400,rotation_angle=900)
     # wait(5000)
     goStraight(_MM_PER_INCH*-8, straightSpeed=1000, straightAcceleration=DEFAULT_ACCELERATION*2)
@@ -39,8 +39,8 @@ def AnyaRun():
     # robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
 def resetArm():
-    wait(10000)
-    left_med_motor.run_angle(speed=-1000,rotation_angle=50)
+    wait(3000)
+    left_med_motor.run_angle(speed=-1000,rotation_angle=150)
 
 
 
