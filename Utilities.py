@@ -38,7 +38,7 @@ BLACK_COLOR = 24
 WHITE_COLOR = 90
 
 _CM_PER_INCH = 2.54
-WHEEL_RADIUS_CM = 4.4
+_MM_PER_INCH = _CM_PER_INCH*10
 
 # Constants for Force turn.
 FORCETURN_RIGHT = 0
@@ -52,6 +52,8 @@ LINE_FOLLOWER_EDGE_RIGHT = 1
 # Color sensor to use
 LEFT_COLOR_SENSOR = 0
 RIGHT_COLOR_SENSOR = 1
+AXLE_DIAMETER_CM = 12.2
+WHEEL_RADIUS_CM = 4.4
 
 def resetRobot():
     robot.settings(straight_speed=DEFAULT_SPEED, straight_acceleration=DEFAULT_ACCELERATION, turn_rate=DEFAULT_TURN_RATE, turn_acceleration=DEFAULT_TURN_ACCEL)
@@ -528,8 +530,7 @@ def goStraight(distance, wait=True, backward = False, straightSpeed=DEFAULT_SPEE
     
     robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
-'''
-def turnToAngle(absoluteAngle:int, turnRate:int = DEFAULT_TURN_RATE, turnAcceleration = DEFAULT_TURN_ACCEL, wait=True):
+def turnToAngle(absoluteAngle:int, turnRate:int=DEFAULT_TURN_RATE, turnAcceleration=DEFAULT_TURN_ACCEL, wait=True, oneWheelTurn=False):
     """
     Turns the robot to the specific Gyro angle
 
@@ -541,10 +542,18 @@ def turnToAngle(absoluteAngle:int, turnRate:int = DEFAULT_TURN_RATE, turnAcceler
     robot.settings(origSpeed, origAccel, turnRate, turnAcceleration)
 
     angleToTurn = absoluteAngle - robot.angle()
-    robot.turn(angleToTurn)
+    if oneWheelTurn==False:
+        robot.turn(angleToTurn)
+    elif oneWheelTurn==True:
+        deg = (((6.28*AXLE_DIAMETER_CM)*(angleToTurn/360))/(6.28*WHEEL_RADIUS_CM))*360
+        if angleToTurn < 0:
+            right_motor.run_angle(deg)
+        elif angleToTurn > 0:
+            print(deg)
+            left_motor.run_angle(speed=origTurnSpeed,rotation_angle=deg)
 
     robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
-'''
+
 
 
 def driveTillLine(speed, distanceInCM, target_angle, doCorrection=True, colorSensorToUse="Left", blackOrWhite="Black"):
@@ -555,24 +564,15 @@ def driveTillLine(speed, distanceInCM, target_angle, doCorrection=True, colorSen
             saturation = left_color.hsv().s
             robot.drive(speed = speed, turn_rate = 0)
             while saturation > 10:
-                # print("Color sensor Saturation: {}".format(saturation))
                 saturation = left_color.hsv().s
 
             print("Stopping at saturation = {}".format(saturation))
-            # robot.hold()
-            # left_motor.hold()
-            # right_motor.hold()
-            # robot.drive(speed=-1*speed, turn_rate=0)
-            # robot.stop()
+
             robot.straight(distance=1, then=Stop.BRAKE, wait=True)
             if(doCorrection):
                 (origSpeed, origAccel, origTurnSpeed, origTurnAccel) = robot.settings()
                 robot.settings(100, 100, 100, 100)
                 robot.straight(distance=-40, then=Stop.HOLD, wait=True)
                 robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
-            # robot.stop()
-            # robot.stop(Stop.Hold)
-            # wait(2000)
+
             saturation = left_color.hsv().s
-            # print("Color sensor Saturation: {}".format(saturation))
-                
