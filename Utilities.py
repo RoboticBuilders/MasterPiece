@@ -265,7 +265,7 @@ def driveTillDistance(distanceinCM, speed, backward=False, wait=True):
 def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targetAngle = 0, 
                           multiplier=2, slowDown=True,slowDistanceMultipler = 0.5):
     global prevValues, correctionPos, savedNums
-    drive_base.reset()
+    # drive_base.reset()
     stopDriveBase()
     prevValues = []
     correctionPos  = 0
@@ -301,9 +301,10 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
     #      " speedPerDistanceReduction: " + str(speedPerDistanceReduction)
     #      ) 
 
-    distanceDrivenMM = drive_base.distance()
-    while (distanceDrivenMM < distanceInMM):
-        distanceDrivenMM = abs(drive_base.distance())           
+    origDistanceDrivenMM = drive_base.distance()
+    distanceDrivenMM = origDistanceDrivenMM
+    while (abs(distanceDrivenMM)-abs(origDistanceDrivenMM) < distanceInMM):
+        distanceDrivenMM = abs(drive_base.distance())
         if (distanceDrivenMM <= distanceInMM20):
             speed = slowSpeed
         elif (slowDown == True and distanceDrivenMM >= (distanceInMM - slowDistanceInMM)):
@@ -498,8 +499,8 @@ def followBlackLine(speed, distance, control_color, edge, gain = 1, slowDown = T
     stopDriveBase()
 
 #######################################################################################################
-BELOW THIS IS MERGED CODE FROM utilities.py
-We need to merge this with other code.
+# BELOW THIS IS MERGED CODE FROM utilities.py
+# We need to merge this with other code.
 #######################################################################################################
 
 def goStraight(distance, wait=True, backward = False, straightSpeed=DEFAULT_SPEED, straightAcceleration=DEFAULT_ACCELERATION, turnRate=DEFAULT_TURN_RATE, turnAcceleration=DEFAULT_TURN_ACCEL):
@@ -530,7 +531,7 @@ def goStraight(distance, wait=True, backward = False, straightSpeed=DEFAULT_SPEE
     
     robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
-def turnToAngle(absoluteAngle:int, turnRate:int=DEFAULT_TURN_RATE, turnAcceleration=DEFAULT_TURN_ACCEL, wait=True, oneWheelTurn=False):
+def turnToAngle_AA(absoluteAngle:int, turnRate:int=DEFAULT_TURN_RATE, turnAcceleration=DEFAULT_TURN_ACCEL, wait=True, oneWheelTurn=False):
     """
     Turns the robot to the specific Gyro angle
 
