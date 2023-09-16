@@ -50,7 +50,10 @@ void loop() {
 
     Serial.print("\nWriting out : ");
     Serial.print(j);
-    //move 'em out
+
+    // Move out the bits. We are moving out the same bit pattern to both
+    // registers.
+    shiftOut(dataPin, clockPin, j);
     shiftOut(dataPin, clockPin, j);
 
     //return the latch pin high to signal chip that it
