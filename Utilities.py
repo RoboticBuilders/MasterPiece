@@ -546,7 +546,7 @@ def turnToAngle_AA(absoluteAngle:int, turnRate:int=DEFAULT_TURN_RATE, turnAccele
 
     robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
-def driveTillLine(speed, doCorrection=True, colorSensorToUse="Left", blackOrWhite="Black"):
+def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Black"):
     
     def _compareValue(sensor, value):
         return sensor.hsv().v in value
@@ -558,11 +558,6 @@ def driveTillLine(speed, doCorrection=True, colorSensorToUse="Left", blackOrWhit
     else:
         func = _compareValue
         vRange = range(90, 100)
-
-    if colorSensorToUse == "Left":
-        sensor = left_color
-    else:
-        sensor = right_color
 
     robot.drive(speed = speed, turn_rate = 0)
     while(func(sensor, vRange) != True):
