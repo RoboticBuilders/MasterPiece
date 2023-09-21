@@ -497,10 +497,10 @@ def followBlackLine(speed, distance, control_color, edge, gain = 1, slowDown = T
     drive_base.stop()
     stopDriveBase()
 
-#######################################################################################################
+'''
 BELOW THIS IS MERGED CODE FROM utilities.py
 We need to merge this with other code.
-#######################################################################################################
+'''
 
 def goStraight(distance, wait=True, backward = False, straightSpeed=DEFAULT_SPEED, straightAcceleration=DEFAULT_ACCELERATION, turnRate=DEFAULT_TURN_RATE, turnAcceleration=DEFAULT_TURN_ACCEL):
     """
