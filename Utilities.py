@@ -253,14 +253,17 @@ def driveTillDistance(distanceinCM, speed, backward=False, wait=True):
     # restore the default drive base settings
     setDriveBaseSettings(straight_speed, straight_acceleration, turn_rate, turn_acceleration)
 
-def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targetAngle = 0, 
+def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
                           multiplier=2, slowDown=True,slowDistanceMultipler = 0.5):
-    # prevValues, correctionPos, savedNums
+    global prevValues, correctionPos, savedNums
     # drive_base.reset()
     stopDriveBase()
-    # prevValues = []
-    # correctionPos  = 0
-    # savedNums = 5
+    if(targetAngle == None):
+        targetAngle = hub.imu.heading()
+
+    prevValues = []
+    correctionPos  = 0
+    savedNums = 5
 
     distanceInMM=distance * 10
     distanceInMM20 = distanceInMM * 0.2
@@ -400,7 +403,7 @@ def _driveStraightWithSlowDownTillLine(distance, speed, target_angle, gain,
     the function uses a combination of distance and the reachedStoppingCondition
     checks to stop.
 
-    reachedStoppingCondition: This is a function that does not take any parameter and is expected to retur true when the loop should be terminated.
+    reachedStoppingCondition: This is a function that does not take any parameter and is expected to return true when the loop should be terminated.
     return the output of the stoppingCondition.
     """
     drive_base.reset()
@@ -551,7 +554,6 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
     def _compareValue(sensor, value):
         return sensor.hsv().v in value
 
-    hsv = left_color.hsv()
     if (blackOrWhite=="Black"):
         func = _compareValue
         vRange = range(0, 20)
@@ -563,7 +565,7 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
     while(func(sensor, vRange) != True):
         hsv = sensor.hsv()
         print(hsv)
-    print("Stopping at (h,s,v) = {}, motor = {}".format(sensor.hsv(), left_motor.angle()))
+    print("Stopping at (h,s,v) = {}".format(sensor.hsv()))
 
     robot.stop()
     robot.straight(distance=0, then=Stop.BRAKE, wait=True)
@@ -578,6 +580,15 @@ def driveTillColor(color, sensor=left_color, speed=DEFAULT_SPEED):
     robot.drive(speed = speed, turn_rate = 0)
     while(sensor.color() != color):
         print(sensor.color())
+    print(sensor.color())
+    robot.stop()
+    robot.straight(distance=0, then=Stop.BRAKE, wait=True)
+
+def driveTillHueRange(hueRange, hueRangeHigh, sensor=left_color, speed=DEFAULT_SPEED):
+    robot.drive(speed = speed, turn_rate = 0)
+    while(not(sensor.hsv().h > hueRange and sensor.hsv().h < hueRangeHigh)):
+        print(sensor.hsv().h)
+    print(sensor.hsv().h)
     robot.stop()
     robot.straight(distance=0, then=Stop.BRAKE, wait=True)
 
