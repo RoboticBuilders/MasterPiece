@@ -10,6 +10,21 @@ typedef struct FourMotorBlock {
     AF_DCMotor(3),
     AF_DCMotor(4)
   };
+
+  int upTimeMs[4] = {
+    333,
+    640,
+    428,
+    385
+  };
+
+  int downTimeMs[4] = {
+    315,
+    650,
+    390,
+    385
+  };
+  
   const int NUM_MOTORS = 4;
 } MotorBlock;
 
@@ -23,7 +38,7 @@ void initializeMotorBlock(MotorBlock* motorBlock) {
 }
 
 // Motors are numbered from one in a motor block.
-void turnOnMotorForTime(MotorBlock* motorBlock, uint8_t motor_number, uint8_t direction, int time_ms) {
+void turnOnMotorForTime(MotorBlock* motorBlock, uint8_t motor_number, uint8_t direction) {
   assert(motor_number >=1 && motor_number <= 4);
   motor_number = motor_number - 1;
   
@@ -34,36 +49,15 @@ void turnOnMotorForTime(MotorBlock* motorBlock, uint8_t motor_number, uint8_t di
   motors[motor_number].setSpeed(SPEED); 
 
   // wait for the specified amount of time.
-  delay(time_ms);
+  if (direction == FORWARD) {
+    delay(motorBlock->upTimeMs[motor_number]);
+  } else {
+    delay(motorBlock->downTimeMs[motor_number]);
+  }
 
   motors[motor_number].setSpeed(0); 
   motors[motor_number].run(RELEASE);
   Serial.print("   Turning off motor\n");
-}
-
-void turnOnAllMotorsForTime(MotorBlock* motorBlock, uint8_t direction, int time_ms) {
-  AF_DCMotor* motors = motorBlock->motors;
-
-  // First set all motors to forward direction.
-  for (int i = 0; i < motorBlock->NUM_MOTORS; ++i) {
-    motors[i].run(direction);
-  }
-
-   // Turn on all motors.
-  for (int i = 0; i < motorBlock->NUM_MOTORS; ++i) {
-    motors[i].setSpeed(SPEED); 
-  }
-
-  // wait for the specified amount of time.
-  delay(time_ms);
-
-  // Turn off all motors. Do it in the same 
-  // order in which we started so any slight 
-  // delays in the start are also accounted for.
-  for (int i = 0; i < motorBlock->NUM_MOTORS; ++i) {
-    motors[i].setSpeed(0); 
-    motors[i].run(RELEASE);
-  }
 }
 
 void turnOffAllMotors(MotorBlock* motorBlock) {
@@ -86,17 +80,18 @@ void setup()
 
 void loop()
 {
-  delay(5000);
-  turnOnAllMotorsForTime(&motorBlock1, FORWARD, 300);
-  delay(5000);
-  turnOnAllMotorsForTime(&motorBlock1, BACKWARD, 300);
+  turnOffAllMotors(&motorBlock1);
+  delay(15000);
+  
   /*
   for (int i = 1; i <=4; ++i) {
-    turnOnMotorForTime(&motorBlock1, i, FORWARD, 300);  
+    turnOnMotorForTime(&motorBlock1, i, FORWARD);  
+    delay(1000);
   }
   delay(5000);
   for (int i = 1; i <=4; ++i) {
-    turnOnMotorForTime(&motorBlock1, i, BACKWARD, 300);  
+    turnOnMotorForTime(&motorBlock1, i, BACKWARD);  
+    delay(1000);
   }
   */
 }
