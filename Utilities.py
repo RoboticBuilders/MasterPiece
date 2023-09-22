@@ -254,12 +254,28 @@ def driveTillDistance(distanceinCM, speed, backward=False, wait=True):
     setDriveBaseSettings(straight_speed, straight_acceleration, turn_rate, turn_acceleration)
 
 def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
-                          multiplier=2, slowDown=True,slowDistanceMultipler = 0.5):
+                          multiplier=2, slowDown=True, slowDistanceMultipler = 0.2):
     global prevValues, correctionPos, savedNums
-    # drive_base.reset()
     stopDriveBase()
+    drive_base.reset()
+
+    # If targetAngle is not set explicitly, set it to current heading for convenience
+    # rather than assuming all callers want to follow 0-degrees
     if(targetAngle == None):
         targetAngle = hub.imu.heading()
+    
+    # For convenience, allow caller to specify negative distance to go backward and adjust
+    # parameters accordingly. The rest of this function does not work with negative distance
+    # so convert that to positive here.
+    if (distance < 0):
+        backward = True
+        distance = -1*distance
+
+    slowSpeed = 100
+    midSpeed = speed
+    if (backward): 
+        slowSpeed = slowSpeed * -1
+        midSpeed = midSpeed * -1
 
     prevValues = []
     correctionPos  = 0
@@ -273,18 +289,12 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
         distanceInMM20 = 20
 
     slowDistanceInMM = distanceInMM * slowDistanceMultipler
-    slowSpeed = 100
-    midSpeed = speed
 
     # If the distance to travel is small, then just use slow speed.
     if distanceInMM < 30:
         midSpeed = slowSpeed = 50
     elif distanceInMM > 500:
         slowDistanceInMM = distanceInMM * 0.1
-
-    if (backward): 
-        slowSpeed = slowSpeed * -1
-        midSpeed = midSpeed * -1
 
     # Calculate the speed reduction per distance travelled. We do
     # this upfront, to enable integer multiplicaation in the loop.
@@ -596,7 +606,7 @@ def testHsv(sensor=left_color):
     while  True:
         print("(h,s,v) = {}".format(sensor.hsv()))
 
-def testRgb(sensor=left_color):
+def testColor(sensor=left_color):
     while  True:
         print("Color: {}".format(sensor.color()))
 
