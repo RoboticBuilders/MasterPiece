@@ -448,7 +448,7 @@ def _driveStraightWithSlowDownTillLine(distance, speed, target_angle, gain,
     return stopCondition
 
 # Input:
-# edge: LINE_FOLLOWER_EDGE_LEFT, LINE_FOLLOWER_EDGE_RIGHT
+# edge: LINE_FOLLOWER_EDGE_LEFT, LINE_FOLLOWER_EDGE_RIGHT 
 def followBlackLine(speed, distance, control_color, edge, gain = 1, slowDown = True, color_sensor=LEFT_COLOR_SENSOR):
     drive_base.reset()
     stopDriveBase()
