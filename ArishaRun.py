@@ -4,8 +4,7 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import GyroDriveBase, DriveBase
 from pybricks.tools import wait, StopWatch
 from Utilities import *
-
-_MM_PER_INCH = 25.4
+import Utilities
 
 def ArishaRun_M2():
     goStraight(600, straightSpeed=500) 
@@ -139,14 +138,7 @@ def staticAttachmentTest():
     turnToAngle_AA(0)
     # goStraight(-5*MM_PER_INCH)
     gyroStraightWithDrive(30,targetAngle=0, backward=True)
-    #right_med_motor.run_angle(800,-200)
-    #go to M2 
-    # turnToAngle(45) 
-    # goStraight(415, straightSpeed=500) 
-    # turnToAngle(0) 
-    # goStraight(200) 
-    # left_med_motor.run_angle(800,300)
-    # turnToAngle(-45) 
+    
 
     #go to M2
     turnToAngle_AA(90) 
@@ -193,6 +185,119 @@ def test():
     wait(5000)
     turnToAngle_AA(0)
 
+#Latest version with pick up Noah the expert
+def staticAttachmentTest2_pickupNoah():
+ 
+    #gyroStraightWithDrive(38, targetAngle=0)
+    goStraight(15 * _MM_PER_INCH)
+    turnToAngle(50, speed=500)
+    turnToAngle_AA(0)
+    goStraight(-6* _MM_PER_INCH )
+    
+    
+    
+    #go to M2
+    wait(10000)
+    turnToAngle_AA(90) 
+    goStraight(260)
+    turnToAngle_AA(0) 
+    wait(10000)
+
+    #wait(3000)
+    #goStraight(24*_MM_PER_INCH)
+    goStraight(17*_MM_PER_INCH)
+    #wait(3000)
+    #driveTillLine(speed=200, distanceInCM=70, target_angle=0, doCorrection=False)
+    #wait(3000)
+    wait(10000)
+    turnToAngle_AA(-45) 
+    wait(10000)
+    # turn back and forward
+    goStraight(150)
+    wait(3000)
+    goStraight(-60)
+    wait(3000)
+    right_med_motor.run_angle(1000, -1300) 
+    #goStraight(50)
+
+    # goback and pick up another expert
+    goStraight(-65)
+    turnToAngle_AA(45)
+    wait(3000)
+    goStraight(3 * _MM_PER_INCH)
+    wait(3000)
+    turnToAngle_AA(90)
+    wait(3000)
+    goStraight(350)
+    #turnToAngle(-170, forceTurn=FORCETURN_RIGHT)
+    turnToAngle_AA(-170)
+    goStraight(300)
+    turnToAngle(-140)
+    goStraight(500)
+
+    # #go back
+    # # goStraight(-75)
+    # # turnToAngle(absoluteAngle=0, turnRate=100, turnAcceleration=100) 
+    # # left_med_motor.run_angle(800,-300)
+    # # goStraight(-600, straightSpeed=500)
+    # # right_med_motor.run_angle(1000, 1300) 
+    # #go back
+
+    # # gyroStraightWithDrive(7, targetAngle=-45, backward=True)
+    # goStraight(-75)
+    # turnToAngle_AA(0)
+    # #left_med_motor.run_angle(800,-300)
+    # goStraight(-600, straightSpeed=500)
+    # right_med_motor.run_angle(1000, 1300) 
+
+#Testing drive till line
+def MissionM1_M2_pickupNoah():
+
+    #3D Cinema
+    left_med_motor.run_angle(300, 150)
+    gyroStraightWithDrive(14 * Utilities._CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(300, -150)
+    left_med_motor.run_angle(300, 150)
+    #turnToAngle(50, speed=500)
+    #turnToAngle(0)
+    gyroStraightWithDrive(-5* Utilities._CM_PER_INCH, targetAngle=0)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218)
+    driveTillHueRange(214, 230, left_color)
+    # driveTillColor(Color.BLUE)
+    turnToAngle(0) 
+    left_med_motor.run_angle(300, -150)
+    #if the driveTillLine fails can use goStraight 17
+    # goStraight(17*_MM_PER_INCH)
+    gyroStraightWithDrive(15*Utilities._CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(300, 150)
+    driveTillLine(speed=150, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    #wait(10000)
+    turnToAngle(-45) 
+    #wait(10000)
+    gyroStraightWithDrive(150/10, targetAngle=-45)
+    #wait(3000)
+    gyroStraightWithDrive(-60/10, targetAngle=-45)
+    #wait(3000)
+    right_med_motor.run_angle(1000, -1300) 
+
+    #pick up noah
+    gyroStraightWithDrive(-65/10, targetAngle=-45)
+    turnToAngle(45)
+    gyroStraightWithDrive(3 * Utilities._CM_PER_INCH, targetAngle=45)
+    turnToAngle(90)
+    left_med_motor.run_angle(300, -150)
+
+    gyroStraightWithDrive(350/10, targetAngle=90)
+    turnToAngle(180, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(300/10, targetAngle=180)
+    turnToAngle(-140)
+    gyroStraightWithDrive(500/10, targetAngle=-140)
+
+
 print("Calling func now")
 
 resetRobot()
@@ -201,8 +306,19 @@ start_time = stopwatch.time()#time.ticks_ms()
 #ArishaRun_M2()
 #ArishaRun_M1andM2()
 # ArishaRun_M1andM2_newgyroStr()
-staticAttachmentTest()
-# test()
+#staticAttachmentTest()
+# staticAttachmentTest2()
+# staticAttachmentTestDriveTillLine()
+# resetGyro(angle=90)
+# driveTillColor(Color.BLUE)
+MissionM1_M2_pickupNoah()
+#driveTillHueRange(214, 230, left_color)
+# turnToAngle(-90)
+# goStraight(240)
+# wait(5000)
+# driveTillLine(speed=150, doCorrection=False, sensor=right_color, blackOrWhite="White")
+# testHsv()
+# testColor()
 end_time = stopwatch.time()
 #logMessage("Time for run {} time(ms): {}".format(str(run), str(time.ticks_diff(end_time, start_time))), level=0)
 print(str(start_time), str(end_time))
@@ -210,3 +326,4 @@ print(str(start_time), str(end_time))
 # robot.straight(distance=500, then=Stop.Hold, wait=True)
 # left_med_motor.run_angle(-1000, 2600)
 print("DONE")
+

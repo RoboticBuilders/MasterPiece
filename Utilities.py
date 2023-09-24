@@ -201,7 +201,7 @@ def turnToAngle(targetAngle, speed=300, turn_acceleration=200, turn_deceleration
     # Figure out the degrees to turn using the correction and the 
     # shortest turning side. Either left or Right.
     degreesToTurn = 0  
-    if (rightTurnDegrees < leftTurnDegrees):
+    if ((rightTurnDegrees < leftTurnDegrees and forceTurn != FORCETURN_LEFT) or forceTurn == FORCETURN_RIGHT):
         direction = "Right"
         correction = _calculateCorrectionForTurn(right_correction, rotations)
         degreesToTurn = rightTurnDegrees - (correction * rightTurnDegrees)
@@ -209,15 +209,6 @@ def turnToAngle(targetAngle, speed=300, turn_acceleration=200, turn_deceleration
         direction = "Left"
         correction = _calculateCorrectionForTurn(left_correction, rotations)
         degreesToTurn = (leftTurnDegrees - (correction * leftTurnDegrees) )* -1
-
-    # If force turn has been specified, then override the calculation for
-    # which direction to turn.
-    if forceTurn == FORCETURN_LEFT:
-        correction = _calculateCorrectionForTurn(left_correction, rotations)
-        degreesToTurn = (leftTurnDegrees - (correction * leftTurnDegrees) )* -1
-    elif forceTurn == FORCETURN_RIGHT:
-        correction = _calculateCorrectionForTurn(right_correction, rotations)
-        degreesToTurn = rightTurnDegrees - (correction * rightTurnDegrees)
     
     #print("Before drive_base turn currentAngle = " + str(currentAngle) + " degreesToTurn= " + str(degreesToTurn) + "current heading before turn= " + str( hub.imu.heading()) )
     # Use the gyro drive base to turn.
@@ -262,11 +253,30 @@ def driveTillDistance(distanceinCM, speed, backward=False, wait=True):
     # restore the default drive base settings
     setDriveBaseSettings(straight_speed, straight_acceleration, turn_rate, turn_acceleration)
 
-def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targetAngle = 0, 
-                          multiplier=2, slowDown=True,slowDistanceMultipler = 0.5):
+def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
+                          multiplier=2, slowDown=True, slowDistanceMultipler = 0.2):
     global prevValues, correctionPos, savedNums
-    # drive_base.reset()
     stopDriveBase()
+    drive_base.reset()
+
+    # If targetAngle is not set explicitly, set it to current heading for convenience
+    # rather than assuming all callers want to follow 0-degrees
+    if(targetAngle == None):
+        targetAngle = hub.imu.heading()
+    
+    # For convenience, allow caller to specify negative distance to go backward and adjust
+    # parameters accordingly. The rest of this function does not work with negative distance
+    # so convert that to positive here.
+    if (distance < 0):
+        backward = True
+        distance = -1*distance
+
+    slowSpeed = 100
+    midSpeed = speed
+    if (backward): 
+        slowSpeed = slowSpeed * -1
+        midSpeed = midSpeed * -1
+
     prevValues = []
     correctionPos  = 0
     savedNums = 5
@@ -279,18 +289,12 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
         distanceInMM20 = 20
 
     slowDistanceInMM = distanceInMM * slowDistanceMultipler
-    slowSpeed = 100
-    midSpeed = speed
 
     # If the distance to travel is small, then just use slow speed.
     if distanceInMM < 30:
         midSpeed = slowSpeed = 50
     elif distanceInMM > 500:
         slowDistanceInMM = distanceInMM * 0.1
-
-    if (backward): 
-        slowSpeed = slowSpeed * -1
-        midSpeed = midSpeed * -1
 
     # Calculate the speed reduction per distance travelled. We do
     # this upfront, to enable integer multiplicaation in the loop.
@@ -409,7 +413,7 @@ def _driveStraightWithSlowDownTillLine(distance, speed, target_angle, gain,
     the function uses a combination of distance and the reachedStoppingCondition
     checks to stop.
 
-    reachedStoppingCondition: This is a function that does not take any parameter and is expected to retur true when the loop should be terminated.
+    reachedStoppingCondition: This is a function that does not take any parameter and is expected to return true when the loop should be terminated.
     return the output of the stoppingCondition.
     """
     drive_base.reset()
@@ -444,7 +448,7 @@ def _driveStraightWithSlowDownTillLine(distance, speed, target_angle, gain,
     return stopCondition
 
 # Input:
-# edge: LINE_FOLLOWER_EDGE_LEFT, LINE_FOLLOWER_EDGE_RIGHT
+# edge: LINE_FOLLOWER_EDGE_LEFT, LINE_FOLLOWER_EDGE_RIGHT 
 def followBlackLine(speed, distance, control_color, edge, gain = 1, slowDown = True, color_sensor=LEFT_COLOR_SENSOR):
     drive_base.reset()
     stopDriveBase()
@@ -548,32 +552,61 @@ def turnToAngle_AA(absoluteAngle:int, turnRate:int=DEFAULT_TURN_RATE, turnAccele
     elif oneWheelTurn==True:
         deg = (((6.28*AXLE_DIAMETER_CM)*(angleToTurn/360))/(6.28*WHEEL_RADIUS_CM))*360
         if angleToTurn < 0:
-            right_motor.run_angle(deg)
+            right_motor.run_angle(speed=origTurnSpeed, rotation_angle=deg)
         elif angleToTurn > 0:
             print(deg)
             left_motor.run_angle(speed=origTurnSpeed,rotation_angle=deg)
 
     robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
-
-
-def driveTillLine(speed, distanceInCM, target_angle, doCorrection=True, colorSensorToUse="Left", blackOrWhite="Black"):
+def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Black"):
     
-    if colorSensorToUse == "Left":
-        if blackOrWhite == "Black":
-            print(left_color.hsv())
-            saturation = left_color.hsv().s
-            robot.drive(speed = speed, turn_rate = 0)
-            while saturation > 10:
-                saturation = left_color.hsv().s
+    def _compareValue(sensor, value):
+        return sensor.hsv().v in value
 
-            print("Stopping at saturation = {}".format(saturation))
+    if (blackOrWhite=="Black"):
+        func = _compareValue
+        vRange = range(0, 20)
+    else:
+        func = _compareValue
+        vRange = range(90, 100)
 
-            robot.straight(distance=1, then=Stop.BRAKE, wait=True)
-            if(doCorrection):
-                (origSpeed, origAccel, origTurnSpeed, origTurnAccel) = robot.settings()
-                robot.settings(100, 100, 100, 100)
-                robot.straight(distance=-40, then=Stop.HOLD, wait=True)
-                robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
+    robot.drive(speed = speed, turn_rate = 0)
+    while(func(sensor, vRange) != True):
+        hsv = sensor.hsv()
+        print(hsv)
+    print("Stopping at (h,s,v) = {}".format(sensor.hsv()))
 
-            saturation = left_color.hsv().s
+    robot.stop()
+    robot.straight(distance=0, then=Stop.BRAKE, wait=True)
+
+    if(doCorrection):
+        (origSpeed, origAccel, origTurnSpeed, origTurnAccel) = robot.settings()
+        robot.settings(100, 100, 100, 100)
+        robot.straight(distance=-40, then=Stop.HOLD, wait=True)
+        robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
+
+def driveTillColor(color, sensor=left_color, speed=DEFAULT_SPEED):
+    robot.drive(speed = speed, turn_rate = 0)
+    while(sensor.color() != color):
+        print(sensor.color())
+    print(sensor.color())
+    robot.stop()
+    robot.straight(distance=0, then=Stop.BRAKE, wait=True)
+
+def driveTillHueRange(hueRange, hueRangeHigh, sensor=left_color, speed=DEFAULT_SPEED):
+    robot.drive(speed = speed, turn_rate = 0)
+    while(not(sensor.hsv().h > hueRange and sensor.hsv().h < hueRangeHigh)):
+        print(sensor.hsv().h)
+    print(sensor.hsv().h)
+    robot.stop()
+    robot.straight(distance=0, then=Stop.BRAKE, wait=True)
+
+def testHsv(sensor=left_color):
+    while  True:
+        print("(h,s,v) = {}".format(sensor.hsv()))
+
+def testColor(sensor=left_color):
+    while  True:
+        print("Color: {}".format(sensor.color()))
+
