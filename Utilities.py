@@ -566,10 +566,10 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
 
     if (blackOrWhite=="Black"):
         func = _compareValue
-        vRange = range(0, 20)
+        vRange = range(0, 35)
     else:
         func = _compareValue
-        vRange = range(90, 100)
+        vRange = range(100, 100)
 
     robot.drive(speed = speed, turn_rate = 0)
     while(func(sensor, vRange) != True):
