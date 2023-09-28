@@ -256,11 +256,14 @@ def MissionM1_M2_pickupNoah():
     #3D Cinema
     left_med_motor.run_angle(300, 150)
     gyroStraightWithDrive(14 * Utilities._CM_PER_INCH, targetAngle=0)
+    # wait(3000)
     left_med_motor.run_angle(300, -150)
     left_med_motor.run_angle(300, 150)
     #turnToAngle(50, speed=500)
     #turnToAngle(0)
+    #goStraight(-5)
     gyroStraightWithDrive(-5* Utilities._CM_PER_INCH, targetAngle=0)
+    # wait(3000)
     
     
     #go to M2
@@ -269,13 +272,14 @@ def MissionM1_M2_pickupNoah():
     driveTillHueRange(214, 230, left_color)
     # driveTillColor(Color.BLUE)
     turnToAngle(0) 
+    # wait(5000)
     left_med_motor.run_angle(300, -150)
     #if the driveTillLine fails can use goStraight 17
     # goStraight(17*_MM_PER_INCH)
     gyroStraightWithDrive(15*Utilities._CM_PER_INCH, targetAngle=0)
     left_med_motor.run_angle(300, 150)
     driveTillLine(speed=150, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-    #wait(10000)
+    # wait(10000)
     turnToAngle(-45) 
     #wait(10000)
     gyroStraightWithDrive(150/10, targetAngle=-45)
@@ -312,6 +316,8 @@ start_time = stopwatch.time()#time.ticks_ms()
 # resetGyro(angle=90)
 # driveTillColor(Color.BLUE)
 MissionM1_M2_pickupNoah()
+#gyroStraightWithDrive(30, speed=300, targetAngle=0)
+
 #driveTillHueRange(214, 230, left_color)
 # turnToAngle(-90)
 # goStraight(240)

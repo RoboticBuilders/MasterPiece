@@ -253,7 +253,7 @@ def driveTillDistance(distanceinCM, speed, backward=False, wait=True):
     # restore the default drive base settings
     setDriveBaseSettings(straight_speed, straight_acceleration, turn_rate, turn_acceleration)
 
-def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
+def gyroStraightWithDrive(distanceInCm, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
                           multiplier=2, slowDown=True, slowDistanceMultipler = 0.2):
     global prevValues, correctionPos, savedNums
     stopDriveBase()
@@ -267,9 +267,9 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
     # For convenience, allow caller to specify negative distance to go backward and adjust
     # parameters accordingly. The rest of this function does not work with negative distance
     # so convert that to positive here.
-    if (distance < 0):
+    if (distanceInCm < 0):
         backward = True
-        distance = -1*distance
+        distanceInCm = -1*distanceInCm
 
     slowSpeed = 100
     midSpeed = speed
@@ -281,7 +281,7 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
     correctionPos  = 0
     savedNums = 5
 
-    distanceInMM=distance * 10
+    distanceInMM=distanceInCm * 10
     distanceInMM20 = distanceInMM * 0.2
     
     # Cap the acceleration part of the algo to 20mm

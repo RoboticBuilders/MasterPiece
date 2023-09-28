@@ -45,17 +45,17 @@ def turnTest():
         wait(500)
     '''
 def testDriveStraight():
-    gyroStraightWithDrive(distance=50, speed=300, targetAngle=0)
-    gyroStraightWithDrive(distance=50, speed=300, backward=True, targetAngle=0)
-    gyroStraightWithDrive(distance=50, speed=300, targetAngle=0)
-    gyroStraightWithDrive(distance=50, speed=300, backward=True, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=50, speed=300, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=50, speed=300, backward=True, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=50, speed=300, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=50, speed=300, backward=True, targetAngle=0)
 
 def testDriveTillBlackline():
-    gyroStraightWithDrive(distance=25, speed=500, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=25, speed=500, targetAngle=0)
     driveTillBlackLine(speed=300, distanceInCM=25, target_angle=0)
-    gyroStraightWithDrive(distance=10, speed=300, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=10, speed=300, targetAngle=0)
     turnToAngle(targetAngle=90)
-    gyroStraightWithDrive(distance=10, speed=400, targetAngle=90, backward=True)
+    gyroStraightWithDrive(distanceInCm=10, speed=400, targetAngle=90, backward=True)
     hub.imu.reset_heading(90)
     
     followBlackLine(speed=400, distance=170, control_color=50, edge=LINE_FOLLOWER_EDGE_RIGHT)
