@@ -39,7 +39,7 @@ def AnyaRun():
 def AnyaRun_gyroStraight():
     #goStraight(_MM_PER_INCH*17, straightSpeed=1000, straightAcceleration=DEFAULT_ACCELERATION*2)# he go straight was 20 in
     gyroStraightWithDrive(distanceInCm=43, targetAngle=0)
-    driveTillHueRange(214,224,right_color)
+    driveTillHueRange(range(214,224),right_color)
     # wait(5000)
     turnToAngle(targetAngle=-45, oneWheelTurn=True)
     # wait(5000)
@@ -108,38 +108,54 @@ def ArishaAugmentedRealityTest_GyroStraight():
     gyroStraightWithDrive(distanceInCm=37, targetAngle=-90)
     # wait(10000)
     gyroStraightWithDrive(distanceInCm=4, targetAngle=0)
-    turnToAngle(targetAngle=0,oneWheelTurn=True)
+    turnToAngle(targetAngle=-45,oneWheelTurn=True) ## was target angle ((0))
+    gyroStraightWithDrive(distanceInCm=3, targetAngle=0) # I might need to delete test line!!!!!
+    turnToAngle(targetAngle=0,oneWheelTurn=True) ## was target angle ((0))  # add on line take off if not work
+    gyroStraightWithDrive(distanceInCm=3, targetAngle=0) # I might need to delete also test line!!!!!
     #goStraight(_MM_PER_INCH*2)
     # gyroStraightWithDrive(distanceInCm=5, targetAngle=0)
-    wait(5000)
+    # wait(5000)
     #goStraight(_MM_PER_INCH*-5.5)  # you might want to try 6 or 6.
-    gyroStraightWithDrive(distanceInCm=14, targetAngle=0, backward=True)
-    turnToAngle(75) # t
+    gyroStraightWithDrive(distanceInCm=7, targetAngle=0, backward=True)
+    turnToAngle(-90) # t
 
 def dropOne():
     right_med_motor.run_angle(speed=500,rotation_angle=360)
 
 
 def AnyaRun2():
-    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*20, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*20, targetAngle=0, speed=400)
     turnToAngle(-45)
     # wait(3000)
     driveTillLine(speed=200, doCorrection=False)
-    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*1, targetAngle=-45)
+    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*1, targetAngle=-45, speed=400)
     turnToAngle(targetAngle=0, oneWheelTurn=True)
-    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*6.5, targetAngle=0)
-    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*9.5, targetAngle=0, backward=True)
+    goStraight(distance=_MM_PER_INCH*6.5,  wait=False)
+    # gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*6.5, targetAngle=0, speed=400)
+    # lift the arm to deliver the expert
+    left_med_motor.run_angle(speed=3000,rotation_angle=200)    
+    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*9.5, targetAngle=0, backward=True, speed=400)
+    # goStraight(distance=_MM_PER_INCH*9.5, backward=True, wait=False)
+    wait(5000)
+    left_med_motor.run_angle(speed=3000,rotation_angle=300)
     turnToAngle(45)
-    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*10, targetAngle=45)
-    left_med_motor.run_angle(speed=-1000,rotation_angle=1150)
+    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*10, targetAngle=45, speed=400)
+    turnToAngle(targetAngle=53, forceTurn=FORCETURN_RIGHT, oneWheelTurn=True)
+    wait(3000)
+    left_med_motor.run_angle(speed=-3000,rotation_angle=1150)
 
 def AnyaDropOffs():
-    wait(5000)
-    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*4, targetAngle=45, backward=True)
-    wait(2000)
-    turnToAngle(targetAngle=-90)
-    wait(2000)
-    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*42, targetAngle=-90)
+    # wait(5000)
+    # gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*4, targetAngle=45, backward=True)
+    # wait(2000)
+    # turnToAngle(targetAngle=-90)
+    # wait(2000)
+
+    gyroStraightWithDrive(distanceInCm=_MM_PER_INCH*-4.5)# was 5.5 back (-5.5)
+    turnToAngle(-90)
+    wait(3000)
+    left_med_motor.run_angle(speed=-3000,rotation_angle=550)
+    gyroStraightWithDrive(distanceInCm=_CM_PER_INCH*29, targetAngle=-90, speed=400)
     turnToAngle(-95)
     wait(2000)
     dropOne ()
@@ -152,10 +168,21 @@ print("Calling func now")
 stopwatch = StopWatch()
 start_time = stopwatch.time()
 
-AnyaRun2()
-AnyaDropOffs()
-resetRightArm()
-resetLeftArm()
+# AnyaRun2()
+# ArishaAugmentedRealityTest_GyroStraight()
+# AnyaDropOffs()
+# resetRightArm()
+# resetLeftArm()
+
+driveTillHueRange(hueRange=range(59, 61), saturationRange=range(31, 33), valueRange=range(99, 101))
+# testHsv()
+
+
+
+
+
+
+#wait(10000)
 
 
 end_time = stopwatch.time()

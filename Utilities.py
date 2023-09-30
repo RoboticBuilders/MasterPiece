@@ -594,13 +594,18 @@ def driveTillColor(color, sensor=left_color, speed=DEFAULT_SPEED):
     robot.stop()
     robot.straight(distance=0, then=Stop.BRAKE, wait=True)
 
-def driveTillHueRange(hueRange, hueRangeHigh, sensor=left_color, speed=DEFAULT_SPEED):
+# def driveTillHueRange(hueRange, hueRangeHigh, sensor=left_color, speed=DEFAULT_SPEED):
+def driveTillHueRange(hueRange, saturationRange=None, valueRange=None, sensor=left_color, speed=DEFAULT_SPEED):
     robot.drive(speed = speed, turn_rate = 0)
-    while(not(sensor.hsv().h > hueRange and sensor.hsv().h < hueRangeHigh)):
-        print(sensor.hsv().h)
+    # while()
+    hsv = sensor.hsv()
+    while(not(hsv.h in hueRange) or not(hsv.s in saturationRange) or not(hsv.v in valueRange)): #> hueRange and sensor.hsv().h < hueRangeHigh)):
+        hsv = sensor.hsv()
+        print(hsv)
     print(sensor.hsv().h)
-    robot.stop()
-    robot.straight(distance=0, then=Stop.BRAKE, wait=True)
+    robot.drive(0, 0)
+    # robot.stop()
+    # robot.straight(distance=0, then=Stop.BRAKE, wait=True)
 
 def testHsv(sensor=left_color):
     while  True:
