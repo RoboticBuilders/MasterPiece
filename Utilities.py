@@ -322,7 +322,9 @@ def gyroStraightWithDrive(distanceInCm, speed=DEFAULT_SPEED, backward = False, t
         #print("distance drive: " + str(distanceDrivenMM) + " speed: " + str(speed))  
 
     drive_base.stop()
-    stopDriveBase()     
+    stopDriveBase()  
+    # return distance driven to caller
+    return (drive_base.distance() - origDistanceDrivenMM)
 
 def getCorrectionForDrive(targetAngle, correctionMultiplier, adjustCorrection = False):
     global prevValues, savedNums, correctionPos
@@ -559,22 +561,27 @@ def turnToAngle_AA(absoluteAngle:int, turnRate:int=DEFAULT_TURN_RATE, turnAccele
 
     robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
-def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Black"):
+def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Black", maxDistance=0):
     
     def _compareValue(sensor, value):
         return sensor.hsv().v in value
 
     if (blackOrWhite=="Black"):
         func = _compareValue
-        vRange = range(0, 35)
+        vRange = range(0, 20)
     else:
         func = _compareValue
         vRange = range(100, 100)
 
+    origDistanceDrivenMM = drive_base.distance()
     robot.drive(speed = speed, turn_rate = 0)
     while(func(sensor, vRange) != True):
+        if(maxDistance > 0 and (drive_base.distance() - origDistanceDrivenMM > maxDistance)):
+            print("Did not find line but reached maxDistance {}".format(maxDistance))
+            doCorrection = False
+            break
         hsv = sensor.hsv()
-        print(hsv)
+        # print(hsv)
     print("Stopping at (h,s,v) = {}".format(sensor.hsv()))
 
     robot.stop()
@@ -586,6 +593,8 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
         robot.straight(distance=-40, then=Stop.HOLD, wait=True)
         robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
+    return (drive_base.distance() - origDistanceDrivenMM)
+
 def driveTillColor(color, sensor=left_color, speed=DEFAULT_SPEED):
     robot.drive(speed = speed, turn_rate = 0)
     while(sensor.color() != color):
@@ -595,17 +604,22 @@ def driveTillColor(color, sensor=left_color, speed=DEFAULT_SPEED):
     robot.straight(distance=0, then=Stop.BRAKE, wait=True)
 
 # def driveTillHueRange(hueRange, hueRangeHigh, sensor=left_color, speed=DEFAULT_SPEED):
-def driveTillHueRange(hueRange, saturationRange=None, valueRange=None, sensor=left_color, speed=DEFAULT_SPEED):
+def driveTillHsvRange(hueRange, saturationRange=None, valueRange=None, sensor=left_color, speed=DEFAULT_SPEED, maxDistance=0):
+    origDistanceDrivenMM = drive_base.distance()
     robot.drive(speed = speed, turn_rate = 0)
     # while()
     hsv = sensor.hsv()
-    while(not(hsv.h in hueRange) or not(hsv.s in saturationRange) or not(hsv.v in valueRange)): #> hueRange and sensor.hsv().h < hueRangeHigh)):
+    while(not(hsv.h in hueRange and hsv.s in saturationRange and hsv.v in valueRange)): #> hueRange and sensor.hsv().h < hueRangeHigh)):
+        if(maxDistance > 0 and (drive_base.distance() - origDistanceDrivenMM > maxDistance)):
+            print("Did not find HSV but reached maxDistance {}".format(maxDistance))
+            break
         hsv = sensor.hsv()
-        print(hsv)
+        # print(hsv)
     print(sensor.hsv().h)
     robot.drive(0, 0)
     # robot.stop()
     # robot.straight(distance=0, then=Stop.BRAKE, wait=True)
+    return (drive_base.distance() - origDistanceDrivenMM)
 
 def testHsv(sensor=left_color):
     while  True:
