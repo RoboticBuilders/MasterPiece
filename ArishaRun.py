@@ -255,14 +255,14 @@ def staticAttachmentTest2_pickupNoah():
 def MissionM1_M2_pickupNoah():  ## Arisha Run must use
 
     #3D Cinema
-    left_med_motor.run_angle(300, 150, wait=False)
-    gyroStraightWithDrive(14 * Utilities._CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(500, 150, wait=False)
+    gyroStraightWithDrive(14 * Utilities._CM_PER_INCH, targetAngle=0, speed=300)
     # wait(3000)
-    left_med_motor.run_angle(300, -150)
-    left_med_motor.run_angle(300, 150)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
     #goStraight(-5)
     #gyroStraightWithDrive(-5* Utilities._CM_PER_INCH, targetAngle=0)
-    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
     # wait(3000)
     
     
@@ -277,11 +277,11 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     # driveTillColor(Color.BLUE)
     turnToAngle(0) 
     # wait(5000)
-    left_med_motor.run_angle(300, -150, wait=False)
+    left_med_motor.run_angle(500, -150, wait=False)
     #if the driveTillLine fails can use goStraight 17
     # goStraight(17*_MM_PER_INCH)
     gyroStraightWithDrive(7*Utilities._CM_PER_INCH, targetAngle=0)
-    left_med_motor.run_angle(300, 150, wait=False)
+    left_med_motor.run_angle(500, 150, wait=False)
     gyroStraightWithDrive(7*Utilities._CM_PER_INCH, targetAngle=0)
     # wait(5000)
 
@@ -291,8 +291,8 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     turnToAngle(-45) 
     # wait(10000)
     gyroStraightWithDrive(distanceInCm=15, targetAngle=-45)
-    # wait(3000)
-    gyroStraightWithDrive(distanceInCm=-5, targetAngle=-45)#, backward=True)##   !@%^&*#@#$%^&^%$#$^&^@@#$%$
+    wait(3000)
+    gyroStraightWithDrive(distanceInCm=5, targetAngle=-45, backward=True) ##   !@%^&*#@#$%^&^%$#$^&^@@#$%$
     #wait(3000)
     #gyroStraightWithDrive(distanceInCm=6, speed=50, targetAngle=-45, backward=True)
     #goStraight(-60)
@@ -300,17 +300,18 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     right_med_motor.run_angle(1000, -1300) 
 
     #pick up noah
-    gyroStraightWithDrive(-65/10, targetAngle=-45)
+    gyroStraightWithDrive(-65/10, targetAngle=-45, speed=500)
     turnToAngle(45)
-    gyroStraightWithDrive(3 * Utilities._CM_PER_INCH, targetAngle=45)
+    gyroStraightWithDrive(3 * Utilities._CM_PER_INCH, targetAngle=45, speed=500)
     turnToAngle(90)
-    left_med_motor.run_angle(300, -150, wait=False)
+    left_med_motor.run_angle(500, -150, wait=False)
+    #was 18 with increase in speed brought down to 10
 
-    gyroStraightWithDrive(35, targetAngle=90)
+    gyroStraightWithDrive(28, targetAngle=90,speed=500)
     turnToAngle(177, forceTurn=FORCETURN_RIGHT)
-    gyroStraightWithDrive(20, targetAngle=177)
+    gyroStraightWithDrive(25, targetAngle=177,speed=500)
     turnToAngle(-130)
-    gyroStraightWithDrive(25, targetAngle=-120)## was go forward 50 not 40
+    gyroStraightWithDrive(40, targetAngle=-130, speed=1000)## was go forward 50 not 40
     # turnToAngle(-100)## was not there before remove if does not work
     # gyroStraightWithDrive(35, targetAngle=-100)## was not there before remove if does not work
 
@@ -341,11 +342,25 @@ MissionM1_M2_pickupNoah()
 #driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
 #testHsv()
 # testColor()
-end_time = stopwatch.time()
+#bigger gear
+# right_med_motor.run_angle(1000, -300) 
+# end_time = stopwatch.time()
+# right_med_motor.run_angle(1000, 1300) 
+# right_med_motor.run_angle(1000, -1300) 
+#small gears
+# right_med_motor.run_angle(1000, 300) 
+# end_time = stopwatch.time()
+# right_med_motor.run_angle(1000, -300) 
+# right_med_motor.run_angle(1000, 300) 
 #logMessage("Time for run {} time(ms): {}".format(str(run), str(time.ticks_diff(end_time, start_time))), level=0)
+
+end_time = stopwatch.time()
 print(str(start_time), str(end_time))
+
 # AnyaRun()
 # robot.straight(distance=500, then=Stop.Hold, wait=True)
-# left_med_motor.run_angle(-1000, 2600)
+right_med_motor.run_angle(1000, 1300) 
+
+
 print("DONE")
 
