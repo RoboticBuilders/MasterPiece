@@ -1,3 +1,4 @@
+from Utilities import _MM_PER_INCH
 from pybricks.hubs import PrimeHub
 from pybricks.pupdevices import Motor
 from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
@@ -251,10 +252,10 @@ def staticAttachmentTest2_pickupNoah():
     # right_med_motor.run_angle(1000, 1300) 
 
 #Testing drive till line
-def MissionM1_M2_pickupNoah():
+def MissionM1_M2_pickupNoah():  ## Arisha Run must use
 
     #3D Cinema
-    left_med_motor.run_angle(300, 150)
+    left_med_motor.run_angle(300, 150, wait=False)
     gyroStraightWithDrive(14 * Utilities._CM_PER_INCH, targetAngle=0)
     # wait(3000)
     left_med_motor.run_angle(300, -150)
@@ -268,28 +269,33 @@ def MissionM1_M2_pickupNoah():
     #go to M2
     turnToAngle(90) 
     #goStraight(218) #218mm
-    gyroStraightWithDrive(distanceInCm=22, targetAngle=90)
-    #driveTillHueRange(214, 230, left_color)
-    wait(5000)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    #driveTillHsvRange(214, 230, left_color)
+    driveTillHsvRange(maxDistance=3*_MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    
+    # wait(5000)
     # driveTillColor(Color.BLUE)
     turnToAngle(0) 
     # wait(5000)
-    left_med_motor.run_angle(300, -150)
+    left_med_motor.run_angle(300, -150, wait=False)
     #if the driveTillLine fails can use goStraight 17
     # goStraight(17*_MM_PER_INCH)
-    gyroStraightWithDrive(15*Utilities._CM_PER_INCH, targetAngle=0)
-    left_med_motor.run_angle(300, 150)
-    wait(5000)
+    gyroStraightWithDrive(7*Utilities._CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(300, 150, wait=False)
+    gyroStraightWithDrive(7*Utilities._CM_PER_INCH, targetAngle=0)
+    # wait(5000)
 
-    #driveTillLine(speed=150, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-    driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
-    wait(5000)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    #driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
+    # wait(5000)
     turnToAngle(-45) 
-    wait(10000)
+    # wait(10000)
     gyroStraightWithDrive(distanceInCm=15, targetAngle=-45)
+    # wait(3000)
+    gyroStraightWithDrive(distanceInCm=-5, targetAngle=-45)#, backward=True)##   !@%^&*#@#$%^&^%$#$^&^@@#$%$
     #wait(3000)
-    gyroStraightWithDrive(distanceInCm=-6, targetAngle=-45)
-   # goStraight(-60)
+    #gyroStraightWithDrive(distanceInCm=6, speed=50, targetAngle=-45, backward=True)
+    #goStraight(-60)
     #wait(3000)
     right_med_motor.run_angle(1000, -1300) 
 
@@ -298,13 +304,15 @@ def MissionM1_M2_pickupNoah():
     turnToAngle(45)
     gyroStraightWithDrive(3 * Utilities._CM_PER_INCH, targetAngle=45)
     turnToAngle(90)
-    left_med_motor.run_angle(300, -150)
+    left_med_motor.run_angle(300, -150, wait=False)
 
-    gyroStraightWithDrive(350/10, targetAngle=90)
-    turnToAngle(180, forceTurn=FORCETURN_RIGHT)
-    gyroStraightWithDrive(300/10, targetAngle=180)
-    turnToAngle(-140)
-    gyroStraightWithDrive(500/10, targetAngle=-140)
+    gyroStraightWithDrive(35, targetAngle=90)
+    turnToAngle(177, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(20, targetAngle=177)
+    turnToAngle(-130)
+    gyroStraightWithDrive(25, targetAngle=-120)## was go forward 50 not 40
+    # turnToAngle(-100)## was not there before remove if does not work
+    # gyroStraightWithDrive(35, targetAngle=-100)## was not there before remove if does not work
 
 
 print("Calling func now")
