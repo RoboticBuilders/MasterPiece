@@ -255,7 +255,7 @@ def staticAttachmentTest2_pickupNoah():
 def MissionM1_M2_pickupNoah():  ## Arisha Run must use
 
     #3D Cinema
-    left_med_motor.run_angle(500, 150, wait=False)
+    left_med_motor.run_angle(600, 150, wait=False)
     #was 14 inches now 10
     gyroStraightWithDrive(9 * Utilities._CM_PER_INCH, targetAngle=0, speed=300)
     # wait(3000)
@@ -293,9 +293,9 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     turnToAngle(-45) 
     # wait(10000)
     gyroStraightWithDrive(distanceInCm=15, targetAngle=-45)
-    wait(3000)
-    goStraight(-50)
-    wait(3000)
+    #wait(3000)
+    goStraight(-40)
+    #wait(3000)
     #gyroStraightWithDrive(distanceInCm=5, targetAngle=-45, backward=True) ##   !@%^&*#@#$%^&^%$#$^&^@@#$%$
     #wait(3000)
     #gyroStraightWithDrive(distanceInCm=6, speed=50, targetAngle=-45, backward=True)
@@ -306,23 +306,47 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     right_med_motor.run_angle(600, 300) 
 
     #pick up noah
-    gyroStraightWithDrive(-65/10, targetAngle=-45, speed=500)
-    turnToAngle(45)
+    # #STRATEGY 1
+    # gyroStraightWithDrive(-6, targetAngle=-45, speed=500)
+    # wait(5000)
+    # turnToAngle(45)
+    # gyroStraightWithDrive(distanceInCm=10, targetAngle=45, speed=500)
+    # # wait(5000)
+    # turnToAngle(90)
+    # left_med_motor.run_angle(500, -150, wait=False)
+    # #wait(3000)
+    # gyroStraightWithDrive(25, targetAngle=90,speed=300)
+    # #wait(5000)
+    # turnToAngle(170, forceTurn=FORCETURN_RIGHT)
+    # #wait(3000)
+    # gyroStraightWithDrive(30, targetAngle=170,speed=300)
+    # turnToAngle(-125)
+    # gyroStraightWithDrive(40, targetAngle=-125, speed=1000)## was go forward 50 not 40
+    #
+    # STRATEGY 2
+
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    # wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=8, targetAngle=45, speed=500)
     turnToAngle(90)
     left_med_motor.run_angle(500, -150, wait=False)
-    #was 18 with increase in speed brought down to 10
-    wait(3000)
 
-    gyroStraightWithDrive(25, targetAngle=90,speed=300)
     wait(5000)
+    # gyroStraightWithDrive(distanceInCm=10, targetAngle=45, speed=500)
+    # # wait(5000)
+    # turnToAngle(90)
+    # left_med_motor.run_angle(500, -150, wait=False)
+    # #wait(3000)
+    gyroStraightWithDrive(25, targetAngle=90,speed=300)
+    # #wait(5000)
     turnToAngle(170, forceTurn=FORCETURN_RIGHT)
     wait(3000)
-    gyroStraightWithDrive(30, targetAngle=170,speed=300)
+    gyroStraightWithDrive(32, targetAngle=170,speed=300)
     turnToAngle(-125)
     gyroStraightWithDrive(40, targetAngle=-125, speed=1000)## was go forward 50 not 40
-    # turnToAngle(-100)## was not there before remove if does not work
-    # gyroStraightWithDrive(35, targetAngle=-100)## was not there before remove if does not work
+
+   
 
 
 print("Calling func now")

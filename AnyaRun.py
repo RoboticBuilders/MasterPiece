@@ -97,21 +97,29 @@ def ArishaAugmentedRealityTest():
 def ArishaAugmentedRealityTest_GyroStraight():
     # resetGyro(angle=45)
     goStraight(_MM_PER_INCH*-4.5, straightSpeed=300)# was 5.5 back (-5.5)
-    turnToAngle(-90)
+    _angle=-90
+    turnToAngle(_angle)
+    wait(10000)
+    
+    #gyroStraightWithDrive(distanceInCm=37, targetAngle=-90)
+    gyroStraightWithDrive(distanceInCm=30, targetAngle=_angle)
+    wait(15000)
+    driveTillHsvRange(maxDistance=2*_MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100) )
+    wait(5000)
     # wait(10000)
-    #goStraight(_MM_PER_INCH*14)
-    gyroStraightWithDrive(distanceInCm=37, targetAngle=-90)
-    # wait(10000)
-    gyroStraightWithDrive(distanceInCm=4, targetAngle=0)
-    turnToAngle(targetAngle=-45,oneWheelTurn=True) ## was target angle ((0))
-    gyroStraightWithDrive(distanceInCm=3, targetAngle=0) # I might need to delete test line!!!!!
-    turnToAngle(targetAngle=10,oneWheelTurn=True) ## was target angle ((0))  # add on line take off if not work
+    # gyroStraightWithDrive(distanceInCm=4, targetAngle=-90)
+    _angle = -45
+    turnToAngle(targetAngle=_angle,oneWheelTurn=True) ## was target angle ((0))
+    gyroStraightWithDrive(distanceInCm=3, targetAngle=_angle) # I might need to delete test line!!!!!
+    _angle = 25
+    turnToAngle(targetAngle=_angle,oneWheelTurn=True) ## was target angle ((0))  # add on line take off if not work
     # gyroStraightWithDrive(distanceInCm=3, targetAngle=0) # I might need to delete also test line!!!!!
     #goStraight(_MM_PER_INCH*2)
     # gyroStraightWithDrive(distanceInCm=5, targetAngle=0)
     # wait(5000)
     #goStraight(_MM_PER_INCH*-5.5)  # you might want to try 6 or 6.
-    gyroStraightWithDrive(distanceInCm=8, targetAngle=0, backward=True)
+    gyroStraightWithDrive(distanceInCm=8, targetAngle=_angle, backward=True)
+    wait(10000)
 
 EXPERT_ARM_TURN_ANGLE = 350
 DROP_OFF_SPEED = 500
@@ -182,16 +190,25 @@ def AnyaDropOffs(numDropoffs=2):
         turnToAngle(-90, oneWheelTurn=True, forceTurn=FORCETURN_RIGHT)
 
     if(numDropoffs>1):
-        gyroStraightWithDrive(distanceInCm=5*_CM_PER_INCH, targetAngle=-90)
-        turnToAngle(225)
-        wait(anyaDropOffsWait)
-        # driveTillLine(speed=200, sensor=right_color, maxDistance=5*_MM_PER_INCH)
-        gyroStraightWithDrive(distanceInCm=3*_CM_PER_INCH, targetAngle=-135)
-        wait(anyaDropOffsWait)
-        turnToAngle(180, oneWheelTurn=True, forceTurn=FORCETURN_LEFT)
-        wait(anyaDropOffsWait)
-        gyroStraightWithDrive(distanceInCm=7*_CM_PER_INCH, targetAngle=-180)
-        wait(anyaDropOffsWait)
+        # gyroStraightWithDrive(distanceInCm=5*_CM_PER_INCH, targetAngle=-90)
+        # turnToAngle(225)
+        # wait(anyaDropOffsWait)
+        # # driveTillLine(speed=200, sensor=right_color, maxDistance=5*_MM_PER_INCH)
+        # gyroStraightWithDrive(distanceInCm=3*_CM_PER_INCH, targetAngle=-135)
+        # wait(anyaDropOffsWait)
+        # turnToAngle(180, oneWheelTurn=True, forceTurn=FORCETURN_LEFT)
+        # wait(anyaDropOffsWait)
+        # gyroStraightWithDrive(distanceInCm=7*_CM_PER_INCH, targetAngle=-180)
+        # wait(anyaDropOffsWait)
+        # dropOneExpert()
+        # try2
+        wait(3000)
+        gyroStraightWithDrive(distanceInCm=3*_CM_PER_INCH, targetAngle=-90)
+        turnToAngle(177, oneWheelTurn=True, forceTurn=FORCETURN_LEFT)
+        wait(3000)
+        gyroStraightWithDrive(distanceInCm=5*_CM_PER_INCH, targetAngle=177)
+        turnToAngle(targetAngle=170)
+        wait(3000)
         dropOneExpert()
 
 
