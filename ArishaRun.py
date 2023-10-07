@@ -289,11 +289,11 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
 
     driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
     #driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
-    # wait(5000)
+    wait(5000)
     turnToAngle(-45) 
     # wait(10000)
     gyroStraightWithDrive(distanceInCm=15, targetAngle=-45)
-    #wait(3000)
+    wait(3000)
     # goStraight(-40)
     driveTillLine(speed=-200, doCorrection=False)
     #wait(3000)
@@ -302,9 +302,9 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     #gyroStraightWithDrive(distanceInCm=6, speed=50, targetAngle=-45, backward=True)
     #goStraight(-60)
     #wait(3000)
-    #right_med_motor.run_angle(1000, -1300) 
+    right_med_motor.run_angle(1000, -1300) 
 
-    right_med_motor.run_angle(600, 300) 
+    #right_med_motor.run_angle(600, 300) 
 
     #pick up noah
     # #STRATEGY 1
@@ -327,13 +327,13 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     # STRATEGY 2
 
     gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
-    # wait(5000)
+    wait(5000)
     turnToAngle(45, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=8, targetAngle=45, speed=500)
     turnToAngle(90)
     left_med_motor.run_angle(500, -150, wait=False)
 
-    wait(5000)
+    #wait(5000)
     # gyroStraightWithDrive(distanceInCm=10, targetAngle=45, speed=500)
     # # wait(5000)
     # turnToAngle(90)
@@ -342,8 +342,8 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     gyroStraightWithDrive(25, targetAngle=90,speed=300)
     # #wait(5000)
     turnToAngle(170, forceTurn=FORCETURN_RIGHT)
-    wait(3000)
-    gyroStraightWithDrive(32, targetAngle=170,speed=300)
+    #wait(3000)
+    gyroStraightWithDrive(35, targetAngle=170,speed=300)
     turnToAngle(-125)
     gyroStraightWithDrive(40, targetAngle=-125, speed=1000)## was go forward 50 not 40
 
@@ -384,7 +384,6 @@ start_time = stopwatch.time()#time.ticks_ms()
 #testHsv()
 # testColor()
 #bigger gear
-# right_med_motor.run_angle(1000, -300) 
 # end_time = stopwatch.time()
 # right_med_motor.run_angle(1000, 1300) 
 # right_med_motor.run_angle(1000, -1300) 
@@ -397,7 +396,9 @@ start_time = stopwatch.time()#time.ticks_ms()
 MissionM1_M2_pickupNoah()
 end_time = stopwatch.time()
 print(str(start_time), str(end_time))
-right_med_motor.run_angle(800, -300) 
+#right_med_motor.run_angle(800, -300) 
+right_med_motor.run_angle(1000, 1300) 
+
 
 # AnyaRun()
 # robot.straight(distance=500, then=Stop.Hold, wait=True)
