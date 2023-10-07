@@ -294,7 +294,8 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     # wait(10000)
     gyroStraightWithDrive(distanceInCm=15, targetAngle=-45)
     #wait(3000)
-    goStraight(-40)
+    # goStraight(-40)
+    driveTillLine(speed=-200, doCorrection=False)
     #wait(3000)
     #gyroStraightWithDrive(distanceInCm=5, targetAngle=-45, backward=True) ##   !@%^&*#@#$%^&^%$#$^&^@@#$%$
     #wait(3000)

@@ -221,7 +221,7 @@ AnyaRun2()
 ArishaAugmentedRealityTest_GyroStraight()
 
 # # Set dropoffs to 0, 1, or 2
-dropoffs=2
+dropoffs=1
 AnyaDropOffs(numDropoffs=dropoffs)
 
 # dropOneExpert()
