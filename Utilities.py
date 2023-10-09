@@ -37,8 +37,8 @@ DEFAULT_TURN_ACCEL = 300
 BLACK_COLOR = 24
 WHITE_COLOR = 90
 
-_CM_PER_INCH = 2.54
-_MM_PER_INCH = _CM_PER_INCH*10
+CM_PER_INCH = 2.54
+MM_PER_INCH = CM_PER_INCH*10
 
 # Constants for Force turn.
 FORCETURN_RIGHT = 0
@@ -96,7 +96,7 @@ def convertInchesToCM(distanceInInches):
     Convert Inches To CM
     ____________________
     """
-    return _CM_PER_INCH * distanceInInches
+    return CM_PER_INCH * distanceInInches
 
 def getDriveBase():
     return drive_base
@@ -617,7 +617,7 @@ def driveTillHsvRange(hueRange, saturationRange=None, valueRange=None, sensor=le
             break
         hsv = sensor.hsv()
         # print(hsv)
-    print(sensor.hsv().h)
+    print("HSV values: h:{}, s:{}, v:{}".format(sensor.hsv().h, sensor.hsv().s, sensor.hsv().v))
     robot.drive(0, 0)
     # robot.stop()
     # robot.straight(distance=0, then=Stop.BRAKE, wait=True)
