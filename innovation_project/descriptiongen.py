@@ -16,7 +16,7 @@ If it still doesn't work, try the same code with a different API key from anothe
 
 from bardapi import Bard
 
-bard = Bard(token='bwgbJ96RXWr-M4Br88NjDzAC8JmgN9UBLRW4EVc3xISOr2VQWsOQ-kmxeRe_-hIFyZ9v8A.') # get the bard api key
+bard = Bard(token='ADD API KEY HERE') # get the bard api key
 image = open('image.png', 'rb').read() # get the image locally
 bard_answer = bard.ask_about_image('What is in the image?', image) # send the prompt to bard
 print(bard_answer['content']) # print the answer
