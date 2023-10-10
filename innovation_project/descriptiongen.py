@@ -11,6 +11,7 @@ IMPORTANT: HOW TO USE
     Follow the instructions above
   NOTE: The API key is different for every account
 If the API key doesn't work, then follow the instructions for regenerating API keys
+If it still doesn't work, try the same code with a different API key from another account
 '''
 
 from bardapi import Bard
