@@ -5,7 +5,7 @@ IMPORTANT: HOW TO USE
     Open Chrome DevTools/Application
     Go to Storage/Cookies/https://bard.google.com
     Find Secure-1PSID
-    Copy the Value and paste it into the API_KEY variable
+    Copy the Value and paste it into the token parameter for the Bard() function
   REGENERATING API KEY
     Clear cookies & cache
     Follow the instructions above
@@ -14,13 +14,8 @@ If the API key doesn't work, then follow the instructions for regenerating API k
 '''
 
 from bardapi import Bard
-import os
 
-API_KEY = ""
-
-os.environ['_BARD_API_KEY']=API_KEY
-
-painting_link = str(input("Insert link to painting:"))
-
-request = str("Write a description for this painting: " + painting_link)
-print(Bard().get_answer(request)['content'])
+bard = Bard(token='bwgbJ96RXWr-M4Br88NjDzAC8JmgN9UBLRW4EVc3xISOr2VQWsOQ-kmxeRe_-hIFyZ9v8A.') # get the bard api key
+image = open('image.png', 'rb').read() # get the image locally
+bard_answer = bard.ask_about_image('What is in the image?', image) # send the prompt to bard
+print(bard_answer['content']) # print the answer
