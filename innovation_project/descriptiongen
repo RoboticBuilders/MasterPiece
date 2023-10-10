@@ -1,0 +1,9 @@
+from bardapi import Bard
+import os
+
+os.environ['_BARD_API_KEY']="ZAhFkjJDmaR_rdK06yOAMd6QSs4VOEwDnAXi14mbMIGP2Vb3fIPlTAcoz1nS077JCcQgFw."
+
+painting_link = str(input("Insert link to painting:"))
+
+request = str("Write a description for this painting: " + painting_link)
+print(Bard().get_answer(request)['content'])
