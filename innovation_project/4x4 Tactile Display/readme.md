@@ -19,6 +19,7 @@ The overall display is controlled by a `master` Arduino UNO which manages which 
 | Arduino (subs) |`4` | One for each frame to control the motors and communication |
 | Arduino (master) | `1` | Controls communication and controls what image is showm |
 | HW-130 shield | `4` | One for each frame to drive the motors |
+| M3 * 10mm screws  |`4` | To attach the Arduino to the frame. |
 | 9V Batteries | `4` | Provides power for the HW-130 and Arduino |
 | 9V battery terminals | `4` | Connects the batteries to the HW-130 |
 | Wires | `Many` | To connect the motors to the HW-130 and the master Arduino |
