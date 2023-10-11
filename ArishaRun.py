@@ -4,7 +4,6 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import GyroDriveBase, DriveBase
 from pybricks.tools import wait, StopWatch
 from Utilities import *
-import Utilities
 
 def ArishaRun_M2():
     goStraight(600, straightSpeed=500) 
@@ -189,10 +188,10 @@ def test():
 def staticAttachmentTest2_pickupNoah():
  
     #gyroStraightWithDrive(38, targetAngle=0)
-    goStraight(15 * _MM_PER_INCH)
+    goStraight(15 * MM_PER_INCH)
     turnToAngle(50, speed=500)
     turnToAngle_AA(0)
-    goStraight(-6* _MM_PER_INCH )
+    goStraight(-6* MM_PER_INCH )
     
     
     
@@ -205,7 +204,7 @@ def staticAttachmentTest2_pickupNoah():
 
     #wait(3000)
     #goStraight(24*_MM_PER_INCH)
-    goStraight(17*_MM_PER_INCH)
+    goStraight(17*MM_PER_INCH)
     #wait(3000)
     #driveTillLine(speed=200, distanceInCM=70, target_angle=0, doCorrection=False)
     #wait(3000)
@@ -224,7 +223,7 @@ def staticAttachmentTest2_pickupNoah():
     goStraight(-65)
     turnToAngle_AA(45)
     wait(3000)
-    goStraight(3 * _MM_PER_INCH)
+    goStraight(3 * MM_PER_INCH)
     wait(3000)
     turnToAngle_AA(90)
     wait(3000)
@@ -251,61 +250,157 @@ def staticAttachmentTest2_pickupNoah():
     # right_med_motor.run_angle(1000, 1300) 
 
 #Testing drive till line
-def MissionM1_M2_pickupNoah():
+def MissionM1_M2_pickupNoah():  ## Arisha Run must use
 
     #3D Cinema
-    left_med_motor.run_angle(300, 150)
-    gyroStraightWithDrive(14 * Utilities._CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(600, 150, wait=False)
+    #was 14 inches now 10
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
     # wait(3000)
-    left_med_motor.run_angle(300, -150)
-    left_med_motor.run_angle(300, 150)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
     #goStraight(-5)
-    #gyroStraightWithDrive(-5* Utilities._CM_PER_INCH, targetAngle=0)
-    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0)
+    #gyroStraightWithDrive(-5* _CM_PER_INCH, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
     # wait(3000)
     
     
     #go to M2
     turnToAngle(90) 
     #goStraight(218) #218mm
-    gyroStraightWithDrive(distanceInCm=22, targetAngle=90)
-    #driveTillHueRange(214, 230, left_color)
-    wait(5000)
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    #driveTillHsvRange(214, 230, left_color)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    
+    # wait(5000)
     # driveTillColor(Color.BLUE)
     turnToAngle(0) 
     # wait(5000)
-    left_med_motor.run_angle(300, -150)
+    #left_med_motor.run_angle(500, -150, wait=False)
     #if the driveTillLine fails can use goStraight 17
     # goStraight(17*_MM_PER_INCH)
-    gyroStraightWithDrive(15*Utilities._CM_PER_INCH, targetAngle=0)
-    left_med_motor.run_angle(300, 150)
-    wait(5000)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(500, 150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    # wait(5000)
 
-    #driveTillLine(speed=150, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-    driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    #driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
     wait(5000)
     turnToAngle(-45) 
-    wait(10000)
-    gyroStraightWithDrive(distanceInCm=15, targetAngle=-45)
+    # wait(10000)
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
     #wait(3000)
-    gyroStraightWithDrive(distanceInCm=-6, targetAngle=-45)
-   # goStraight(-60)
+    # goStraight(-40)
+    #commenting out right now
+    driveTillLine(speed=-200, doCorrection=False)
+    #wait(3000)
+    #gyroStraightWithDrive(distanceInCm=5, targetAngle=-45, backward=True) ##   !@%^&*#@#$%^&^%$#$^&^@@#$%$
+    #wait(3000)
+    #gyroStraightWithDrive(distanceInCm=6, speed=50, targetAngle=-45, backward=True)
+    #goStraight(-60)
     #wait(3000)
     right_med_motor.run_angle(1000, -1300) 
+    
+
+    #right_med_motor.run_angle(600, 300) 
 
     #pick up noah
-    gyroStraightWithDrive(-65/10, targetAngle=-45)
-    turnToAngle(45)
-    gyroStraightWithDrive(3 * Utilities._CM_PER_INCH, targetAngle=45)
+    # #STRATEGY 1
+    # gyroStraightWithDrive(-6, targetAngle=-45, speed=500)
+    # wait(5000)
+    # turnToAngle(45)
+    # gyroStraightWithDrive(distanceInCm=10, targetAngle=45, speed=500)
+    # # wait(5000)
+    # turnToAngle(90)
+    # left_med_motor.run_angle(500, -150, wait=False)
+    # #wait(3000)
+    # gyroStraightWithDrive(25, targetAngle=90,speed=300)
+    # #wait(5000)
+    # turnToAngle(170, forceTurn=FORCETURN_RIGHT)
+    # #wait(3000)
+    # gyroStraightWithDrive(30, targetAngle=170,speed=300)
+    # turnToAngle(-125)
+    # gyroStraightWithDrive(40, targetAngle=-125, speed=1000)## was go forward 50 not 40
+    #
+    # STRATEGY 2
+
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=8, targetAngle=45, speed=500)
     turnToAngle(90)
-    left_med_motor.run_angle(300, -150)
+    left_med_motor.run_angle(500, -150, wait=False)
 
-    gyroStraightWithDrive(350/10, targetAngle=90)
-    turnToAngle(180, forceTurn=FORCETURN_RIGHT)
-    gyroStraightWithDrive(300/10, targetAngle=180)
-    turnToAngle(-140)
-    gyroStraightWithDrive(500/10, targetAngle=-140)
+    #wait(5000)
+    # gyroStraightWithDrive(distanceInCm=10, targetAngle=45, speed=500)
+    # # wait(5000)
+    # turnToAngle(90)
+    # left_med_motor.run_angle(500, -150, wait=False)
+    # #wait(3000)
+    gyroStraightWithDrive(25, targetAngle=90,speed=300)
+    # #wait(5000)
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    #wait(3000)
+    gyroStraightWithDrive(35, targetAngle=165,speed=300)
+    turnToAngle(-125)
+    gyroStraightWithDrive(40, targetAngle=-125, speed=1000)## was go forward 50 not 40
 
+
+#Testing drive till line
+def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
+
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    #was 14 inches now 10
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    # wait(3000)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
+    # wait(3000)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218) #218mm
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    
+    # wait(5000)
+    turnToAngle(0) 
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(500, 150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    # wait(5000)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    #driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
+    wait(5000)
+    turnToAngle(-45) 
+    # wait(10000)
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    #wait(3000)
+    # goStraight(-40)
+    right_med_motor.run_angle(1000, -1300) 
+    driveTillLine(speed=-200, doCorrection=False)
+   
+    # STRATEGY 2
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=8, targetAngle=45, speed=500)
+    turnToAngle(90)
+    left_med_motor.run_angle(500, -150, wait=False)
+
+    gyroStraightWithDrive(25, targetAngle=90,speed=300)
+    # #wait(5000)
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    #wait(3000)
+    gyroStraightWithDrive(35, targetAngle=165,speed=300)
+    turnToAngle(-125)
+    gyroStraightWithDrive(40, targetAngle=-125, speed=1000)## was go forward 50 not 40
 
 print("Calling func now")
 
@@ -321,9 +416,17 @@ start_time = stopwatch.time()#time.ticks_ms()
 # resetGyro(angle=90)
 # driveTillColor(Color.BLUE)
 #driveTillLine(speed=150, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-MissionM1_M2_pickupNoah()
-# gyroStraightWithDrive(distanceInCm=-6, targetAngle=-45)
-#gyroStraightWithDrive(30, speed=300, targetAngle=0)
+#MissionM1_M2_pickupNoah()
+MissionM1_M2_pickupNoah_Aligner()
+# right_med_motor.run_angle(speed=1000, rotation_angle=-300) 
+# gyroStraightWithDrive2(distanceInCm=15, targetAngle=0)
+# wait(1000)
+# gyroStraightWithDrive2(distanceInCm=15, targetAngle=0)
+# goStraight(distance=-50)
+# print("Second call now ----------------------------")
+# wait(1500)
+# gyroStraightWithDrive(distanceInCm=-5, targetAngle=0)
+# gyroStraightWithDrive(100, speed=300, targetAngle=0)
 #testHsv()
 #driveTillHueRange(214, 230, left_color)
 # turnToAngle(-90)
@@ -333,11 +436,26 @@ MissionM1_M2_pickupNoah()
 #driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
 #testHsv()
 # testColor()
-end_time = stopwatch.time()
+#bigger gear
+# end_time = stopwatch.time()
+# right_med_motor.run_angle(1000, 1300) 
+# right_med_motor.run_angle(1000, -1300) 
+#small gears
+# right_med_motor.run_angle(1000, 300) 
+# end_time = stopwatch.time()
+# right_med_motor.run_angle(1000, -300) 
+# right_med_motor.run_angle(1000, 300) 
 #logMessage("Time for run {} time(ms): {}".format(str(run), str(time.ticks_diff(end_time, start_time))), level=0)
+# MissionM1_M2_pickupNoah()
+end_time = stopwatch.time()
 print(str(start_time), str(end_time))
+#right_med_motor.run_angle(800, -300) 
+right_med_motor.run_angle(1000, 1300) 
+
+
 # AnyaRun()
 # robot.straight(distance=500, then=Stop.Hold, wait=True)
-# left_med_motor.run_angle(-1000, 2600)
+
+
 print("DONE")
 
