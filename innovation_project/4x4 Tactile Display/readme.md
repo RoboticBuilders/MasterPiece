@@ -27,3 +27,7 @@ The overall display is controlled by a `master` Arduino UNO which manages which 
 | Arduino cables (subs) | `4` | To deploy programs to the sub Arduinos |
 | Arduino cable (master) | `1` | To provide power and deploy program to the master |
 | Breadboard (or prototype board) | `1` | To connect master/sub/LCD communication wires for I2C |
+
+# Wiring diagram
+
+![Wiring diagram](4x4_Sketch.jpg "Wiring")
