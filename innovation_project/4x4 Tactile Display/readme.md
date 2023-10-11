@@ -31,3 +31,8 @@ The overall display is controlled by a `master` Arduino UNO which manages which 
 # Wiring diagram
 
 ![Wiring diagram](4x4_Sketch.jpg "Wiring")
+
+# Frame
+![Frame](Frame_3D.jpg "Wiring")
+
+The Frame model in the stl folder along with other models.
