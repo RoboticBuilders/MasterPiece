@@ -63,6 +63,8 @@ def resetGyro(angle:int = 0):
     hub.imu.reset_heading(angle)
 
 def initializeAndWaitForRobotReady():
+    left_med_motor.reset_angle(0)
+    right_med_motor.reset_angle(0)
     getDriveBase().heading_control.target_tolerances(speed=50, position=5)   
     while True:
         if (hub.imu.ready() == True):
@@ -102,8 +104,9 @@ def getDriveBase():
     return drive_base
 
 def stopDriveBase():
-    left_motor.hold()
-    right_motor.hold()
+    drive_base.drive(speed = 0, turn_rate = 0)
+    #left_motor.hold()
+    #right_motor.hold()
 
 def waitForLeftButtonPress():
     # Wait for any button to be pressed, and save the result.
