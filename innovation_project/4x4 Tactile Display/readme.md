@@ -12,7 +12,7 @@ The overall display is controlled by a `master` Arduino UNO which manages which 
 | ----------- | ----------- | ----------- |
 | Frames       | `4`           | The 3D printed frame for each row of the display. |
 | Base       | `1`           | A 3D printed base on which the frames are placed. |
-| Shoulders | 2 | A 3D printed structure that holds the tops of the frames together |
+| Shoulders | `2` | A 3D printed structure that holds the tops of the frames together |
 | DC motors + screw | `16` | Motors that power the actuator for the pins. 4 per frame |
 | Hex spacers | `16` | Spacers that go over the screw and provide linear motion. |
 | Pin Heads       | `16` | 3D printed pin heads to place on the hex spacers |
