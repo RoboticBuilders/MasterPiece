@@ -2,19 +2,18 @@ from Utilities import *
 
 def run4():
     # pickup Expert Attachment constants
-    PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN = 1
+    PICKUP_EXPERT_ATTACHMENT_DOWN = 1
     PICKUP_EXPERT_ATTACHMENT_UP = 2
 
-    # Expects the arm to start down.
-    def _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN):
-        if position == PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN:
-            right_med_motor.run_target(500, 200)
+    # Expects the arm to start up.
+    def _positionPickUpExpertAttachment(position):
+        if position == PICKUP_EXPERT_ATTACHMENT_DOWN:
+            right_med_motor.run_target(500, 150)
         else: 
-            right_med_motor.run_target(500, -200)
+            right_med_motor.run_target(500, 0)
 
     def _positionChicken():
-        left_med_motor.run_angle(500, 600)
-
+        left_med_motor.run_angle(speed=250, rotation_angle=-600)
 
     def _rolling_camera():
         gyroStraightWithDrive(distanceInCm = 26, speed = 250, targetAngle = 0)
@@ -34,63 +33,52 @@ def run4():
 
     def _resetAttachment():
         # Reset the attachment for next run.
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
+        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN)
 
     angle = 0
-    # Drive forward to do rolling camera and also
-    # pick up the expert.
-    gyroStraightWithDrive(distanceInCm = 50, speed = 250, targetAngle = angle)
+    # Drive forward to do rolling camera and also to drop off the
+    # expert and the orange audience on to the movie set.
+    gyroStraightWithDrive(distanceInCm = 45, speed = 250, targetAngle = angle)
+    angle = -3
+    gyroStraightWithDrive(distanceInCm = 35, speed = 400, targetAngle = angle)
 
-    # Pick up the expert
-    #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
+    # Backoff from the movie set
+    gyroStraightWithDrive(distanceInCm = 65, speed = 500, targetAngle = angle, backward=True)
 
-    # Drive towards the dropoff at movie set
-    gyroStraightWithDrive(distanceInCm = 34, speed = 250, targetAngle = angle)
-    
-    # Below this code is to pick up expert, 3d printer, chicken
-    # 
-    # Backoff from the movie set to drop off the expert and orange 
-    # audience. 
-    gyroStraightWithDrive(distanceInCm = 70, speed = 500, targetAngle = angle, backward=True)
-
-    # Drive forward to pickup the expert.
+    # Drive forward to pickup the expert in front of the 3d printer.
     angle = 46
     turnToAngle(targetAngle = angle, speed = 500)
-
-    # Bring down attachment.
-    _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
+    _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN) 
 
     # drive forward before picking up arm
-    gyroStraightWithDrive(distanceInCm = 26, speed = 200, targetAngle = angle)
+    gyroStraightWithDrive(distanceInCm = 25, speed = 200, targetAngle = angle)
 
     # Pickup the expert
     _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
 
     # Now flush with the missions.
-    gyroStraightWithDrive(distanceInCm = 13, speed = 250, targetAngle = angle)
-
+    gyroStraightWithDrive(distanceInCm = 15, speed = 250, targetAngle = angle)
+    
+    # Start Driving forward
+    drive_base.drive(50, 0)
+    
     # Now turn the chicken
     _positionChicken()
 
     # Now backoff.
-    gyroStraightWithDrive(distanceInCm = 10, speed = 150, targetAngle = angle, backward=True)
-    gyroStraightWithDrive(distanceInCm = 40, speed = 250, targetAngle = angle, backward=True)
+    gyroStraightWithDrive(distanceInCm = 15, speed = 150, targetAngle = angle, backward=True)
+    gyroStraightWithDrive(distanceInCm = 40, speed = 500, targetAngle = angle, backward=True)
 
     # Reset attachment for the next run. 
     # Comment in the main program.
     _resetAttachment()
-
-    #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
-    #wait(3000)
-    #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
     
-
-'''
-    angle = 0
-    gyroStraightWithDrive(distanceInCm = 40, speed = 250, targetAngle = angle)
-    _positionChicken()
+    '''
+    _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
+    wait(3000)
+    _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
     '''
 
 initializeAndWaitForRobotReady()
-run4()
+runWithTiming(run4, "run4")
 #right_med_motor.run_target(300, 100)
