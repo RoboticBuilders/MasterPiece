@@ -353,13 +353,10 @@ def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
 
     #3D Cinema
     left_med_motor.run_angle(600, 150, wait=False)
-    #was 14 inches now 10
     gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
-    # wait(3000)
     left_med_motor.run_angle(500, -150)
     left_med_motor.run_angle(500, 150)
     gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
-    # wait(3000)
     
     
     #go to M2
@@ -368,39 +365,31 @@ def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
     left_med_motor.run_angle(500, -150, wait=False)
     gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
     driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
-    
-    # wait(5000)
     turnToAngle(0) 
     gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
     left_med_motor.run_angle(500, 150, wait=False)
     gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
-    # wait(5000)
     driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-    #driveTillBlackLine(speed=200,distanceInCM=100, target_angle=0)
-    wait(5000)
+    # wait(5000)
+    #Execute M2
     turnToAngle(-45) 
-    # wait(10000)
     gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
-    #wait(3000)
-    # goStraight(-40)
     right_med_motor.run_angle(1000, -1300) 
     driveTillLine(speed=-200, doCorrection=False)
    
-    # STRATEGY 2
+    # STRATEGY to pick up Noah
     gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
-    wait(5000)
+    # wait(5000)
     turnToAngle(45, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=8, targetAngle=45, speed=500)
     turnToAngle(90)
     left_med_motor.run_angle(500, -150, wait=False)
 
-    gyroStraightWithDrive(25, targetAngle=90,speed=300)
-    # #wait(5000)
+    gyroStraightWithDrive(27, targetAngle=90,speed=300)  ## we were doing 25 instead of 27 cm of go back.
     turnToAngle(165, forceTurn=FORCETURN_RIGHT)
-    #wait(3000)
-    gyroStraightWithDrive(35, targetAngle=165,speed=300)
+    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
     turnToAngle(-125)
-    gyroStraightWithDrive(40, targetAngle=-125, speed=1000)## was go forward 50 not 40
+    gyroStraightWithDrive(50, targetAngle=-125, speed=1000)
 
 print("Calling func now")
 
