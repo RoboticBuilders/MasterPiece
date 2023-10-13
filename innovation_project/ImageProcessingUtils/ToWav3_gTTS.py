@@ -1,7 +1,7 @@
 from gtts import gTTS
 import os
 
-textFilePath = "Image_Descriptions/Great_Wave.txt"
+textFilePath = "Image_Descriptions/Labor_Day.txt"
 
 fileName = os.path.basename(textFilePath).split('/')[-1].split('.')[-2]
 

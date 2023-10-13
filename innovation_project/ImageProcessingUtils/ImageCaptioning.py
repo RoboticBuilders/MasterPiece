@@ -2,7 +2,8 @@ from transformers import BlipProcessor, BlipForConditionalGeneration
 from PIL import Image
 import numpy as np
 
-imageName = 'Images/The_Scream.jpg'
+#imageName = 'Images/The_Scream.jpg'
+imageName = 'Images/Labor_Day.jpeg'
 raw_image = Image.open(imageName)
 
 processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -20,4 +21,4 @@ model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-capt
 inputs = processor(raw_image, return_tensors="pt")
 
 out = model.generate(**inputs)
-print(processor.decode(out[0], skip_special_tokens=True))
+print(processor.decode(out[0], skip_special_tokens=True, max_new_tokens=200))
