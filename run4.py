@@ -2,7 +2,7 @@ from Utilities import *
 
 def run4():
     # pickup Expert Attachment constants
-    PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN = 1
+    PICKUP_EXPERT_ATTACHMENT_DOWN = 1
     PICKUP_EXPERT_ATTACHMENT_UP = 2
 
     # Expects the arm to start down.
@@ -35,7 +35,7 @@ def run4():
 
     def _resetAttachment():
         # Reset the attachment for next run.
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
+        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN)
 
     def _codeForRun4():
         angle = 0
@@ -74,12 +74,11 @@ def run4():
 
         turnToAngle(targetAngle = angle)
 
-        # Now flush with the missions.
-        gyroStraightWithDrive(distanceInCm = 14, speed = 300, targetAngle = angle)
+    # Now flush with the missions.
+    gyroStraightWithDrive(distanceInCm = 13, speed = 250, targetAngle = angle)
 
-        
-        # Now turn the chicken
-        _positionChicken()
+    # Now turn the chicken
+    _positionChicken()
 
         # Now backoff.
         gyroStraightWithDrive(distanceInCm = 10, speed = 100, targetAngle = angle - 7, backward=True, multiplier = 0.1)
