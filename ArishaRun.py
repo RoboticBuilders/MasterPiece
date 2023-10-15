@@ -343,7 +343,7 @@ def MissionM1_M2_pickupNoah():  ## Arisha Run must use
     # #wait(5000)
     turnToAngle(165, forceTurn=FORCETURN_RIGHT)
     #wait(3000)
-    gyroStraightWithDrive(35, targetAngle=165,speed=300)
+    gyroStraightWithDrive(31, targetAngle=165,speed=300)
     turnToAngle(-125)
     gyroStraightWithDrive(40, targetAngle=-125, speed=1000)## was go forward 50 not 40
 
@@ -367,31 +367,407 @@ def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
     driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
     turnToAngle(0) 
     gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
-    left_med_motor.run_angle(500, 150, wait=False)
+    left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
     gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
     driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
     # wait(5000)
     #Execute M2
     turnToAngle(-45) 
     gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
-    right_med_motor.run_angle(1000, -1300) 
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
     driveTillLine(speed=-200, doCorrection=False)
    
     # STRATEGY to pick up Noah
     gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
+    #wait(5000)
+
     # wait(5000)
     turnToAngle(45, oneWheelTurn=True)
-    gyroStraightWithDrive(distanceInCm=8, targetAngle=45, speed=500)
-    turnToAngle(90)
-    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=6, targetAngle=45, speed=500)
+    turnToAngle(100)
+    left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
 
-    gyroStraightWithDrive(27, targetAngle=90,speed=300)  ## we were doing 25 instead of 27 cm of go back.
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
     turnToAngle(165, forceTurn=FORCETURN_RIGHT)
     gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
-    turnToAngle(-125)
-    gyroStraightWithDrive(50, targetAngle=-125, speed=1000)
+    turnToAngle(-120)
+    gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
+
+
+
+
 
 print("Calling func now")
+
+
+
+resetRobot()
+def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
+
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218) #218mm
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    turnToAngle(0) 
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    # wait(5000)
+    #Execute M2
+    turnToAngle(-45) 
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    driveTillLine(speed=-200, doCorrection=False)
+   
+    # STRATEGY to pick up Noah
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
+    #wait(5000)
+
+    # wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=6, targetAngle=45, speed=500)
+    turnToAngle(100)
+    left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
+
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
+    turnToAngle(-120)
+    gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
+
+
+
+
+
+print("Calling func now")
+
+
+
+resetRobot()
+def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
+
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218) #218mm
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    turnToAngle(0) 
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    # wait(5000)
+    #Execute M2
+    turnToAngle(-45) 
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    driveTillLine(speed=-200, doCorrection=False)
+   
+    # STRATEGY to pick up Noah
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
+    #wait(5000)
+
+    # wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=6, targetAngle=45, speed=500)
+    turnToAngle(100)
+    left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
+
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
+    turnToAngle(-120)
+    gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
+
+
+
+
+
+print("Calling func now")
+
+
+
+resetRobot()
+def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
+
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218) #218mm
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    turnToAngle(0) 
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    # wait(5000)
+    #Execute M2
+    turnToAngle(-45) 
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    driveTillLine(speed=-200, doCorrection=False)
+   
+    # STRATEGY to pick up Noah
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
+    #wait(5000)
+
+    # wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=6, targetAngle=45, speed=500)
+    turnToAngle(100)
+    left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
+
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
+    turnToAngle(-120)
+    gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
+
+
+
+
+
+print("Calling func now")
+
+
+
+resetRobot()
+def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
+
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218) #218mm
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    turnToAngle(0) 
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    # wait(5000)
+    #Execute M2
+    turnToAngle(-45) 
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    driveTillLine(speed=-200, doCorrection=False)
+   
+    # STRATEGY to pick up Noah
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
+    #wait(5000)
+
+    # wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=6, targetAngle=45, speed=500)
+    turnToAngle(100)
+    left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
+
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
+    turnToAngle(-120)
+    gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
+
+
+
+
+
+print("Calling func now")
+
+
+
+resetRobot()
+def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
+
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218) #218mm
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    turnToAngle(0) 
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    # wait(5000)
+    #Execute M2
+    turnToAngle(-45) 
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    driveTillLine(speed=-200, doCorrection=False)
+   
+    # STRATEGY to pick up Noah
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
+    #wait(5000)
+
+    # wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=6, targetAngle=45, speed=500)
+    turnToAngle(100)
+    left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
+
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
+    turnToAngle(-120)
+    gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
+
+
+
+
+
+print("Calling func now")
+
+
+
+resetRobot()
+def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
+
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218) #218mm
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    turnToAngle(0) 
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    # wait(5000)
+    #Execute M2
+    turnToAngle(-45) 
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    driveTillLine(speed=-200, doCorrection=False)
+   
+    # STRATEGY to pick up Noah
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
+    #wait(5000)
+
+    # wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=6, targetAngle=45, speed=500)
+    turnToAngle(100)
+    left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
+
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
+    turnToAngle(-120)
+    gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
+
+
+def ArishaTestFunctionMamaBeMadSheIsStubornAndMean():  ## Arisha Run must use
+
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150)
+    gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
+    
+    
+    #go to M2
+    turnToAngle(90) 
+    #goStraight(218) #218mm
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    turnToAngle(0) 
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
+    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    wait(10000)
+    #Execute M2
+    turnToAngle(-45) 
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    driveTillLine(speed=-200, doCorrection=False)
+   
+    # STRATEGY to pick up Noah
+    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
+    wait(5000)
+
+    wait(5000)
+    turnToAngle(45, oneWheelTurn=True)
+    gyroStraightWithDrive(distanceInCm=8, targetAngle=45, speed=500)  ## was 6 now is 8 cm
+    turnToAngle(100)
+    left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
+
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
+    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
+    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
+    turnToAngle(-120)
+    gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
+
+
+print("Calling func now")
+
+
 
 resetRobot()
 stopwatch = StopWatch()
@@ -406,7 +782,8 @@ start_time = stopwatch.time()#time.ticks_ms()
 # driveTillColor(Color.BLUE)
 #driveTillLine(speed=150, doCorrection=False, sensor=left_color, blackOrWhite="Black")
 #MissionM1_M2_pickupNoah()
-MissionM1_M2_pickupNoah_Aligner()
+ArishaTestFunctionMamaBeMadSheIsStubornAndMean()
+# MissionM1_M2_pickupNoah_Aligner()
 # right_med_motor.run_angle(speed=1000, rotation_angle=-300) 
 # gyroStraightWithDrive2(distanceInCm=15, targetAngle=0)
 # wait(1000)
@@ -437,9 +814,9 @@ MissionM1_M2_pickupNoah_Aligner()
 #logMessage("Time for run {} time(ms): {}".format(str(run), str(time.ticks_diff(end_time, start_time))), level=0)
 # MissionM1_M2_pickupNoah()
 end_time = stopwatch.time()
-print(str(start_time), str(end_time))
+print("Time is " + str((end_time-start_time)/1000) + " seconds")
 #right_med_motor.run_angle(800, -300) 
-right_med_motor.run_angle(1000, 1300) 
+right_med_motor.run_angle(1000, 1200) 
 
 
 # AnyaRun()
