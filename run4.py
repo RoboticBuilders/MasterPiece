@@ -2,12 +2,12 @@ from Utilities import *
 
 def run4():
     # pickup Expert Attachment constants
-    PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN = 1
+    PICKUP_EXPERT_ATTACHMENT_DOWN = 1
     PICKUP_EXPERT_ATTACHMENT_UP = 2
 
     # Expects the arm to start down.
-    def _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN):
-        if position == PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN:
+    def _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN):
+        if position == PICKUP_EXPERT_ATTACHMENT_DOWN:
             right_med_motor.run_target(500, 175)
         else:
             #changed the degrees from -50 to -30
@@ -35,7 +35,7 @@ def run4():
 
     def _resetAttachment():
         # Reset the attachment for next run.
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
+        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN)
 
     def _codeForRun4():
         angle = 0
@@ -64,7 +64,7 @@ def run4():
         turnToAngle(targetAngle = angle, speed = 500)
 
         # Bring down attachment.
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
+        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN)
 
         # drive forward before picking up arm
         gyroStraightWithDrive(distanceInCm = 26.5, speed = 150, targetAngle = angle)
