@@ -719,7 +719,7 @@ def MissionM1_M2_pickupNoah_Aligner():  ## Arisha Run must use
     gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
 
 
-def ArishaTestFunctionMamaBeMadSheIsStubornAndMean():  ## Arisha Run must use
+def run1():  ## Arisha Run must use
 
     #3D Cinema
     left_med_motor.run_angle(600, 150, wait=False)
@@ -782,7 +782,7 @@ start_time = stopwatch.time()#time.ticks_ms()
 # driveTillColor(Color.BLUE)
 #driveTillLine(speed=150, doCorrection=False, sensor=left_color, blackOrWhite="Black")
 #MissionM1_M2_pickupNoah()
-ArishaTestFunctionMamaBeMadSheIsStubornAndMean()
+run1()
 # MissionM1_M2_pickupNoah_Aligner()
 # right_med_motor.run_angle(speed=1000, rotation_angle=-300) 
 # gyroStraightWithDrive2(distanceInCm=15, targetAngle=0)

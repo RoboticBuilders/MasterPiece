@@ -324,6 +324,10 @@ def AnyaDropOffs(numDropoffs=2):
         wait(3000)
         dropOneExpert()
 
+def run5():
+    AnyaRun2()
+    ArishaAugmentedRealityTest_GyroStraight()
+    AnyaDropOffs_Ballerina5()
 
 print("Calling func now")
 print("BATTERY = " + str(hub.battery.voltage()))

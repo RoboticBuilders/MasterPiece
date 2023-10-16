@@ -34,8 +34,3 @@ def run2():
     moviesetandlever()
 
 run2()
-
-
-
-
-
