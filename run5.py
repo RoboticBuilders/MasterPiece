@@ -6,6 +6,15 @@ from pybricks.tools import wait, StopWatch
 from Utilities import *
 
 (origSpeed, origAccel, origTurnSpeed, origTurnAccel) = robot.settings()
+CIRCULAR_MOTION_ARM_DEGREES=450
+CIRCULAR_MOTION_ARM_SPEED=1000
+augmentedRealityWaitTime=0
+EXPERT_ARM_TURN_ANGLE = 140
+DROP_OFF_SPEED = 400
+EXPERT_ARM_CONTROL = right_med_motor
+anyaRun2Wait = 0
+anyaDropOffsWait_B5 = 0
+anyaDropOffsWait = 0
 
 def AnyaRun():
     goStraight(MM_PER_INCH*17, straightSpeed=1000, straightAcceleration=DEFAULT_ACCELERATION*2)# he go straight was 20 in
@@ -28,9 +37,6 @@ def AnyaRun():
     wait(5000)
     left_med_motor.run_angle(speed=-1000,rotation_angle=900)
     ArishaAugmentedRealityTest()
-
-
-
 
 def AnyaRun_gyroStraight():
     #goStraight(MM_PER_INCH*17, straightSpeed=1000, straightAcceleration=DEFAULT_ACCELERATION*2)# he go straight was 20 in
@@ -60,11 +66,8 @@ def AnyaRun_gyroStraight():
     left_med_motor.run_angle(speed=-1000,rotation_angle=1150)
     ArishaAugmentedRealityTest_GyroStraight()
 
-CIRCULAR_MOTION_ARM_DEGREES=450
-CIRCULAR_MOTION_ARM_SPEED=1000
 def resetCircularMotionArm(wait=True):
     left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=-1*CIRCULAR_MOTION_ARM_DEGREES, wait=wait)
-
 
 def ArishaAugmentedRealityTest():
     # resetGyro(angle=45)
@@ -93,7 +96,7 @@ def ArishaAugmentedRealityTest():
     # # goStraight(MM_PER_INCH*-15)
     # wait(5000)
 
-augmentedRealityWaitTime=0
+
 def ArishaAugmentedRealityTest_GyroStraight():
     # resetGyro(angle=45)
     # Back up from music concert
@@ -122,9 +125,6 @@ def ArishaAugmentedRealityTest_GyroStraight():
     gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle, backward=True)
     wait(augmentedRealityWaitTime)
 
-EXPERT_ARM_TURN_ANGLE = 140
-DROP_OFF_SPEED = 400
-EXPERT_ARM_CONTROL = right_med_motor
 def dropOneExpert(numDropoffRotations=1, wait=True):
     right_med_motor.run_angle(speed=DROP_OFF_SPEED,rotation_angle=numDropoffRotations*EXPERT_ARM_TURN_ANGLE, wait=wait)
 
@@ -132,7 +132,6 @@ def resetExpertDropOffArm(numRotations=2):
     if(numRotations>0):
         right_med_motor.run_angle(speed=-DROP_OFF_SPEED,rotation_angle=numRotations*EXPERT_ARM_TURN_ANGLE)
 
-anyaRun2Wait = 0
 def AnyaRun2():
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*17, targetAngle=0, speed=600)
     turnToAngle(-45)
@@ -155,7 +154,6 @@ def AnyaRun2():
     wait(anyaRun2Wait)
     left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=CIRCULAR_MOTION_ARM_DEGREES)
 
-anyaDropOffsWait_B5 = 0
 def AnyaDropOffs_Ballerina5():
     gyroStraightWithDrive(distanceInCm=1)
     # _angle=-45
@@ -207,8 +205,6 @@ def AnyaDropOffs_Ballerina5():
     while(not EXPERT_ARM_CONTROL.done()):
         wait(10)
     
-
-
 def AnyaDropOffs_Ballerina5_ruchi():
     gyroStraightWithDrive(distanceInCm=1)
     # _angle=-45
@@ -258,9 +254,6 @@ def AnyaDropOffs_Ballerina5_ruchi():
     wait(anyaDropOffsWait)
     dropOneExpert(numDropoffRotations=2)
 
-
-
-anyaDropOffsWait = 0
 def AnyaDropOffs(numDropoffs=2):
     #Get to starting position - only for testing!!!
     # gyroStraightWithDrive(distanceInCm=CM_PER_INCH*8, targetAngle=0, backward=True)
@@ -329,25 +322,26 @@ def run5():
     ArishaAugmentedRealityTest_GyroStraight()
     AnyaDropOffs_Ballerina5()
 
-print("Calling func now")
-print("BATTERY = " + str(hub.battery.voltage()))
-stopwatch = StopWatch()
-start_time = stopwatch.time()
+def mainRun5():
+    print("Calling func now")
+    print("BATTERY = " + str(hub.battery.voltage()))
+    stopwatch = StopWatch()
+    start_time = stopwatch.time()
 
-AnyaRun2()
-ArishaAugmentedRealityTest_GyroStraight()
+    AnyaRun2()
+    ArishaAugmentedRealityTest_GyroStraight()
 
-# Set dropoffs to 0, 1, or 2
-dropoffs=2
-AnyaDropOffs_Ballerina5()
+    # Set dropoffs to 0, 1, or 2
+    dropoffs=2
+    AnyaDropOffs_Ballerina5()
 
-# dropOneExpert(numDropoffRotations=2, wait=True)
+    # dropOneExpert(numDropoffRotations=2, wait=True)
 
-end_time = stopwatch.time()
-print("Time is " + str((end_time-start_time)/1000) + " seconds")
+    end_time = stopwatch.time()
+    print("Time is " + str((end_time-start_time)/1000) + " seconds")
 
-# Reset dropoff arm
-wait(5000)
-resetExpertDropOffArm()
+    # Reset dropoff arm
+    wait(5000)
+    resetExpertDropOffArm()
 
-print("DONE")
+    print("DONE")

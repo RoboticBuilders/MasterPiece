@@ -29,8 +29,6 @@ def moviesetandlever():
     turnToAngle(targetAngle=-30, speed=30)
  
 def run2():
-    initializeAndWaitForRobotReady()
+    #initializeAndWaitForRobotReady()
     soundmixer()
     moviesetandlever()
-
-run2()

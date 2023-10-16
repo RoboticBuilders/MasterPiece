@@ -58,7 +58,11 @@ WHEEL_RADIUS_CM = 4.4
 def resetRobot():
     robot.settings(straight_speed=DEFAULT_SPEED, straight_acceleration=DEFAULT_ACCELERATION, turn_rate=DEFAULT_TURN_RATE, turn_acceleration=DEFAULT_TURN_ACCEL)
     robot.reset()
-
+    left_med_motor.reset_angle(0)
+    right_med_motor.reset_angle(0)
+    hub.imu.reset_heading(0)
+    drive_base.reset()
+    
 def resetGyro(angle:int = 0):
     hub.imu.reset_heading(angle)
 

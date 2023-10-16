@@ -53,5 +53,3 @@ def run3():
     resetGyro(0)
 
     gyroStraightWithDrive(110)
-
-run3()

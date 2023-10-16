@@ -103,7 +103,7 @@ def run4():
     _positionChicken()
     '''
 
-initializeAndWaitForRobotReady()
-runWithTiming(run4,'run4')
+#initializeAndWaitForRobotReady()
+#runWithTiming(run4,'run4')
 
 #right_med_motor.run_target(300, 100)
