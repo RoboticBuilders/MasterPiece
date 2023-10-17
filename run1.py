@@ -684,29 +684,34 @@ def run1():
     turnToAngle(0) 
     gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
     left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
+    #gyroStraightWithDrive(9*CM_PER_INCH, targetAngle=0)
+    #wait(3000)
     gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
     driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-    wait(10000)
+    #wait(10000)
     #Execute M2
     turnToAngle(-45) 
     gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
     right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
-    driveTillLine(speed=-200, doCorrection=False)
+    #driveTillLine(speed=-200, doCorrection=False)
    
     # STRATEGY to pick up Noah
-    gyroStraightWithDrive(-10, targetAngle=-45, speed=500)
-    right_med_motor.run_angle(speed=1000, rotation_angle = 300) # was 1000
-    wait(5000)
+    gyroStraightWithDrive(-15, targetAngle=-45, speed=500)
+    right_med_motor.run_angle(speed=1000, rotation_angle = 200) # was 1000
+    # wait(3000)
 
-    wait(5000)
+    # wait(3000)
     turnToAngle(45, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=8, targetAngle=45, speed=500)  ## was 6 now is 8 cm
     turnToAngle(100)
     left_med_motor.run_angle(speed= 500, rotation_angle = -150, wait=False)
 
-    gyroStraightWithDrive(30, targetAngle=100,speed=300)  ## we were doing 25 instead of 27 cm of go back.
-    turnToAngle(165, forceTurn=FORCETURN_RIGHT)
-    gyroStraightWithDrive(37, targetAngle=165,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
+
+    gyroStraightWithDrive(30, targetAngle=100,speed=300)
+    #wait(3000)  ## we were doing 25 instead of 27 cm of go back.
+    turnToAngle(175, forceTurn=FORCETURN_RIGHT)
+    #wait(3000)
+    gyroStraightWithDrive(35, targetAngle=175,speed=300)  ## we were doing 25 instead of 27 cm of go forward.
     turnToAngle(-120)
     gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
 
@@ -769,3 +774,5 @@ def initializeRun1():
 
     print("DONE")
 
+
+initializeRun1()
