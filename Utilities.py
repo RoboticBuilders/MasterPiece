@@ -37,8 +37,8 @@ DEFAULT_TURN_ACCEL = 300
 BLACK_COLOR = 24
 WHITE_COLOR = 90
 
-_CM_PER_INCH = 2.54
-_MM_PER_INCH = _CM_PER_INCH*10
+CM_PER_INCH = 2.54
+MM_PER_INCH = CM_PER_INCH*10
 
 # Constants for Force turn.
 FORCETURN_RIGHT = 0
@@ -58,11 +58,17 @@ WHEEL_RADIUS_CM = 4.4
 def resetRobot():
     robot.settings(straight_speed=DEFAULT_SPEED, straight_acceleration=DEFAULT_ACCELERATION, turn_rate=DEFAULT_TURN_RATE, turn_acceleration=DEFAULT_TURN_ACCEL)
     robot.reset()
-
+    left_med_motor.reset_angle(0)
+    right_med_motor.reset_angle(0)
+    hub.imu.reset_heading(0)
+    drive_base.reset()
+    
 def resetGyro(angle:int = 0):
     hub.imu.reset_heading(angle)
 
 def initializeAndWaitForRobotReady():
+    left_med_motor.reset_angle(0)
+    right_med_motor.reset_angle(0)
     getDriveBase().heading_control.target_tolerances(speed=50, position=5)   
     while True:
         if (hub.imu.ready() == True):
@@ -96,14 +102,15 @@ def convertInchesToCM(distanceInInches):
     Convert Inches To CM
     ____________________
     """
-    return _CM_PER_INCH * distanceInInches
+    return CM_PER_INCH * distanceInInches
 
 def getDriveBase():
     return drive_base
 
 def stopDriveBase():
-    left_motor.hold()
-    right_motor.hold()
+    drive_base.drive(speed = 0, turn_rate = 0)
+    #left_motor.hold()
+    #right_motor.hold()
 
 def waitForLeftButtonPress():
     # Wait for any button to be pressed, and save the result.
@@ -253,7 +260,7 @@ def driveTillDistance(distanceinCM, speed, backward=False, wait=True):
     # restore the default drive base settings
     setDriveBaseSettings(straight_speed, straight_acceleration, turn_rate, turn_acceleration)
 
-def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
+def gyroStraightWithDrive(distanceInCm, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
                           multiplier=2, slowDown=True, slowDistanceMultipler = 0.2):
     global prevValues, correctionPos, savedNums
     stopDriveBase()
@@ -267,9 +274,9 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
     # For convenience, allow caller to specify negative distance to go backward and adjust
     # parameters accordingly. The rest of this function does not work with negative distance
     # so convert that to positive here.
-    if (distance < 0):
+    if (distanceInCm < 0):
         backward = True
-        distance = -1*distance
+        distanceInCm = -1*distanceInCm
 
     slowSpeed = 100
     midSpeed = speed
@@ -281,7 +288,7 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
     correctionPos  = 0
     savedNums = 5
 
-    distanceInMM=distance * 10
+    distanceInMM=distanceInCm * 10
     distanceInMM20 = distanceInMM * 0.2
     
     # Cap the acceleration part of the algo to 20mm
@@ -297,7 +304,7 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
         slowDistanceInMM = distanceInMM * 0.1
 
     # Calculate the speed reduction per distance travelled. We do
-    # this upfront, to enable integer multiplicaation in the loop.
+    # this upfront, to enable integer multiplication in the loop.
     speedPerDistanceReduction = slowSpeed / distanceInMM
 
     #print("distance: " + str(distanceInMM) + " distanceInMM20: " + str(distanceInMM20) + 
@@ -307,22 +314,26 @@ def gyroStraightWithDrive(distance, speed=DEFAULT_SPEED, backward = False, targe
 
     origDistanceDrivenMM = drive_base.distance()
     distanceDrivenMM = origDistanceDrivenMM
+    # print("Initial: {}: {}, {}, {}".format(speed, distanceDrivenMM, origDistanceDrivenMM, distanceInMM))
     while (abs(distanceDrivenMM)-abs(origDistanceDrivenMM) < distanceInMM):
         distanceDrivenMM = abs(drive_base.distance())
         if (distanceDrivenMM <= distanceInMM20):
-            speed = slowSpeed
+            _speed = slowSpeed
         elif (slowDown == True and distanceDrivenMM >= (distanceInMM - slowDistanceInMM)):
-            speed = slowSpeed - (speedPerDistanceReduction * (distanceDrivenMM -(distanceInMM - slowDistanceInMM)))
+            _speed = slowSpeed - (speedPerDistanceReduction * (distanceDrivenMM -(distanceInMM - slowDistanceInMM)))
         else:
-            speed = midSpeed
+            _speed = midSpeed
         
         correction = getCorrectionForDrive(targetAngle, correctionMultiplier = multiplier, adjustCorrection = True)
-        drive_base.drive(speed = speed, turn_rate = correction)
+        # print("{}, {}, {}: {}, {}, {}".format(drive_base.distance_control.stalled(), _speed, correction, drive_base.distance(), origDistanceDrivenMM, distanceInMM))
+        drive_base.drive(speed = _speed, turn_rate = correction)
         wait(5)
         #print("distance drive: " + str(distanceDrivenMM) + " speed: " + str(speed))  
 
-    drive_base.stop()
-    stopDriveBase()     
+    drive_base.drive(0, 0)
+    
+    # return distance driven to caller
+    return (drive_base.distance() - origDistanceDrivenMM)
 
 def getCorrectionForDrive(targetAngle, correctionMultiplier, adjustCorrection = False):
     global prevValues, savedNums, correctionPos
@@ -559,7 +570,7 @@ def turnToAngle_AA(absoluteAngle:int, turnRate:int=DEFAULT_TURN_RATE, turnAccele
 
     robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
-def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Black"):
+def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Black", maxDistance=0):
     
     def _compareValue(sensor, value):
         return sensor.hsv().v in value
@@ -569,12 +580,17 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
         vRange = range(0, 20)
     else:
         func = _compareValue
-        vRange = range(90, 100)
+        vRange = range(100, 100)
 
+    origDistanceDrivenMM = drive_base.distance()
     robot.drive(speed = speed, turn_rate = 0)
     while(func(sensor, vRange) != True):
+        if(maxDistance > 0 and (drive_base.distance() - origDistanceDrivenMM > maxDistance)):
+            print("Did not find line but reached maxDistance {}".format(maxDistance))
+            doCorrection = False
+            break
         hsv = sensor.hsv()
-        print(hsv)
+        # print(hsv)
     print("Stopping at (h,s,v) = {}".format(sensor.hsv()))
 
     robot.stop()
@@ -586,6 +602,8 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
         robot.straight(distance=-40, then=Stop.HOLD, wait=True)
         robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
+    return (drive_base.distance() - origDistanceDrivenMM)
+
 def driveTillColor(color, sensor=left_color, speed=DEFAULT_SPEED):
     robot.drive(speed = speed, turn_rate = 0)
     while(sensor.color() != color):
@@ -594,13 +612,23 @@ def driveTillColor(color, sensor=left_color, speed=DEFAULT_SPEED):
     robot.stop()
     robot.straight(distance=0, then=Stop.BRAKE, wait=True)
 
-def driveTillHueRange(hueRange, hueRangeHigh, sensor=left_color, speed=DEFAULT_SPEED):
+# def driveTillHueRange(hueRange, hueRangeHigh, sensor=left_color, speed=DEFAULT_SPEED):
+def driveTillHsvRange(hueRange, saturationRange=None, valueRange=None, sensor=left_color, speed=DEFAULT_SPEED, maxDistance=0):
+    origDistanceDrivenMM = drive_base.distance()
     robot.drive(speed = speed, turn_rate = 0)
-    while(not(sensor.hsv().h > hueRange and sensor.hsv().h < hueRangeHigh)):
-        print(sensor.hsv().h)
-    print(sensor.hsv().h)
-    robot.stop()
-    robot.straight(distance=0, then=Stop.BRAKE, wait=True)
+    # while()
+    hsv = sensor.hsv()
+    while(not(hsv.h in hueRange and (saturationRange is None or hsv.s in saturationRange) and (valueRange is None or hsv.v in valueRange))): #> hueRange and sensor.hsv().h < hueRangeHigh)):
+        if(maxDistance > 0 and (drive_base.distance() - origDistanceDrivenMM > maxDistance)):
+            print("Did not find HSV but reached maxDistance {}".format(maxDistance))
+            break
+        hsv = sensor.hsv()
+        # print(hsv)
+    print("HSV values: h:{}, s:{}, v:{}".format(sensor.hsv().h, sensor.hsv().s, sensor.hsv().v))
+    robot.drive(0, 0)
+    # robot.stop()
+    # robot.straight(distance=0, then=Stop.BRAKE, wait=True)
+    return (drive_base.distance() - origDistanceDrivenMM)
 
 def testHsv(sensor=left_color):
     while  True:
@@ -610,3 +638,86 @@ def testColor(sensor=left_color):
     while  True:
         print("Color: {}".format(sensor.color()))
 
+# # This version does not use abs() as we were seeing some weird behavior where drive base reset takes
+# # a while, which causes the next gyroStraight call to fail if going backwards or a small distance
+# def gyroStraightWithDrive2(distanceInCm, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
+#                           multiplier=2, slowDown=False, slowDistanceMultipler = 0.2):
+#     global prevValues, correctionPos, savedNums
+#     # stopDriveBase()
+#     # drive_base.reset()
+
+#     # If targetAngle is not set explicitly, set it to current heading for convenience
+#     # rather than assuming all callers want to follow 0-degrees
+#     if(targetAngle == None):
+#         targetAngle = hub.imu.heading()
+    
+#     # For convenience, allow caller to specify negative distance to go backward and adjust
+#     # parameters accordingly. The rest of this function does not work with negative distance
+#     # so convert that to positive here.
+#     if (distanceInCm < 0):
+#         backward = True
+#         distanceInCm = -1*distanceInCm
+
+#     slowSpeed = 100
+#     midSpeed = speed
+#     if (backward): 
+#         slowSpeed = slowSpeed * -1
+#         midSpeed = midSpeed * -1
+#         if(speed > 0):
+#             speed = speed * -1
+
+#     prevValues = []
+#     correctionPos  = 0
+#     savedNums = 5
+
+#     distanceInMM=distanceInCm * 10
+#     distanceInMM20 = distanceInMM * 0.2
+    
+#     # Cap the acceleration part of the algo to 20mm
+#     if distanceInMM20 > 20:
+#         distanceInMM20 = 20
+
+#     slowDistanceInMM = distanceInMM * slowDistanceMultipler
+
+#     # If the distance to travel is small, then just use slow speed.
+#     if distanceInMM < 30:
+#         midSpeed = slowSpeed = 50
+#     elif distanceInMM > 500:
+#         slowDistanceInMM = distanceInMM * 0.1
+
+#     # Calculate the speed reduction per distance travelled. We do
+#     # this upfront, to enable integer multiplication in the loop.
+#     speedPerDistanceReduction = slowSpeed / distanceInMM
+
+#     #print("distance: " + str(distanceInMM) + " distanceInMM20: " + str(distanceInMM20) + 
+#     #      " slowDistanceInMM: " + str(slowDistanceInMM) +
+#     #      " speedPerDistanceReduction: " + str(speedPerDistanceReduction)
+#     #      ) 
+
+#     origDistanceDrivenMM = drive_base.distance()
+#     targetDistanceMM = origDistanceDrivenMM + distanceInMM
+#     if (backward):
+#         targetDistanceMM = origDistanceDrivenMM - distanceInMM
+
+#     distanceDrivenMM = origDistanceDrivenMM
+#     print("Initial: {}, {}, {}".format(distanceDrivenMM, origDistanceDrivenMM, distanceInMM))
+#     while ((not backward and distanceDrivenMM < targetDistanceMM) or 
+#            (backward and distanceDrivenMM > distanceInMM)):
+#         distanceDrivenMM = drive_base.distance()
+#         # if (distanceDrivenMM <= origDistanceDrivenMM+distanceInMM20):
+#         #     speed = slowSpeed
+#         # elif (slowDown == True and distanceDrivenMM >= (distanceInMM - slowDistanceInMM)):
+#         #     speed = slowSpeed - (speedPerDistanceReduction * (distanceDrivenMM -(distanceInMM - slowDistanceInMM)))
+#         # else:
+#         #     speed = midSpeed
+        
+#         correction = getCorrectionForDrive(targetAngle, correctionMultiplier = multiplier, adjustCorrection = True)
+#         print("{}, {}: {}, {}, {}".format(speed, targetDistanceMM, drive_base.distance(), origDistanceDrivenMM, distanceInMM))
+#         drive_base.drive(speed = speed, turn_rate = correction)
+#         wait(5)
+#         #print("distance drive: " + str(distanceDrivenMM) + " speed: " + str(speed))  
+
+#     drive_base.drive(0, 0)
+    
+#     # return distance driven to caller
+#     return (drive_base.distance() - origDistanceDrivenMM)

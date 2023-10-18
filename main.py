@@ -1,43 +1,47 @@
 from Utilities import *
+from run1 import *
+from run2 import *
+from run3 import *
+from run4 import *
+from run5 import *
 
-def run1():
-    print("Add code to me!")
+def _maindriver():
+    counter = 1
+    arm_change_start_time = 0
+    arm_change_end_time = 0
+    stopwatch = StopWatch()
+    while True:
+        if counter == 6: 
+            break
+        # Skip printing for the first time the loop runs.
+        if (counter != 1):
+            arm_change_start_time = stopwatch.time()
+            print("Waiting for arm change", level=0)
 
-def run2():
-    print("Add code to me!")
+        hub.speaker.beep()
+        waitForLeftButtonPress()
+        resetRobot()
+        if (counter != 1):
+            arm_change_end_time = stopwatch.time()    
+            print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)), level=0)
 
-def run3():
-    print("Add code to me!")
+        if counter == 1:
+            runWithTiming(run1,"run1")
+        if counter == 2:
+            runWithTiming(run2,"run2")
+        if counter == 3:
+            runWithTiming(run3,"run3")
+        if counter == 4:
+            runWithTiming(run4,"run4")
+        if counter == 5:
+            runWithTiming(run5,"run5")
+        
+        counter = counter + 1
 
-def run4():
-    def _goToCraftCreator():
-        gyroStraightWithDrive(distance = 13, speed = 500, targetAngle = 0)
-        turnToAngle(absoluteAngle = -45, turnRate = 500)
-        gyroStraightWithDrive(distance = 28, speed = 500, targetAngle = -45)
+stopwatch = StopWatch()
+start_time = stopwatch.time()
 
-    def _doVirtualRealityArtist():
-        print("Add code to me!")
-
-    def _goToMovieSet():
-        gyroStraightWithDrive(distance = 16, speed = 800, targetAngle = -45, backward = True)
-        turnToAngle(absoluteAngle = -90, turnRate = 500)
-        gyroStraightWithDrive(distance = 45, speed = 500, targetAngle = -90)
-        turnToAngle(absoluteAngle = -135, turnRate = 500)
-        gyroStraightWithDrive(distance = 10, speed = 500, targetAngle = -135)
-
-    def _movieSetDropoffs():
-        print("Add code to me!")
-
-    def _goHome():
-        gyroStraightWithDrive(distance = 10, speed = 500, targetAngle = -135, backward = True)
-        turnToAngle(absoluteAngle = 110, turnRate = 500)
-        gyroStraightWithDrive(distance = 75, speed = 1000, targetAngle = 110) 
-
-    _goToCraftCreator()
-    _doVirtualRealityArtist()
-    _goToMovieSet()
-    _movieSetDropoffs()
-    _goHome()
-
-def run5():
-    print("Add code to me!")
+initializeAndWaitForRobotReady()
+_maindriver()
+end_time = stopwatch.time()
+print("Total Time: " + str((end_time-start_time)/1000) + " seconds")
