@@ -670,10 +670,11 @@ def run1():
     #3D Cinema
     left_med_motor.run_angle(600, 150, wait=False)
     gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    #gyroStraightWithDrive(distanceInCm=17, targetAngle=0, speed=500)
     left_med_motor.run_angle(500, -150)
     left_med_motor.run_angle(500, 150)
     gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
-    
+
     
     #go to M2
     turnToAngle(90) 
@@ -697,7 +698,7 @@ def run1():
    
     # STRATEGY to pick up Noah
     gyroStraightWithDrive(-15, targetAngle=-45, speed=500)
-    right_med_motor.run_angle(speed=1000, rotation_angle = 200) # was 1000
+    right_med_motor.run_angle(speed=1000, rotation_angle = 300,wait=False) # was 1000
     # wait(3000)
 
     # wait(3000)
