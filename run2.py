@@ -23,17 +23,17 @@ def moviesetandlever_sidebucketarm():
     gyroStraightWithDrive(distanceInCm=-3, speed=250)
     gyroStraightWithDrive(distanceInCm=10, speed=200, backward=True)
     turnToAngle(targetAngle=330, speed=250)
-    right_med_motor.run_angle(speed=250, rotation_angle=250)
+    right_med_motor.run_angle(speed=2, rotation_angle=250)
     gyroStraightWithDrive(distanceInCm=5, speed=200, backward=True)
-    turnToAngle(targetAngle=282, speed=250)
-    gyroStraightWithDrive(distanceInCm=30, speed=500, backward=True)
+    turnToAngle(targetAngle=330, speed=250)
+    gyroStraightWithDrive(distanceInCm=30, speed=500)
  
 def goto_soundmixer_bigbucket():
-    gyroStraightWithDrive(distanceInCm = 42, speed = 200, backward = False, targetAngle = 0, slowDown = True)
+    gyroStraightWithDrive(distanceInCm = 41, speed = 200, backward = False, targetAngle = 0, slowDown = True)
 
 def solve_soundmixer_bigbucket():
     right_med_motor.run_angle(speed=500, rotation_angle=-1500)
-    gyroStraightWithDrive(distanceInCm = 4, speed = 200, backward = False, targetAngle = 0, slowDown = True)
+    gyroStraightWithDrive(distanceInCm = 3, speed = 200, backward = False, targetAngle = 0, slowDown = True)
     #right_med_motor.run_angle(speed=500, rotation_angle=-200)
     turnToAngle(targetAngle=20, speed=30)
     turnToAngle(targetAngle=120, speed=50)
@@ -41,11 +41,17 @@ def solve_soundmixer_bigbucket():
 def goto_movieset_bigbucket():
     gyroStraightWithDrive(distanceInCm = 32, speed = 200, slowDown = True)
     turnToAngle(targetAngle=45, speed=50)
-    gyroStraightWithDrive(distanceInCm = 7, speed = 200, slowDown = True)
+    gyroStraightWithDrive(distanceInCm = 8, speed = 100, slowDown = True)
 
 def solve_movieset_bigbucket():
     right_med_motor.run_angle(speed=300, rotation_angle=1500)
-    gyroStraightWithDrive(distanceInCm = 7, speed = 200, backward = True, targetAngle = 45, slowDown = True)
+    gyroStraightWithDrive(distanceInCm = 12, speed = 200, backward = True, targetAngle = 45, slowDown = True)
+    turnToAngle(targetAngle=0, speed=50)
+    right_med_motor.run_angle(speed=600, rotation_angle=-500)
+
+def comehome_bigbucket():
+    turnToAngle(targetAngle=45, speed=50)
+    gyroStraightWithDrive(distanceInCm = 45, speed = 200, backward = True, targetAngle = 45, slowDown = False)
 
 def run2_sidebucketarm():
     initializeAndWaitForRobotReady()
@@ -58,8 +64,9 @@ def run2_bigbucket():
     solve_soundmixer_bigbucket()
     goto_movieset_bigbucket()
     solve_movieset_bigbucket()
+    comehome_bigbucket()
 
 def run2():
-    run2_bigbucket()
+    run2_sidebucketarm()
 
 run2()
