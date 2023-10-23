@@ -7,12 +7,18 @@ from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
 def soundmixer_sidebucketarm():
-    gyroStraightWithDrive(distanceInCm = 43, speed = 500, targetAngle = 0)
-    gyroStraightWithDrive(distanceInCm = 18, speed = 200, targetAngle = 0)
+    gyroStraightWithDrive(distanceInCm = 30, speed = 500, targetAngle = 0)
+    gyroStraightWithDrive(distanceInCm = 12, speed = 200, targetAngle = 0)
+
+    #gyroStraightWithDrive(distanceInCm = 18, speed = 200, targetAngle = 0)
     #wait(1000)
-    turnToAngle(targetAngle=20, speed=50)
     turnToAngle(targetAngle=100, speed=50)
     #wait(1000)
+
+def goHome():
+    gyroStraightWithDrive(distanceInCm = 5, speed = 200, targetAngle = 0, backward=True)
+    turnToAngle(targetAngle=0, speed=50)
+    gyroStraightWithDrive(distanceInCm = 40, speed = 500, targetAngle = 0, backward=True)
 
 def moviesetandlever_sidebucketarm():
     gyroStraightWithDrive(distanceInCm=24, speed=100, slowDown=True)
@@ -54,9 +60,10 @@ def comehome_bigbucket():
     gyroStraightWithDrive(distanceInCm = 45, speed = 200, backward = True, targetAngle = 45, slowDown = False)
 
 def run2_sidebucketarm():
-    initializeAndWaitForRobotReady()
+    #initializeAndWaitForRobotReady()
     soundmixer_sidebucketarm()
-    moviesetandlever_sidebucketarm()
+    goHome()
+    #moviesetandlever_sidebucketarm()
 
 def run2_bigbucket():
     #initializeAndWaitForRobotReady()
