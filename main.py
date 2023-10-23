@@ -43,6 +43,7 @@ def _maindriver():
 stopwatch = StopWatch()
 start_time = stopwatch.time()
 initializeAndWaitForRobotReady()
-_maindriver()
+#_maindriver()
+run4()
 end_time = stopwatch.time()
 print("Total Time: " + str((end_time-start_time)/1000) + " seconds")

@@ -78,6 +78,9 @@ def run4():
         #Changed speed from 300 to 200 on 10/15/2023
         gyroStraightWithDrive(distanceInCm = 14, speed = 200, targetAngle = angle)
 
+        # Reset the angle to the more accurate, flushed angle
+        resetGyro(angle = angle)
+
         # Now turn the chicken
         _positionChicken()
 

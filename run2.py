@@ -50,7 +50,7 @@ def goto_movieset_bigbucket():
     gyroStraightWithDrive(distanceInCm = 8, speed = 100, slowDown = True)
 
 def solve_movieset_bigbucket():
-    right_med_motor.run_angle(speed=300, rotation_angle=1500)
+    right_med_motor.run_angle(speed=600, rotation_angle=1500)
     gyroStraightWithDrive(distanceInCm = 12, speed = 200, backward = True, targetAngle = 45, slowDown = True)
     turnToAngle(targetAngle=0, speed=50)
     right_med_motor.run_angle(speed=600, rotation_angle=-500)

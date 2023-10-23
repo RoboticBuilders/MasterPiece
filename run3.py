@@ -5,52 +5,54 @@ from pybricks.robotics import GyroDriveBase, DriveBase
 from pybricks.tools import wait, StopWatch
 from Utilities import *
 
+RUN3_WAIT_ON=0
+lightshow_arm_speed = 2000
+
 def run3():
 
     # This function drops of the innovation project, expert, and orange person to the museum.
     def _positionInnovationProjectAndExpertsToMuseum():
 
-        left_med_motor.run_angle(300, 360 * -8)
+        #left_med_motor.run_angle(300, 360 * -8)
 
         turnToAngle(330, speed=200, oneWheelTurn=True)
 
         gyroStraightWithDrive(distanceInCm = 48, speed = 300, targetAngle = 330)
 
-        turnToAngle(305, speed=200, oneWheelTurn=True)
-        wait(500)
+        turnToAngle(targetAngle=305, speed=200, oneWheelTurn=True)
+        if RUN3_WAIT_ON == 1:
+            wait(500)
 
         gyroStraightWithDrive(distanceInCm=60, speed=300, targetAngle=305)
 
-        turnToAngle(270, speed=200, oneWheelTurn=True)
-        wait(500)
+        turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
+        if RUN3_WAIT_ON == 1:
+            wait(500)
+
     # This function does the lightshow mission by lifting up the arms.
     def _executeLightShow():
-
-
-        left_med_motor.run_angle(300, 360 * 8)
-        wait(500)
+        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=360 * 11)
+        if RUN3_WAIT_ON == 1:
+            wait(500)
         
         gyroStraightWithDrive(distanceInCm=27, speed=300, targetAngle=270, backward=True)
+        if RUN3_WAIT_ON == 1:
+            wait(1000)
 
-        wait(1000)
+        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=360 * -11)
+        if RUN3_WAIT_ON == 1:
+            wait(500)
 
-        left_med_motor.run_angle(300, 360 * -11)
-        wait(500)
-
-        left_med_motor.run_angle(300, 360 * 4)
-        wait(500)
+        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=360 * 4)
+        if RUN3_WAIT_ON == 1:
+            wait(500)
 
 
     # This function does the immersive experience mission.
     def _executeImmersiveExperience():
-
-        
-
         gyroStraightWithDrive(distanceInCm=7, speed=300, targetAngle=270)
 
         left_med_motor.run_angle(300, 360 * -2)
-
-
         turnToAngle(160, speed=200)
 
         gyroStraightWithDrive(distanceInCm=25, speed=300, targetAngle=160)
