@@ -55,6 +55,8 @@ RIGHT_COLOR_SENSOR = 1
 AXLE_DIAMETER_CM = 12.2
 WHEEL_RADIUS_CM = 4.4
 
+GLOBAL_LEVEL = 1
+
 def resetRobot():
     robot.settings(straight_speed=DEFAULT_SPEED, straight_acceleration=DEFAULT_ACCELERATION, turn_rate=DEFAULT_TURN_RATE, turn_acceleration=DEFAULT_TURN_ACCEL)
     robot.reset()
@@ -88,6 +90,13 @@ def runWithTiming(function,name):
     sw.pause()
     return endTime - startTime
 
+# level can be any number between 0-5
+# 5 = Print the most detailed messages
+# 1 = Print only the most important messages.
+def logMessage(message, level):
+    if (level <= GLOBAL_LEVEL):
+        print(message)
+
 def getAverageAngle():
     return (left_motor.angle() + right_motor.angle()) / 2
 
@@ -112,12 +121,12 @@ def stopDriveBase():
     #left_motor.hold()
     #right_motor.hold()
 
-def waitForLeftButtonPress():
+def waitForRightButtonPress():
     # Wait for any button to be pressed, and save the result.
     pressed = []
     while not any(pressed):
         pressed = hub.buttons.pressed()
-        if (Button.LEFT in pressed):
+        if (Button.RIGHT in pressed):
             return
 
 def getHeadingValue():
@@ -624,7 +633,7 @@ def driveTillHsvRange(hueRange, saturationRange=None, valueRange=None, sensor=le
             break
         hsv = sensor.hsv()
         # print(hsv)
-    print("HSV values: h:{}, s:{}, v:{}".format(sensor.hsv().h, sensor.hsv().s, sensor.hsv().v))
+    logMessage("HSV values: h:{}, s:{}, v:{}".format(sensor.hsv().h, sensor.hsv().s, sensor.hsv().v), level=5)
     robot.drive(0, 0)
     # robot.stop()
     # robot.straight(distance=0, then=Stop.BRAKE, wait=True)

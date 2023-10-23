@@ -119,6 +119,7 @@ def ballerina5_ExpertDropOffs():
         wait(10)
 
 def run5():
+    resetGyro(0)
     doMusicConcert()
     doAugmentedReality()
     ballerina5_ExpertDropOffs()

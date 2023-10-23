@@ -59,7 +59,7 @@ def run2_sidebucketarm():
     moviesetandlever_sidebucketarm()
 
 def run2_bigbucket():
-    initializeAndWaitForRobotReady()
+    #initializeAndWaitForRobotReady()
     goto_soundmixer_bigbucket()
     solve_soundmixer_bigbucket()
     goto_movieset_bigbucket()
@@ -67,6 +67,5 @@ def run2_bigbucket():
     comehome_bigbucket()
 
 def run2():
+    resetGyro(0)
     run2_sidebucketarm()
-
-run2()

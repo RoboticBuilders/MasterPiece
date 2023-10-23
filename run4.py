@@ -93,17 +93,7 @@ def run4():
         #wait(3000)
         #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
 
+    resetGyro(0)
     _codeForRun4() 
     #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
-       
 
-'''
-    angle = 0
-    gyroStraightWithDrive(distanceInCm = 40, speed = 250, targetAngle = angle)
-    _positionChicken()
-    '''
-
-#initializeAndWaitForRobotReady()
-#runWithTiming(run4,'run4')
-
-#right_med_motor.run_target(300, 100)

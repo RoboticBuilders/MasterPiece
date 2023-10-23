@@ -5,6 +5,8 @@ from Utilities import *
 
 # This is the main entry point for Run1. Driver is calling this method
 def run1():
+    resetGyro(0)
+    
     #3D Cinema
     do3DCinema()
 
@@ -80,5 +82,5 @@ def initializeRun1():
 
     print("DONE")
 
-
+#run1()
 # initializeRun1()

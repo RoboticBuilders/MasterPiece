@@ -16,14 +16,15 @@ def _maindriver():
         # Skip printing for the first time the loop runs.
         if (counter != 1):
             arm_change_start_time = stopwatch.time()
-            print("Waiting for arm change", level=0)
+            print("Waiting for arm change")
 
         hub.speaker.beep()
-        waitForLeftButtonPress()
         resetRobot()
+        waitForLeftButtonPress()
+        
         if (counter != 1):
             arm_change_end_time = stopwatch.time()    
-            print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)), level=0)
+            print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)))
 
         if counter == 1:
             runWithTiming(run1,"run1")
@@ -37,10 +38,10 @@ def _maindriver():
             runWithTiming(run5,"run5")
         
         counter = counter + 1
+        drive_base.straight(distance=0, then=Stop.BRAKE)
 
 stopwatch = StopWatch()
 start_time = stopwatch.time()
-
 initializeAndWaitForRobotReady()
 _maindriver()
 end_time = stopwatch.time()
