@@ -20,7 +20,7 @@ def _maindriver():
 
         hub.speaker.beep()
         resetRobot()
-        waitForLeftButtonPress()
+        waitForRightButtonPress()
         
         if (counter != 1):
             arm_change_end_time = stopwatch.time()    
