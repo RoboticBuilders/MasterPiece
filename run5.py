@@ -155,7 +155,7 @@ print("BATTERY = " + str(hub.battery.voltage()))
 stopwatch = StopWatch()
 start_time = stopwatch.time()
 
-run5()
+#run5()
 print("---DONE WITH RUN---")
 
 end_time = stopwatch.time()

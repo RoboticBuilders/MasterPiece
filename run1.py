@@ -4,7 +4,7 @@ from pybricks.tools import wait, StopWatch
 from Utilities import *
 
 # This is the main entry point for Run1. Driver is calling this method
-def run1():
+def oldrun1():
     resetGyro(0)
     
     #3D Cinema
@@ -76,7 +76,7 @@ def goHomeAlternateOfPickUpNoah():
     gyroStraightWithDrive(-45, targetAngle=_angle, speed=1000)
 
 
-def run1at45():
+def run1():
     resetGyro(0)
     
     #3D Cinema
@@ -132,8 +132,8 @@ def initializeRun1():
     stopwatch = StopWatch()
     start_time = stopwatch.time()
 
-    #run1()
-    run1at45()
+    #oldrun1()
+    run1()
     end_time = stopwatch.time()
     print("Time is " + str((end_time-start_time)/1000) + " seconds")
 
