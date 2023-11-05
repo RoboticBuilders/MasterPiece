@@ -2,11 +2,11 @@ from pybricks.tools import wait, StopWatch
 from Utilities import *
 
 (origSpeed, origAccel, origTurnSpeed, origTurnAccel) = robot.settings()
-CIRCULAR_MOTION_ARM_DEGREES=450
+CIRCULAR_MOTION_ARM_DEGREES=480
 CIRCULAR_MOTION_ARM_SPEED=1000
 augmentedRealityWaitTime=0
-EXPERT_ARM_TURN_ANGLE = 200
-DROP_OFF_SPEED = 400
+EXPERT_ARM_TURN_ANGLE = 380
+DROP_OFF_SPEED = 450
 EXPERT_ARM_CONTROL = right_med_motor
 anyaRun2Wait = 0
 anyaDropOffsWait_B5 = 0
@@ -18,15 +18,16 @@ def resetCircularMotionArm(wait=True):
 def doMusicConcert():
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*17, targetAngle=0, speed=600)
     turnToAngle(-45)
-    # wait(anyaRun2Wait)
-    driveTillLine(speed=300, doCorrection=False)
-    # wait(anyaRun2Wait)
+
+    driveTillLine(speed=300, doCorrection=False, tag="Music Concert")
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*1, targetAngle=-45, speed=600)
     turnToAngle(targetAngle=0, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*6.5, targetAngle=0, speed=500)
+
     # lift the arm to deliver the expert
     left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=-150)    
-    gyroStraightWithDrive(distanceInCm=CM_PER_INCH*8, targetAngle=10, backward=True, speed=400)
+    # was 8, then 9.5
+    gyroStraightWithDrive(distanceInCm=CM_PER_INCH*10.5, targetAngle=10, backward=True, speed=400)
     turnToAngle(45)
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*10, targetAngle=45, speed=400)
     turnToAngle(targetAngle=53, forceTurn=FORCETURN_RIGHT, oneWheelTurn=True)
@@ -79,10 +80,9 @@ def ballerina5_ExpertDropOffs():
     _angle=-90
     turnToAngle(_angle)
     wait(anyaDropOffsWait_B5)
-    #was 6 followed by 12 for driveTillLine
     distGyro = gyroStraightWithDrive(distanceInCm=15*CM_PER_INCH, targetAngle=_angle, speed=500)
     wait(anyaDropOffsWait_B5)
-    distToWhiteLine = driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100) )
+    distToWhiteLine = driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100), tag="expert dropoffs")
     print("Distances covered so far: {}, {}".format(distGyro, distToWhiteLine))
     wait(anyaDropOffsWait_B5)
     TOTAL_DIST_TO_TRAVEL = 21*MM_PER_INCH # was 17
@@ -112,7 +112,7 @@ def ballerina5_ExpertDropOffs():
     # gyroStraightWithDrive(distanceInCm=5*CM_PER_INCH, targetAngle=-90)
     _angle=-45
     turnToAngle(_angle)
-    dropOneExpert(numDropoffRotations=2, wait=False)
+    dropOneExpert(numDropoffRotations=1, wait=False)
     gyroStraightWithDrive(speed=100, distanceInCm=2*CM_PER_INCH, targetAngle=_angle)
     wait(anyaDropOffsWait)
     while(not EXPERT_ARM_CONTROL.done()):
@@ -161,6 +161,6 @@ print("---DONE WITH RUN---")
 end_time = stopwatch.time()
 print("Time is " + str((end_time-start_time)/1000) + " seconds")
 
-wait(5000)
+wait(30000)
 print("Resetting expert arm...")
-resetExpertDropOffArm(numRotations=2)
+resetExpertDropOffArm(numRotations=1)
