@@ -12,13 +12,16 @@ def run1():
 
     # Scene Change
     doSceneChange()
-   
-    pickupNoahExpert()
+    goHomeAlternateOfPickUpNoah()
+    # pickupNoahExpert()
 
 def do3DCinema():
     left_med_motor.run_angle(600, 150, wait=False)
-    gyroStraightWithDrive(9 * CM_PER_INCH, targetAngle=0, speed=300)
+    #was 9 inch
+    gyroStraightWithDrive(6 * CM_PER_INCH, targetAngle=0, speed=300)
     #gyroStraightWithDrive(distanceInCm=17, targetAngle=0, speed=500)
+    # turnToAngle(20)
+    # turnToAngle(0)
     left_med_motor.run_angle(500, -150)
     left_med_motor.run_angle(500, 150)
     gyroStraightWithDrive(distanceInCm=-13, targetAngle=0, speed=500)
@@ -28,14 +31,14 @@ def doSceneChange():
     turnToAngle(90) 
     #goStraight(218) #218mm
     left_med_motor.run_angle(500, -150, wait=False)
-    gyroStraightWithDrive(distanceInCm=19, targetAngle=90)
+    gyroStraightWithDrive(distanceInCm=19, targetAngle=90, speed=600)
     driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
     turnToAngle(0) 
-    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    gyroStraightWithDrive(7*CM_PER_INCH, speed=1000, targetAngle=0)
     left_med_motor.run_angle(speed=500, rotation_angle=150, wait=False)
     #gyroStraightWithDrive(9*CM_PER_INCH, targetAngle=0)
     #wait(3000)
-    gyroStraightWithDrive(7*CM_PER_INCH, targetAngle=0)
+    gyroStraightWithDrive(7*CM_PER_INCH, speed=1000,targetAngle=0)
     driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
     # gyroStraightWithDrive(distanceInCm=3, targetAngle=0)
     #wait(10000)
@@ -65,6 +68,62 @@ def pickupNoahExpert():
     turnToAngle(-120)
     gyroStraightWithDrive(50, targetAngle=-120, speed=1000)
 
+def goHomeAlternateOfPickUpNoah():
+    gyroStraightWithDrive(-4, targetAngle=-45, speed=500)
+    _angle=10
+    turnToAngle(_angle)
+    left_med_motor.run_angle(500, -150, wait=False)
+    gyroStraightWithDrive(-45, targetAngle=_angle, speed=1000)
+
+
+def run1at45():
+    resetGyro(0)
+    
+    #3D Cinema
+    left_med_motor.run_angle(600, 150, wait=False)
+    #was 9 inch
+    gyroStraightWithDrive(6 * CM_PER_INCH, targetAngle=0, speed=300)
+    #gyroStraightWithDrive(distanceInCm=17, targetAngle=0, speed=500)
+    # turnToAngle(20)
+    # turnToAngle(0)
+    left_med_motor.run_angle(500, -150)
+    left_med_motor.run_angle(500, 150, wait=False)
+    gyroStraightWithDrive(distanceInCm=-8, targetAngle=0, speed=500)
+
+    # Scene Change
+    #go to M2
+    left_med_motor.run_angle(1000, -150, wait=False)
+    turnToAngle(45) 
+    
+
+    #goStraight(218) #218mm
+    gyroStraightWithDrive(distanceInCm=10, targetAngle=45, speed=600)
+
+    #driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    #wait(5000)
+
+    driveTillHsvRange(maxDistance=15*MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100) )## it was the left color sensor.
+
+
+    #driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
+    turnToAngle(0) 
+    #gyroStraightWithDrive(7*CM_PER_INCH, speed=1000, targetAngle=0)
+    left_med_motor.run_angle(speed=1000, rotation_angle=150, wait=False)
+    #gyroStraightWithDrive(9*CM_PER_INCH, targetAngle=0)
+    #wait(3000)
+    gyroStraightWithDrive(5*CM_PER_INCH, speed=1000,targetAngle=0)
+    driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
+    # gyroStraightWithDrive(distanceInCm=3, targetAngle=0)
+    #wait(10000)
+    #Execute M2
+    turnToAngle(-45) 
+    gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
+    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    
+    
+    goHomeAlternateOfPickUpNoah()
+   
+
 # This is code that was outside.
 def initializeRun1():
     print("Calling func now")
@@ -73,8 +132,8 @@ def initializeRun1():
     stopwatch = StopWatch()
     start_time = stopwatch.time()
 
-    run1()
-
+    #run1()
+    run1at45()
     end_time = stopwatch.time()
     print("Time is " + str((end_time-start_time)/1000) + " seconds")
 
@@ -83,4 +142,4 @@ def initializeRun1():
     print("DONE")
 
 #run1()
-# initializeRun1()
+initializeRun1()

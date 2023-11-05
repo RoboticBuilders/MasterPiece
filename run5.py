@@ -5,7 +5,7 @@ from Utilities import *
 CIRCULAR_MOTION_ARM_DEGREES=450
 CIRCULAR_MOTION_ARM_SPEED=1000
 augmentedRealityWaitTime=0
-EXPERT_ARM_TURN_ANGLE = 140
+EXPERT_ARM_TURN_ANGLE = 200
 DROP_OFF_SPEED = 400
 EXPERT_ARM_CONTROL = right_med_motor
 anyaRun2Wait = 0
@@ -25,7 +25,7 @@ def doMusicConcert():
     turnToAngle(targetAngle=0, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*6.5, targetAngle=0, speed=500)
     # lift the arm to deliver the expert
-    left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=-100)    
+    left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=-150)    
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*8, targetAngle=10, backward=True, speed=400)
     turnToAngle(45)
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*10, targetAngle=45, speed=400)
@@ -44,7 +44,7 @@ def doAugmentedReality():
 
     #wait(10000)
     #37 to ensure that the masterpiece mission doesnt come in the way
-    gyroStraightWithDrive(distanceInCm=35, targetAngle=-90) #----Changed
+    gyroStraightWithDrive(distanceInCm=35, targetAngle=_angle) #----Changed
     # gyroStraightWithDrive(distanceInCm=30, targetAngle=_angle)
     wait(augmentedRealityWaitTime)
     _angle = -45
@@ -56,10 +56,10 @@ def doAugmentedReality():
     # gyroStraightWithDrive(distanceInCm=3, targetAngle=0) # I might need to delete also test line!!!!!
     #goStraight(MM_PER_INCH*2)
     # gyroStraightWithDrive(distanceInCm=5, targetAngle=0)
-    # wait(5000)
+    # wait(augmentedRealityWaitTime)
     #goStraight(MM_PER_INCH*-5.5)  # you might want to try 6 or 6.
     gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle, backward=True)
-    wait(augmentedRealityWaitTime)
+    # wait(augmentedRealityWaitTime)
     _angle = 35
     turnToAngle(targetAngle=_angle,oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle)
@@ -151,4 +151,16 @@ def mainRun5():
 
     print("DONE")
 
-# mainRun5()
+print("BATTERY = " + str(hub.battery.voltage()))
+stopwatch = StopWatch()
+start_time = stopwatch.time()
+
+run5()
+print("---DONE WITH RUN---")
+
+end_time = stopwatch.time()
+print("Time is " + str((end_time-start_time)/1000) + " seconds")
+
+wait(5000)
+print("Resetting expert arm...")
+resetExpertDropOffArm(numRotations=2)
