@@ -20,7 +20,9 @@ def _maindriver():
 
         hub.speaker.beep()
         resetRobot()
+        print("Waiting for right button press...")
         waitForRightButtonPress()
+
         
         if (counter != 1):
             arm_change_end_time = stopwatch.time()    
@@ -43,7 +45,7 @@ def _maindriver():
 stopwatch = StopWatch()
 start_time = stopwatch.time()
 initializeAndWaitForRobotReady()
-#_maindriver()
-run4()
+_maindriver()
+#run4()
 end_time = stopwatch.time()
 print("Total Time: " + str((end_time-start_time)/1000) + " seconds")
