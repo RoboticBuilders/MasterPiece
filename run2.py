@@ -73,6 +73,31 @@ def run2_bigbucket():
     solve_movieset_bigbucket()
     comehome_bigbucket()
 
+def Run2New():
+    initializeAndWaitForRobotReady()
+    #soundmixer
+    gyroStraightWithDrive(distanceInCm=55, speed=325)
+    turnToAngle(targetAngle=20, speed=40)
+    turnToAngle(targetAngle=120, speed=300)
+
+    #going to movie set
+    gyroStraightWithDrive(distanceInCm=20, speed=300)
+    turnToAngle(targetAngle=48, speed=300)
+    gyroStraightWithDrive(distanceInCm=3, speed=300)
+
+
+    #bringing camera to target
+    right_med_motor.run_angle(speed=400, rotation_angle=-350)
+    gyroStraightWithDrive(distanceInCm=15, speed=200, backward=True)
+    turnToAngle(targetAngle=20)
+    #gyroStraightWithDrive(distanceInCm=18, speed=300, backward=True) # this flicks the lever too
+    #turnToAngle(targetAngle=5, speed=300)
+
+    #go to home
+    right_med_motor.run_angle(300, rotation_angle=350.)
+    gyroStraightWithDrive(distanceInCm=40, speed=500, backward=True)
+
 def run2():
     resetGyro(0)
-    run2_sidebucketarm()
+    Run2New()
+    #run2_sidebucketarm()
