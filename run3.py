@@ -35,7 +35,7 @@ def run3():
 
         gyroStraightWithDrive(distanceInCm= 58, speed=300, targetAngle=305)
 
-        turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
+        turnToAngle(targetAngle=265, speed=200, oneWheelTurn=True)
         if RUN3_WAIT_ON == 1:
             wait(500)
 

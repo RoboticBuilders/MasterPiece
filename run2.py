@@ -76,7 +76,7 @@ def run2_bigbucket():
 def Run2New():
     initializeAndWaitForRobotReady()
     #soundmixer
-    gyroStraightWithDrive(distanceInCm=55, speed=325)
+    gyroStraightWithDrive(distanceInCm=51, speed=200)
     turnToAngle(targetAngle=20, speed=40)
     turnToAngle(targetAngle=120, speed=300)
 
