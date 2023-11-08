@@ -4,6 +4,7 @@ from pybricks.tools import wait, StopWatch
 from Utilities import *
 
 # This is the main entry point for Run1. Driver is calling this method
+# This should take 15 seconds and can switch for better reliability as it detects blue
 def oldrun1():
     resetGyro(0)
     
@@ -76,44 +77,32 @@ def goHomeAlternateOfPickUpNoah():
     gyroStraightWithDrive(-45, targetAngle=_angle, speed=1000)
 
 
+# new run1 takes 13 seconds.
 def run1():
     resetGyro(0)
     
     #3D Cinema
     left_med_motor.run_angle(600, 150, wait=False)
     #was 9 inch
-    gyroStraightWithDrive(6 * CM_PER_INCH, targetAngle=0, speed=300)
+    gyroStraightWithDrive(6 * CM_PER_INCH, targetAngle=0, speed=300)##å®ˆß˙å!@#$%^&*())))))(*&$)
     #gyroStraightWithDrive(distanceInCm=17, targetAngle=0, speed=500)
-    # turnToAngle(20)
-    # turnToAngle(0)
     left_med_motor.run_angle(500, -150)
     left_med_motor.run_angle(500, 150, wait=False)
     gyroStraightWithDrive(distanceInCm=-8, targetAngle=0, speed=500)
 
     # Scene Change
-    #go to M2
+    # go to M2
     left_med_motor.run_angle(1000, -150, wait=False)
     turnToAngle(45) 
-    
-
-    #goStraight(218) #218mm
     gyroStraightWithDrive(distanceInCm=10, targetAngle=45, speed=600)
-
+    #can switch to black line
     #driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-    #wait(5000)
-
     driveTillHsvRange(maxDistance=15*MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100) )## it was the left color sensor.
-
-
-    #driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=left_color, hueRange = range(214, 230) )
     turnToAngle(0) 
-    #gyroStraightWithDrive(7*CM_PER_INCH, speed=1000, targetAngle=0)
     left_med_motor.run_angle(speed=1000, rotation_angle=150, wait=False)
-    #gyroStraightWithDrive(9*CM_PER_INCH, targetAngle=0)
     #wait(3000)
     gyroStraightWithDrive(5*CM_PER_INCH, speed=1000,targetAngle=0)
     driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-    # gyroStraightWithDrive(distanceInCm=3, targetAngle=0)
     #wait(10000)
     #Execute M2
     turnToAngle(-45) 
@@ -121,6 +110,7 @@ def run1():
     right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
     
     
+    # go Home
     goHomeAlternateOfPickUpNoah()
    
 
@@ -141,5 +131,5 @@ def initializeRun1():
 
     print("DONE")
 
-#run1()
+run1()
 #initializeRun1()
