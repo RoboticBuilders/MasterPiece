@@ -6,12 +6,12 @@ def run4():
     PICKUP_EXPERT_ATTACHMENT_UP = 2
 
     # Expects the arm to start down.
-    def _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN):
+    def _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True):
         if position == PICKUP_EXPERT_ATTACHMENT_DOWN:
-            right_med_motor.run_target(500, 175)
+            right_med_motor.run_target(500, 175, Stop.HOLD, wait)
         else:
             #changed the degrees from -50 to -30
-            right_med_motor.run_target(500, -35)
+            right_med_motor.run_target(500, -35, Stop.HOLD, wait)
 
     def _positionChicken():
         left_med_motor.run_angle(500, 850)
@@ -38,7 +38,7 @@ def run4():
         _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN)
 
     def _codeForRun4():
-        angle = 0
+        angle = 2
         # Drive forward to do rolling camera and also
         # pick up the expert.
         gyroStraightWithDrive(distanceInCm = 50, speed = 250, targetAngle = angle)
@@ -54,7 +54,7 @@ def run4():
         # Backoff from the movie set to drop off the expert and orange 
         # audience. 
         gyroStraightWithDrive(distanceInCm = 5, speed = 200, targetAngle = angle, backward=True)
-        gyroStraightWithDrive(distanceInCm = 57, speed = 500, targetAngle = angle, backward=True)
+        gyroStraightWithDrive(distanceInCm = 55, speed = 500, targetAngle = angle, backward=True)
 
 
         #wait(4000)
@@ -67,7 +67,7 @@ def run4():
         _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN)
 
         # drive forward before picking up arm
-        gyroStraightWithDrive(distanceInCm = 26.5, speed = 150, targetAngle = angle)
+        gyroStraightWithDrive(distanceInCm = 28, speed = 150, targetAngle = angle)
 
         # Pickup the expert
         _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
@@ -76,7 +76,7 @@ def run4():
 
         # Now flush with the missions.
         #Changed speed from 300 to 200 on 10/15/2023
-        gyroStraightWithDrive(distanceInCm = 14, speed = 200, targetAngle = angle)
+        gyroStraightWithDrive(distanceInCm = 20, speed = 200, targetAngle = angle)
 
         # Reset the angle to the more accurate, flushed angle
         resetGyro(angle = angle)
@@ -86,7 +86,7 @@ def run4():
 
         # Now backoff.
         gyroStraightWithDrive(distanceInCm = 10, speed = 100, targetAngle = angle - 7, backward=True, multiplier = 0.1)
-        gyroStraightWithDrive(distanceInCm = 40, speed = 250, targetAngle = angle, backward=True)
+        gyroStraightWithDrive(distanceInCm = 40, speed = 700, targetAngle = angle, backward=True)
 
         # Reset attachment for the next run. 
         # Comment in the main program.
@@ -96,7 +96,9 @@ def run4():
         #wait(3000)
         #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP_TO_DOWN)
 
-    resetGyro(0)
+    #resetGyro(0)
+    resetRobot()
     _codeForRun4() 
     #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
 
+run4()
