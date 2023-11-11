@@ -37,7 +37,8 @@ def run3():
 
         turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
         
-        gyroStraightWithDrive(distanceInCm=15, speed=200, targetAngle=270)
+        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=3710, wait=False)
+        
         wait(500)
 
         drive_base.stop()
@@ -47,7 +48,7 @@ def run3():
 
     # This function does the lightshow mission by lifting u7 the arms.
     def _executeLightShow():
-        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=3710)
+        gyroStraightWithDrive(distanceInCm=15, speed=200, targetAngle=270)
         if RUN3_WAIT_ON == 1:
             wait(500)
         
@@ -70,9 +71,10 @@ def run3():
 
     # This function does the immersive experience mission.
     def _executeImmersiveExperience():
+        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=-1440, wait=False)
+        
         gyroStraightWithDrive(distanceInCm=7, speed=200, targetAngle=270)
 
-        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=-1440)
         #left_med_motor.run_angle(300, -1080)
         turnToAngle(160, speed=200)
 
@@ -100,6 +102,6 @@ def run3():
 
     _codeForRun3()
 # This is function runs the entire run.
-#run3()
+#runWithTiming(run3, 'run3')
 
         
