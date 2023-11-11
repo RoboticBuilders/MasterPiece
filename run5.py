@@ -6,7 +6,7 @@ CIRCULAR_MOTION_ARM_DEGREES=480
 CIRCULAR_MOTION_ARM_SPEED=1000
 augmentedRealityWaitTime=0
 EXPERT_ARM_TURN_ANGLE = 380
-DROP_OFF_SPEED = 450
+DROP_OFF_SPEED = 300
 EXPERT_ARM_CONTROL = right_med_motor
 anyaRun2Wait = 0
 anyaDropOffsWait_B5 = 0
@@ -155,12 +155,12 @@ print("BATTERY = " + str(hub.battery.voltage()))
 stopwatch = StopWatch()
 start_time = stopwatch.time()
 
-#run5()
+# run5()
 print("---DONE WITH RUN---")
 
 end_time = stopwatch.time()
 print("Time is " + str((end_time-start_time)/1000) + " seconds")
 
-wait(30000)
+#wait(30000)
 print("Resetting expert arm...")
 resetExpertDropOffArm(numRotations=1)
