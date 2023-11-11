@@ -74,7 +74,7 @@ def goHomeAlternateOfPickUpNoah():
     _angle=10
     turnToAngle(_angle)
     left_med_motor.run_angle(500, -150, wait=False)
-    gyroStraightWithDrive(-38, targetAngle=_angle, speed=1000)  ## it was orignally one line going back -45
+    gyroStraightWithDrive(-40, targetAngle=_angle, speed=1000)  ## it was orignally one line going back -38
     turnToAngle(90)
     gyroStraightWithDrive(-18, targetAngle=90, speed=600)
 
@@ -90,7 +90,7 @@ def run1():
     #gyroStraightWithDrive(distanceInCm=17, targetAngle=0, speed=500)
     left_med_motor.run_angle(500, -150)
     left_med_motor.run_angle(500, 150, wait=False)
-    gyroStraightWithDrive(distanceInCm=-8, targetAngle=0, speed=500)
+    gyroStraightWithDrive(distanceInCm=-10, targetAngle=0, speed=500)
 
     # Scene Change
     # go to M2
