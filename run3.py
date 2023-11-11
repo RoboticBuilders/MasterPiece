@@ -33,23 +33,29 @@ def run3():
         if RUN3_WAIT_ON == 1:
             wait(500)
 
-        gyroStraightWithDrive(distanceInCm= 58, speed=300, targetAngle=305)
+        gyroStraightWithDrive(distanceInCm= 56.5, speed=300, targetAngle=305)
 
-        turnToAngle(targetAngle=265, speed=200, oneWheelTurn=True)
+        turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
+        
+        gyroStraightWithDrive(distanceInCm=15, speed=200, targetAngle=270)
+        wait(500)
+
+        drive_base.stop()
+        wait(500)
         if RUN3_WAIT_ON == 1:
             wait(500)
 
-    # This function does the lightshow mission by lifting up the arms.
+    # This function does the lightshow mission by lifting u7 the arms.
     def _executeLightShow():
         left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=3710)
         if RUN3_WAIT_ON == 1:
             wait(500)
         
-        gyroStraightWithDrive(distanceInCm=27, speed=200, targetAngle=270, backward=True)
+        gyroStraightWithDrive(distanceInCm=40, speed=200, targetAngle=270, backward=True)
         if RUN3_WAIT_ON == 1:
             wait(1000)
 
-        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=-4430)
+        left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=-4790)
         if RUN3_WAIT_ON == 1:
             wait(500)
 
