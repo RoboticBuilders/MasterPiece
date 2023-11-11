@@ -133,5 +133,5 @@ def initializeRun1():
 
     print("DONE")
 
-runWithTiming(run1, "run1")
+# runWithTiming(run1, "run1")
 #initializeRun1()
