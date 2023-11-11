@@ -74,7 +74,9 @@ def goHomeAlternateOfPickUpNoah():
     _angle=10
     turnToAngle(_angle)
     left_med_motor.run_angle(500, -150, wait=False)
-    gyroStraightWithDrive(-45, targetAngle=_angle, speed=1000)
+    gyroStraightWithDrive(-38, targetAngle=_angle, speed=1000)  ## it was orignally one line going back -45
+    turnToAngle(90)
+    gyroStraightWithDrive(-18, targetAngle=90, speed=600)
 
 
 # new run1 takes 13 seconds.
@@ -84,7 +86,7 @@ def run1():
     #3D Cinema
     left_med_motor.run_angle(600, 150, wait=False)
     #was 9 inch
-    gyroStraightWithDrive(6 * CM_PER_INCH, targetAngle=0, speed=300)##å®ˆß˙å!@#$%^&*())))))(*&$)
+    gyroStraightWithDrive(8 * CM_PER_INCH, targetAngle=0, speed=300)
     #gyroStraightWithDrive(distanceInCm=17, targetAngle=0, speed=500)
     left_med_motor.run_angle(500, -150)
     left_med_motor.run_angle(500, 150, wait=False)
@@ -94,7 +96,7 @@ def run1():
     # go to M2
     left_med_motor.run_angle(1000, -150, wait=False)
     turnToAngle(45) 
-    gyroStraightWithDrive(distanceInCm=10, targetAngle=45, speed=600)
+    gyroStraightWithDrive(distanceInCm=12, targetAngle=45, speed=600)## was 10
     #can switch to black line
     #driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
     driveTillHsvRange(maxDistance=15*MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100) )## it was the left color sensor.
@@ -131,5 +133,5 @@ def initializeRun1():
 
     print("DONE")
 
-run1()
+runWithTiming(run1, "run1")
 #initializeRun1()
