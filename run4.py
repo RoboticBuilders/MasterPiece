@@ -100,5 +100,3 @@ def run4():
     resetRobot()
     _codeForRun4() 
     #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
-
-run4()

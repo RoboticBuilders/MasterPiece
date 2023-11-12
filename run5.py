@@ -151,6 +151,7 @@ def mainRun5():
 
     print("DONE")
 
+'''
 print("BATTERY = " + str(hub.battery.voltage()))
 stopwatch = StopWatch()
 start_time = stopwatch.time()
@@ -164,3 +165,4 @@ print("Time is " + str((end_time-start_time)/1000) + " seconds")
 #wait(30000)
 print("Resetting expert arm...")
 resetExpertDropOffArm(numRotations=1)
+'''
