@@ -597,26 +597,46 @@ def findPaths(points, color="blue", runName="Run6"):
     drawPath(coordinates, color, runName)
 
 def findAndShowAllPaths():
+    home1 = Point(0,0)
     home2 = Point(190, 20)
-    TV = Point(185, 65)
-    HybridCar = Point(142, 90)
-    home2 = Point(190, 20)
-    powerplant = Point(100, 20)
-    home1 = Point(20,10)
-    smartgrid = Point(97, 94)
-    solarplant = Point(77, 96)
-    oilplatform = Point(5, 64)
-    energyStorage = Point(40, 96)
-    waterReservoir = Point(80, 64)
-    toyfactory = Point(127,65)
-    powerToX = Point(98, 54)
-    windTurbine = Point(175, 90)
-    RechargeableBattery = Point(149, 70)
-    hydroDam = Point(56, 49)
+    Cinema = Point(5,70) #,15,58
+    TheaterSceneChange =  Point(15,105) #,25,85
+    ImmersiveExperience = Point(75,110) #,85,95
+    Masterpiece = Point(80,110) #,100,95
+    AugmentedReality = Point(130,110) #,140,95
+    HologramPerformer = Point(75,110) #,190,90
+    MusicConcert = Point(175,110) #,190,90
+    RollingCamera = Point(70,10) #,140,5
+    MovieSet, Point(80,20) # 130,10
+    SoundMixer, Point(50,70) # 70,50
+    LightShow, Point(95,60) # 110,50
+    VirtualRealityArtist, Point(130,60) # 145,50
+    CraftCreator, Point(145,65) # 155,55
+    OrangePerson1, Point(30,100) # 70,85
+    OrangePerson2, Point(20,65) # 25,55
+    OrangePerson3, Point(95,10) # 110,5
+    OrangePerson4, Point(95,60) # 110,55
+    OrangePerson5, Point(80,110) # 100,95
+    OrangePerson6, Point(165,110) # 175,100
+    OrangePerson7, Point(5,85) # 10,80
+    SamExpertDropoff, Point(95,10) # 110,5
+    AnnaExpertDropoff, Point(80,110) # 100,95
+    NoahExpertDropoff, Point(165,110) # 175,100
+    IzzyExpertDropoff, Point(30,100) # 70,85
+    EmilyExpertDropoff, Point(20,65) # 25,55
+    AnnaExpertPickup, Point(0,0) # 0,0
+    SamExpertPickup, Point(20,105) # 25,110
+    NoahExpertPickup, Point(65,55) # 70,50
+    IzzyExpertPickup, Point(150,55) # 155,50
+    EmilyExpertPickup, Point(140,25) # 145,20
+    RollingCameraLever, Point(85,7) # 96,3
+
 
     missions = readMissionFile()
     actions = []
     coordinates = []
+
+
     run1 = [home2, TV, windTurbine, RechargeableBattery, home2]
     run2 = [home2, powerplant, home2]
     run3 = [home2, RechargeableBattery, HybridCar, waterReservoir, solarplant, home1]

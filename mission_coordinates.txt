@@ -1,10 +1,32 @@
 Mission_name, bottom_left_X,bottom_left_Y, top_right_X,top_right_Y
-HydroDam,52,45,77,70
-OilPlatform,4,65,27,89
-Energystorage,32,98,47,110
-smartgrid,98,95,107,111
-powerplant,86,5,116,17
-toyfactory,127,46,149,67
-hybridcar,124,93,141,113
-windmill,177,89,194,110
-TV,190,66,198,84
+3DCinema,5,70,15,58
+TheaterSceneChange, 15,105,25,85
+ImmersiveExperience, 75,110,85,95
+Masterpiece, 80,110,100,95
+AugmentedReality, 130,110,140,95
+HologramPerformer, 175,110,190,90
+MusicConcert, 175,110,190,90
+RollingCamera, 70,10,140,5
+MovieSet, 80,20,130,10
+SoundMixer, 50,70,70,50
+LightShow, 95,60,110,50
+VirtualRealityArtist, 130,60,145,50
+CraftCreator, 145,65,155,55
+OrangePerson1, 30,100,70,85
+OrangePerson2, 20,65,25,55
+OrangePerson3, 95,10,110,5
+OrangePerson4, 95,60,110,55
+OrangePerson5, 80,110,100,95
+OrangePerson6, 165,110,175,100
+OrangePerson7, 5,85,10,80
+SamExpertDropoff, 95,10,110,5
+AnnaExpertDropoff, 80,110,100,95
+NoahExpertDropoff, 165,110,175,100
+IzzyExpertDropoff, 30,100,70,85
+EmilyExpertDropoff, 20,65,25,55
+AnnaExpertPickup, 0,0,0,0
+SamExpertPickup, 20,105,25,110
+NoahExpertPickup, 65,55,70,50
+IzzyExpertPickup, 150,55,155,50
+EmilyExpertPickup, 140,25,145,20
+RollingCameraLever, 85,7,96,3
