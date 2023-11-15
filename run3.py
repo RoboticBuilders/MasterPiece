@@ -86,7 +86,7 @@ def run3():
         gyroStraightWithDrive(distanceInCm=27, speed=300, targetAngle=275)
     # This function is when we go to homw 2 and we pick up Emily on the way back.
     def _goHomeWithEmily():
-        gyroStraightWithDrive(distanceInCm=45, speed=600, targetAngle=275, backward=True)
+        gyroStraightWithDrive(distanceInCm=45, speed=600, targetAngle=270, backward=True)
 
         turnToAngle(17, speed=200)
         wait(100)
