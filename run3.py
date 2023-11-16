@@ -34,7 +34,7 @@ def run3():
             wait(500)
 
         gyroStraightWithDrive(distanceInCm= 56.5, speed=300, targetAngle=305)
-
+    
         turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
         
         left_med_motor.run_angle(speed=lightshow_arm_speed, rotation_angle=3710, wait=False)
@@ -86,7 +86,7 @@ def run3():
         gyroStraightWithDrive(distanceInCm=27, speed=300, targetAngle=275)
     # This function is when we go to homw 2 and we pick up Emily on the way back.
     def _goHomeWithEmily():
-        gyroStraightWithDrive(distanceInCm=45, speed=600, targetAngle=275, backward=True)
+        gyroStraightWithDrive(distanceInCm=45, speed=600, targetAngle=270, backward=True)
 
         turnToAngle(17, speed=200)
         wait(100)
@@ -101,7 +101,7 @@ def run3():
         _goHomeWithEmily()
 
     _codeForRun3()
-# This is function runs the entire run.
+# This is function runs the entire run and times it. 30 seconds so far.
 #runWithTiming(run3, 'run3')
 
         
