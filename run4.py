@@ -41,6 +41,7 @@ def run4():
         angle = 2
         # Drive forward to do rolling camera and also
         # pick up the expert.
+        turnToAngle(targetAngle = angle, speed = 400)
         gyroStraightWithDrive(distanceInCm = 50, speed = 250, targetAngle = angle)
 
         # Pick up the expert
