@@ -1,32 +1,12 @@
 Mission_name, bottom_left_X,bottom_left_Y, top_right_X,top_right_Y
-3DCinema,5,70,15,58
-TheaterSceneChange, 15,105,25,85
-ImmersiveExperience, 75,110,85,95
-Masterpiece, 80,110,100,95
-AugmentedReality, 130,110,140,95
-HologramPerformer, 175,110,190,90
-MusicConcert, 175,110,190,90
-RollingCamera, 70,10,140,5
-MovieSet, 80,20,130,10
-SoundMixer, 50,70,70,50
-LightShow, 95,60,110,50
-VirtualRealityArtist, 130,60,145,50
-CraftCreator, 145,65,155,55
-OrangePerson1, 30,100,70,85
-OrangePerson2, 20,65,25,55
-OrangePerson3, 95,10,110,5
-OrangePerson4, 95,60,110,55
-OrangePerson5, 80,110,100,95
-OrangePerson6, 165,110,175,100
-OrangePerson7, 5,85,10,80
-SamExpertDropoff, 95,10,110,5
-AnnaExpertDropoff, 80,110,100,95
-NoahExpertDropoff, 165,110,175,100
-IzzyExpertDropoff, 30,100,70,85
-EmilyExpertDropoff, 20,65,25,55
-AnnaExpertPickup, 0,0,0,0
-SamExpertPickup, 20,105,25,110
-NoahExpertPickup, 65,55,70,50
-IzzyExpertPickup, 150,55,155,50
-EmilyExpertPickup, 140,25,145,20
-RollingCameraLever, 85,7,96,3
+3DCinema,5,58,15,70
+TheaterSceneChange, 15,85,25,105
+ImmersiveExperience, 75,95,85,110
+AugmentedReality, 130,95,140,110
+HologramPerformer, 175,90,190,110
+MusicConcert, 175,90,190,110
+RollingCamera, 70,5,140,10
+MovieSet, 80,10,130,20
+SoundMixer, 50,50,70,70
+LightShow, 95,50,110,60
+VirtualRealityArtistAndCraft, 130,50,155,70
