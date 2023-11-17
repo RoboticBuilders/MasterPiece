@@ -121,13 +121,15 @@ def stopDriveBase():
     #left_motor.hold()
     #right_motor.hold()
 
-def waitForRightButtonPress():
+def waitForButtonPress():
     # Wait for any button to be pressed, and save the result.
     pressed = []
     while not any(pressed):
         pressed = hub.buttons.pressed()
-        if (Button.RIGHT in pressed):
-            return
+    button = pressed[0]
+    while any(pressed):
+        pressed = hub.buttons.pressed()
+    return button
 
 def getHeadingValue():
     return str(hub.imu.heading())
