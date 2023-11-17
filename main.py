@@ -10,6 +10,8 @@ def _maindriver():
     arm_change_start_time = 0
     arm_change_end_time = 0
     stopwatch = StopWatch()
+    counter = 1
+
     while True:
         if counter == 6: 
             break
@@ -22,7 +24,6 @@ def _maindriver():
         resetRobot()
         print("Waiting for right button press...")
         waitForRightButtonPress()
-
         
         if (counter != 1):
             arm_change_end_time = stopwatch.time()    
@@ -37,6 +38,8 @@ def _maindriver():
         if counter == 4:
             runWithTiming(run4,"run4")
         if counter == 5:
+            runWithTiming(run45,"run45")
+        if counter == 6:
             runWithTiming(run5,"run5")
         
         counter = counter + 1
