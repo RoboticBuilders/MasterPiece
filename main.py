@@ -10,7 +10,7 @@ def _maindriver():
     arm_change_start_time = 0
     arm_change_end_time = 0
     stopwatch = StopWatch()
-    counter = 1
+    counter = 5
 
     while True:
         if counter == 6: 

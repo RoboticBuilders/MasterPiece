@@ -2,7 +2,7 @@ from Utilities import *
 
 def run4():
     def _doRollingCameraAndDropOffAtMovieSet():
-        angle = 0
+        angle = 2
         # Drive forward to do rolling camera
         gyroStraightWithDrive(distanceInCm = 45, speed = 300, targetAngle = angle)
 
@@ -66,9 +66,10 @@ def run45():
         # Now flush with the missions.
         # And keep pushing the robot forward to align with the mission
         # while we turn the chicken
-        gyroStraightWithDrive(distanceInCm = 10, speed = 200, targetAngle = angle)
-        drive_base.drive(speed = 200, turn_rate = 0)
+        gyroStraightWithDrive(distanceInCm = 10, speed = 400, targetAngle = angle)
+        drive_base.drive(speed = 100, turn_rate = 0)
 
+        wait(5000)
         # Now turn the chicken
         _positionChicken()
 
