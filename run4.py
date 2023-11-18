@@ -1,92 +1,62 @@
+from pybricks.hubs import PrimeHub
+from pybricks.pupdevices import Motor
+from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
+from pybricks.robotics import GyroDriveBase, DriveBase
+from pybricks.tools import wait, StopWatch
 from Utilities import *
 
+# This version is the new veriosn as of 11/14 without light show
+RUN3_WAIT_ON=0
+
+
 def run4():
-    def _doRollingCameraAndDropOffAtMovieSet():
-        angle = 2
-        # Drive forward to do rolling camera
-        gyroStraightWithDrive(distanceInCm = 45, speed = 300, targetAngle = angle)
+    resetGyro(0)
 
-        angle = 0
-        # Drive towards the dropoff at movie set
-        gyroStraightWithDrive(distanceInCm = 25, speed = 500, targetAngle = angle)
+    turnToAngle(335, speed=200, oneWheelTurn=True)
 
-        # Pick up the expert
-        #_positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
-        
-    def _goHomeAfterRollingCamera():
-        angle = 355
+    gyroStraightWithDrive(distanceInCm = 52, speed = 400, targetAngle = 335)
 
-        # Backoff from the movie set to drop off the expert and orange 
-        # audience. 
-        gyroStraightWithDrive(distanceInCm = 65, speed = 1000, targetAngle = angle, backward=True)
+   # turnToAngle(targetAngle=270, speed=400, oneWheelTurn=True)
+    #if RUN3_WAIT_ON == 1:
+       # wait(500)
 
-    def _resetAttachmentForNextRun():
-        # Reset attachment for the next run. 
-        # Comment in the main program.
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
+    #gyroStraightWithDrive(distanceInCm= 25, speed=400, targetAngle=270)
 
-    def _dorun4():
-        _doRollingCameraAndDropOffAtMovieSet()
-        _goHomeAfterRollingCamera()
-        #_resetAttachmentForNextRun()
+    turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
 
-    resetRobot()
-    _dorun4() 
-
-def run5():
-    # pickup Expert Attachment constants
-    PICKUP_EXPERT_ATTACHMENT_DOWN = 1
-    PICKUP_EXPERT_ATTACHMENT_UP = 2
-
-    # Expects the arm to start down.
-    def _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True):
-        if position == PICKUP_EXPERT_ATTACHMENT_DOWN:
-            right_med_motor.run_target(500, 175, Stop.HOLD, wait)
-        else:
-            right_med_motor.run_target(300, -35, Stop.HOLD, wait)
-
-    def _positionChicken():
-        left_med_motor.run_angle(-500, 950)
+    #right_med_motor.run_angle(speed=400, rotation_angle=130, wait=False)
     
-    def _pickupExpert():
-        angle = 0
+    gyroStraightWithDrive(distanceInCm= 47, speed=400, targetAngle=270, slowDown=True)
+    right_med_motor.run_angle(speed=200, rotation_angle=-100)
 
-        # Bring down attachment.
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN, wait=False)
+    wait(500)
 
-        # drive forward before picking up arm
-        gyroStraightWithDrive(distanceInCm = 23, speed = 500, targetAngle = angle)
 
-        # Pickup the expert
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
+    right_med_motor.run_angle(speed=200, rotation_angle=100)
 
-    def _doChickenAndCraftCretor():
-        angle = 0
+    gyroStraightWithDrive(distanceInCm=47, speed=600, targetAngle=275, backward=True)
 
-        # Now flush with the missions.
-        # And keep pushing the robot forward to align with the mission
-        # while we turn the chicken
-        gyroStraightWithDrive(distanceInCm = 10, speed = 400, targetAngle = angle)
-        drive_base.drive(speed = 100, turn_rate = 0)
+    turnToAngle(8, speed=200)
+    wait(100)
+        
+    gyroStraightWithDrive(distanceInCm=125, speed=600, targetAngle=8)
 
-        # Now turn the chicken
-        _positionChicken()
 
-        # Now that we are done, stop pushing.
-        stopDriveBase()
 
-        # Now backoff.
-        gyroStraightWithDrive(distanceInCm = 15, speed = 200, targetAngle = angle, 
-                              backward=True, multiplier = 0.1)
+#runWithTiming(run3, "run3")
+#resetGyro(0)
 
-    def _goHome():
-        angle = 0
-        gyroStraightWithDrive(distanceInCm = 30, speed = 1000, targetAngle = angle, backward=True)
+#right_med_motor.run_angle(speed=500, rotation_angle=-100)
 
-    def _dorun45():
-        _pickupExpert()
-        _doChickenAndCraftCretor()
-        _goHome()
+#wait(500)
 
-    resetRobot()
-    _dorun45() 
+
+#right_med_motor.run_angle(speed=500, rotation_angle=100)
+
+
+# if RUN3_WAIT_ON == 1:
+#             wait(500)
+
+
+
+        
