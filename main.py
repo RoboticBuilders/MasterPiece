@@ -13,6 +13,7 @@ def _maindriver():
     counter = 5
 
     while True:
+        hub.display.number(counter)
         if counter == 6: 
             break
         # Skip printing for the first time the loop runs.
@@ -23,8 +24,20 @@ def _maindriver():
         hub.speaker.beep()
         resetRobot()
         print("Waiting for right button press...")
-        waitForRightButtonPress()
-        
+        button = waitForButtonPress()
+        print(button)
+
+        # display counter
+        # if the left button is pressed 
+        # counter=counter+1
+        # if right button is pressed
+        # run counter "continue counter from there"
+
+        if button==Button.LEFT:
+            counter=counter+1
+            continue
+
+# the next few lines are the else loop here it is also the case if the right button is pressed.
         if (counter != 1):
             arm_change_end_time = stopwatch.time()    
             print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)))
@@ -49,6 +62,23 @@ stopwatch = StopWatch()
 start_time = stopwatch.time()
 initializeAndWaitForRobotReady()
 _maindriver()
+
 #run4()
 end_time = stopwatch.time()
 print("Total Time: " + str((end_time-start_time)/1000) + " seconds")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
