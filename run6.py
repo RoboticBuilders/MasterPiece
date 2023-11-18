@@ -118,13 +118,13 @@ def ballerina5_ExpertDropOffs():
     while(not EXPERT_ARM_CONTROL.done()):
         wait(10)
 
-def run5():
+def run6():
     resetGyro(0)
     doMusicConcert()
     doAugmentedReality()
     ballerina5_ExpertDropOffs()
 
-def mainRun5():
+def mainRun6():
     print("Calling func now")
     initializeAndWaitForRobotReady()
 

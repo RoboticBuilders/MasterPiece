@@ -33,7 +33,7 @@ def run4():
     resetRobot()
     _dorun4() 
 
-def run45():
+def run5():
     # pickup Expert Attachment constants
     PICKUP_EXPERT_ATTACHMENT_DOWN = 1
     PICKUP_EXPERT_ATTACHMENT_UP = 2
@@ -92,4 +92,3 @@ def run45():
 
     resetRobot()
     _dorun45() 
-    

@@ -3,18 +3,17 @@ from run1 import *
 from run2 import *
 from run3 import *
 from run4 import *
-from run5 import *
+from run6 import *
 
 def _maindriver():
     counter = 1
     arm_change_start_time = 0
     arm_change_end_time = 0
     stopwatch = StopWatch()
-    counter = 5
 
     while True:
         hub.display.number(counter)
-        if counter == 6: 
+        if counter == 7: 
             break
         # Skip printing for the first time the loop runs.
         if (counter != 1):
@@ -51,9 +50,9 @@ def _maindriver():
         if counter == 4:
             runWithTiming(run4,"run4")
         if counter == 5:
-            runWithTiming(run45,"run45")
-        if counter == 6:
             runWithTiming(run5,"run5")
+        if counter == 6:
+            runWithTiming(run6,"run6")
         
         counter = counter + 1
         drive_base.straight(distance=0, then=Stop.BRAKE)
