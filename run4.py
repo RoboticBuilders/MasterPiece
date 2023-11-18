@@ -69,7 +69,6 @@ def run5():
         gyroStraightWithDrive(distanceInCm = 10, speed = 400, targetAngle = angle)
         drive_base.drive(speed = 100, turn_rate = 0)
 
-        wait(5000)
         # Now turn the chicken
         _positionChicken()
 
@@ -79,7 +78,6 @@ def run5():
         # Now backoff.
         gyroStraightWithDrive(distanceInCm = 15, speed = 200, targetAngle = angle, 
                               backward=True, multiplier = 0.1)
-
 
     def _goHome():
         angle = 0
