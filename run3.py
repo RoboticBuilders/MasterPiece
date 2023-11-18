@@ -36,10 +36,10 @@ def run3():
 
     gyroStraightWithDrive(distanceInCm=45, speed=600, targetAngle=275, backward=True)
 
-    turnToAngle(17, speed=200)
+    turnToAngle(8, speed=200)
     wait(100)
         
-    gyroStraightWithDrive(distanceInCm=125, speed=600, targetAngle=17)
+    gyroStraightWithDrive(distanceInCm=125, speed=600, targetAngle=8)
 
 
 
