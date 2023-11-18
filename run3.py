@@ -27,14 +27,14 @@ def run3():
     #right_med_motor.run_angle(speed=400, rotation_angle=130, wait=False)
     
     gyroStraightWithDrive(distanceInCm= 47, speed=400, targetAngle=270, slowDown=True)
-    right_med_motor.run_angle(speed=200, rotation_angle=100)
+    right_med_motor.run_angle(speed=200, rotation_angle=-100)
 
     wait(500)
 
 
-    right_med_motor.run_angle(speed=200, rotation_angle=-100)
+    right_med_motor.run_angle(speed=200, rotation_angle=100)
 
-    gyroStraightWithDrive(distanceInCm=45, speed=600, targetAngle=275, backward=True)
+    gyroStraightWithDrive(distanceInCm=47, speed=600, targetAngle=275, backward=True)
 
     turnToAngle(8, speed=200)
     wait(100)
@@ -44,7 +44,14 @@ def run3():
 
 
 #runWithTiming(run3, "run3")
+#resetGyro(0)
 
+#right_med_motor.run_angle(speed=500, rotation_angle=-100)
+
+#wait(500)
+
+
+#right_med_motor.run_angle(speed=500, rotation_angle=100)
 
 
 # if RUN3_WAIT_ON == 1:
