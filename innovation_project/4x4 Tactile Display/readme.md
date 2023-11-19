@@ -36,3 +36,8 @@ The overall display is controlled by a `master` Arduino UNO which manages which 
 ![Frame](Frame_3D.jpg "Wiring")
 
 The Frame model in the stl folder along with other models.
+
+# Frames confguration
+Since we have 16 frames where each frame represents a row, we need to standardize the configuration for code to work as expected. This diagram shows the configuration we want for 8x8 display.
+
+![Frames Configuration](Frames_Configuration.jpg "Frames Configuration")
