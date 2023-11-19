@@ -10,7 +10,7 @@ def run6():
         if position == PICKUP_EXPERT_ATTACHMENT_DOWN:
             right_med_motor.run_target(500, 175, Stop.HOLD, wait)
         else:
-            right_med_motor.run_target(300, -35, Stop.HOLD, wait)
+            right_med_motor.run_target(300, 0, Stop.HOLD, wait)
 
     def _positionChicken():
         left_med_motor.run_angle(-500, 950)

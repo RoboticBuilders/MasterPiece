@@ -27,12 +27,12 @@ def run4():
     #right_med_motor.run_angle(speed=400, rotation_angle=130, wait=False)
     
     gyroStraightWithDrive(distanceInCm= 47, speed=400, targetAngle=270, slowDown=True)
-    right_med_motor.run_angle(speed=200, rotation_angle=-100)
+    right_med_motor.run_angle(speed=100, rotation_angle=-90)
 
     wait(500)
 
 
-    right_med_motor.run_angle(speed=200, rotation_angle=100)
+    right_med_motor.run_angle(speed=200, rotation_angle=90)
 
     gyroStraightWithDrive(distanceInCm=47, speed=600, targetAngle=275, backward=True)
 
