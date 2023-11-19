@@ -3,8 +3,7 @@ from run1 import *
 from run2 import *
 from run3 import *
 from run4 import *
-from run4_new_arm import *
-from run2_with_long_arm import *
+from run4 import *
 from run5 import *
 from run6 import *
 from run7 import *
