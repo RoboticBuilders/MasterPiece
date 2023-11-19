@@ -1,6 +1,7 @@
 
 #include <AFMotor.h>
 #include <Wire.h>
+#include <EEPROM.h>
 
 AF_DCMotor motor1(2);
 AF_DCMotor motor2(3);
@@ -17,9 +18,6 @@ volatile bool motor3_running = false;
 volatile bool motor4_running = false;
 
 void setup() {
-
-  // read EEPROM for i2cWireAddress
-  
   // Set motor speeds
   motor1.setSpeed(500);
   motor2.setSpeed(500);
@@ -31,6 +29,10 @@ void setup() {
   // Reset all pins to lowest point
   ResetPins();
 
+  // read EEPROM for i2cWireAddress
+  int wireAddress = readWireAddress();
+  i2cWireAddress = wireAddress;
+  
   // join I2C bus with the address for this sub Arduino
   Wire.begin(i2cWireAddress);     
 
@@ -156,4 +158,14 @@ void receiveEvent(int howMany) {
 
   if (arr[3] > 0)
     motor4_running = true;
+}
+
+int readWireAddress()
+{
+  // We store wireAddress at the start of EEPROM
+  int wireAddress = EEPROM.read(0);
+  if (wireAddress >= 8 && wireAddress <=23)
+    return wireAddress;
+  else
+    return i2cWireAddress;
 }
