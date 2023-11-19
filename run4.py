@@ -12,9 +12,10 @@ RUN3_WAIT_ON=0
 def run4():
     resetGyro(0)
 
-    turnToAngle(335, speed=200, oneWheelTurn=True)
+    _angle = 335
+    turnToAngle(_angle, speed=200, oneWheelTurn=True)
 
-    gyroStraightWithDrive(distanceInCm = 52, speed = 400, targetAngle = 335)
+    gyroStraightWithDrive(distanceInCm = 56, speed = 400, targetAngle = _angle)
 
    # turnToAngle(targetAngle=270, speed=400, oneWheelTurn=True)
     #if RUN3_WAIT_ON == 1:
@@ -27,23 +28,24 @@ def run4():
     #right_med_motor.run_angle(speed=400, rotation_angle=130, wait=False)
     
     gyroStraightWithDrive(distanceInCm= 47, speed=400, targetAngle=270, slowDown=True)
-    right_med_motor.run_angle(speed=100, rotation_angle=-90)
+    right_med_motor.run_angle(speed=200, rotation_angle=-130)
 
     wait(500)
 
 
-    right_med_motor.run_angle(speed=200, rotation_angle=90)
+    right_med_motor.run_angle(speed=200, rotation_angle=170)
 
-    gyroStraightWithDrive(distanceInCm=47, speed=600, targetAngle=275, backward=True)
+    gyroStraightWithDrive(distanceInCm=47, speed=400, targetAngle=275, backward=True)
 
-    turnToAngle(8, speed=200)
+    _angle = 4
+    turnToAngle(_angle, speed=200)
     wait(100)
         
-    gyroStraightWithDrive(distanceInCm=125, speed=600, targetAngle=8)
+    gyroStraightWithDrive(distanceInCm=125, speed=600, targetAngle=_angle)
 
 
 
-#runWithTiming(run3, "run3")
+# runWithTiming(run4, "run4")
 #resetGyro(0)
 
 #right_med_motor.run_angle(speed=500, rotation_angle=-100)
