@@ -15,7 +15,7 @@ def run4():
     _angle = 335
     turnToAngle(_angle, speed=200, oneWheelTurn=True)
 
-    gyroStraightWithDrive(distanceInCm = 56, speed = 400, targetAngle = _angle)
+    gyroStraightWithDrive(distanceInCm = 52, speed = 400, targetAngle = _angle)
 
    # turnToAngle(targetAngle=270, speed=400, oneWheelTurn=True)
     #if RUN3_WAIT_ON == 1:
@@ -37,11 +37,13 @@ def run4():
 
     gyroStraightWithDrive(distanceInCm=47, speed=400, targetAngle=275, backward=True)
 
-    _angle = 4
+    _angle = 12
     turnToAngle(_angle, speed=200)
-    wait(100)
-        
-    gyroStraightWithDrive(distanceInCm=125, speed=400, targetAngle=_angle)
+    gyroStraightWithDrive(distanceInCm=80, speed=400, targetAngle=_angle)
+
+    _angle =0
+    turnToAngle(_angle, speed=200)
+    gyroStraightWithDrive(distanceInCm=45, speed=400, targetAngle=_angle)
 
 
 

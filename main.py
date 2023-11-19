@@ -3,6 +3,7 @@ from run1 import *
 from run2 import *
 from run3 import *
 from run4 import *
+from run4_new_arm import *
 from run5 import *
 from run6 import *
 from run7 import *
@@ -54,7 +55,7 @@ def _maindriver():
             runWithTiming(run1,"run3")
         if counter == 4:
             # Immersive experience run
-            runWithTiming(run4,"run4")
+            runWithTiming(run4_new_arm,"run4")
         if counter == 5:
             # Rolling camera run 
             runWithTiming(run5,"run5")
@@ -76,19 +77,3 @@ _maindriver()
 #run4()
 end_time = stopwatch.time()
 print("Total Time: " + str((end_time-start_time)/1000) + " seconds")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
