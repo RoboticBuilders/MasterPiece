@@ -4,6 +4,7 @@ from run2 import *
 from run3 import *
 from run4 import *
 from run4_new_arm import *
+from run2_with_long_arm import *
 from run5 import *
 from run6 import *
 from run7 import *
@@ -46,6 +47,7 @@ def _maindriver():
 
         if counter == 1:
             # Movie set run
+            #runWithTiming(run2,"run1")
             runWithTiming(run2,"run1")
         if counter == 2:
             # Sound mixer run
