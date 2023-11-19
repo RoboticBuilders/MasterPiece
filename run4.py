@@ -41,7 +41,7 @@ def run4():
     turnToAngle(_angle, speed=200)
     wait(100)
         
-    gyroStraightWithDrive(distanceInCm=125, speed=600, targetAngle=_angle)
+    gyroStraightWithDrive(distanceInCm=125, speed=400, targetAngle=_angle)
 
 
 
