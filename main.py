@@ -48,13 +48,13 @@ def _maindriver():
         if counter == 1:
             # Movie set run
             #runWithTiming(run2,"run1")
-            runWithTiming(run2,"run1")
+            runWithTiming(run1,"run1")
         if counter == 2:
             # Sound mixer run
-            runWithTiming(run3,"run2")
+            runWithTiming(run2,"run2")
         if counter == 3:
             # Theater scene change run
-            runWithTiming(run1,"run3")
+            runWithTiming(run3,"run3")
         if counter == 4:
             # Immersive experience run
             runWithTiming(run4_new_arm,"run4")
