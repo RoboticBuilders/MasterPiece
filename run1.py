@@ -75,8 +75,9 @@ def goHomeAlternateOfPickUpNoah():
     turnToAngle(_angle)
     left_med_motor.run_angle(500, -150, wait=False)
     gyroStraightWithDrive(-40, targetAngle=_angle, speed=1000)  ## it was orignally one line going back -38
-    turnToAngle(90)
-    gyroStraightWithDrive(-18, targetAngle=90, speed=600)
+    _angle=45
+    turnToAngle(_angle)
+    gyroStraightWithDrive(-18, targetAngle=_angle, speed=600)
 
 
 # new run1 takes 13 seconds.

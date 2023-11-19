@@ -8,10 +8,12 @@ from pybricks.tools import wait, StopWatch
 
 def run3():
     resetGyro(0)
-    gyroStraightWithDrive(distanceInCm=34, speed=350)
+    gyroStraightWithDrive(distanceInCm=38, speed=350)
     right_med_motor.run_angle(speed=600, rotation_angle = -1300, wait=False) # was 1000
     gyroStraightWithDrive(distanceInCm=20, speed=250)
 
     #come back home
-    gyroStraightWithDrive(distanceInCm=54, speed=500, backward=True, targetAngle=0)
+    gyroStraightWithDrive(distanceInCm=48, speed=500, backward=True, targetAngle=0)
+
+    right_med_motor.run_angle(speed=800, rotation_angle = 1300)
 
