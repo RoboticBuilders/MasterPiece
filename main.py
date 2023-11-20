@@ -70,9 +70,9 @@ def _maindriver():
         counter = counter + 1
         drive_base.straight(distance=0, then=Stop.BRAKE)
 
+initializeAndWaitForRobotReady()
 stopwatch = StopWatch()
 start_time = stopwatch.time()
-initializeAndWaitForRobotReady()
 _maindriver()
 
 #run4()

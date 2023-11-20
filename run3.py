@@ -110,7 +110,7 @@ def run3():
     #Execute M2
     turnToAngle(-45) 
     gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
-    right_med_motor.run_angle(speed=800, rotation_angle = -1300) # was 1000
+    right_med_motor.run_angle(speed=2000, rotation_angle = -1300) # was 1000
     
     
     # go Home

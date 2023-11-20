@@ -63,14 +63,14 @@ def run2_withLineDetection():
 def _run1_internal():
     #go to the movie set
     gyroStraightWithDrive(distanceInCm=54, speed=350)
-    right_med_motor.run_angle(speed=800, rotation_angle = -1300)
+    right_med_motor.run_angle(speed=2000, rotation_angle = -1300)
     
     #get camera in right position
     gyroStraightWithDrive(distanceInCm=18, speed=200, backward=True)
 
     turnToAngle(targetAngle=320, speed=40)
-    right_med_motor.run_angle(600, rotation_angle=400) # was 400
-    right_med_motor.run_angle(600, rotation_angle=900, wait=False)
+    right_med_motor.run_angle(2000, rotation_angle=400) # was 400
+    right_med_motor.run_angle(2000, rotation_angle=900, wait=False)
 
     turnToAngle(targetAngle=0, speed=100)
 
