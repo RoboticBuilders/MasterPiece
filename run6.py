@@ -9,7 +9,7 @@ def run6():
         angle = 0
 
         # Bring down attachment.
-        run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=False)
+        #run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=False)
 
         # drive forward before picking up arm
         gyroStraightWithDrive(distanceInCm = 23, speed = 500, targetAngle = angle)

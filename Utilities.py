@@ -656,9 +656,9 @@ RUN6_PICKUP_EXPERT_ATTACHMENT_UP = 2
 # Expects the arm to start down.
 def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True):
     if position == RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN:
-        right_med_motor.run_target(500, 75, Stop.HOLD, wait)
+        right_med_motor.run_target(500, 0, Stop.HOLD, wait)
     else:
-        right_med_motor.run_target(300, 0, Stop.HOLD, wait)
+        right_med_motor.run_target(300, -75, Stop.HOLD, wait)
 
 # # This version does not use abs() as we were seeing some weird behavior where drive base reset takes
 # # a while, which causes the next gyroStraight call to fail if going backwards or a small distance
