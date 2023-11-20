@@ -591,7 +591,7 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
         vRange = range(0, 20)
     else:
         func = _compareValue
-        vRange = range(100, 100)
+        vRange = range(83, 100)
 
     origDistanceDrivenMM = drive_base.distance()
     robot.drive(speed = speed, turn_rate = 0)
@@ -601,7 +601,7 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
             doCorrection = False
             break
         hsv = sensor.hsv()
-        # print(hsv)
+        #print(hsv)
     print("Stopping at (h,s,v) = {} for {}".format(sensor.hsv(), tag))
 
     robot.stop()
@@ -658,7 +658,7 @@ def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DO
     if position == RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN:
         right_med_motor.run_target(500, 0, Stop.HOLD, wait)
     else:
-        right_med_motor.run_target(300, -75, Stop.HOLD, wait)
+        right_med_motor.run_target(300, -150, Stop.HOLD, wait)
 
 # # This version does not use abs() as we were seeing some weird behavior where drive base reset takes
 # # a while, which causes the next gyroStraight call to fail if going backwards or a small distance

@@ -56,7 +56,7 @@ def _maindriver():
             runWithTiming(run3,"run3")
         if counter == 4:
             # Immersive experience run
-            runWithTiming(run4_new_arm,"run4")
+            runWithTiming(run4,"run4")
         if counter == 5:
             # Rolling camera run 
             runWithTiming(run5,"run5")
