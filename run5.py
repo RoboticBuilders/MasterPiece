@@ -18,6 +18,7 @@ def run5():
 
         # Backoff from the movie set to drop off the expert and orange 
         # audience. 
+        run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, wait=False)
         gyroStraightWithDrive(distanceInCm = 65, speed = 1000, targetAngle = angle, backward=True)
 
     def _dorun5():
