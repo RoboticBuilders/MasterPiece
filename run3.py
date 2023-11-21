@@ -74,11 +74,12 @@ def goHomeAlternateOfPickUpNoah():
     _angle=10
     turnToAngle(_angle)
     left_med_motor.run_angle(500, -150, wait=False)
+    #right_med_motor.run_angle(speed=500, rotation_angle = 300, wait=False)
     gyroStraightWithDrive(-40, targetAngle=_angle, speed=1000)  ## it was orignally one line going back -38
     _angle=45
     turnToAngle(_angle)
-    gyroStraightWithDrive(-18, targetAngle=_angle, speed=600)
-
+    gyroStraightWithDrive(-18, targetAngle=_angle, speed=1000)
+    
 
 # new run1 takes 13 seconds.
 def run3():
@@ -86,8 +87,8 @@ def run3():
     
     #3D Cinema
     left_med_motor.run_angle(600, 150, wait=False)
-    #was 9 inch
-    gyroStraightWithDrive(8 * CM_PER_INCH, targetAngle=0, speed=300)
+    #was 8 inch
+    gyroStraightWithDrive(14 * CM_PER_INCH, targetAngle=0, speed=300)
     #gyroStraightWithDrive(distanceInCm=17, targetAngle=0, speed=500)
     left_med_motor.run_angle(500, -150)
     left_med_motor.run_angle(500, 150, wait=False)
@@ -97,10 +98,11 @@ def run3():
     # go to M2
     left_med_motor.run_angle(1000, -150, wait=False)
     turnToAngle(45) 
-    gyroStraightWithDrive(distanceInCm=12, targetAngle=45, speed=600)## was 10
+    #was 12
+    gyroStraightWithDrive(distanceInCm=16, targetAngle=45, speed=600)## was 10
     #can switch to black line
-    #driveTillLine(speed=200, doCorrection=False, sensor=left_color, blackOrWhite="Black")
-    driveTillHsvRange(maxDistance=15*MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100) )## it was the left color sensor.
+    driveTillLine(speed=200, doCorrection=False, sensor=right_color, blackOrWhite="Black")
+    #driveTillHsvRange(maxDistance=15*MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100) )## it was the left color sensor.
     turnToAngle(0) 
     left_med_motor.run_angle(speed=1000, rotation_angle=150, wait=False)
     #wait(3000)
@@ -112,7 +114,7 @@ def run3():
     gyroStraightWithDrive(distanceInCm=13, targetAngle=-45)
     right_med_motor.run_angle(speed=2000, rotation_angle = -1300) # was 1000
     
-    
+    #
     # go Home
     goHomeAlternateOfPickUpNoah()
    
@@ -135,4 +137,4 @@ def initializeRun3():
     print("DONE")
 
 
-#initializeRun1()
+#initializeRun3()

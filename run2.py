@@ -16,3 +16,4 @@ def run2():
     gyroStraightWithDrive(distanceInCm=48, speed=500, backward=True, targetAngle=0)
     right_med_motor.run_angle(speed=2000, rotation_angle = 1300)
 
+#run2()
