@@ -17,7 +17,7 @@ def run4():
     turnToAngle(_angle, speed=200, oneWheelTurn=True)
 
     # Changed 11/16: 52 to 54 to avoid hitting the Sound Mixer
-    gyroStraightWithDrive(distanceInCm = 52, speed = 400, targetAngle = _angle) 
+    gyroStraightWithDrive(distanceInCm = 50, speed = 400, targetAngle = _angle) 
     turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm = 47, speed=400, targetAngle=270, slowDown=True)
     
