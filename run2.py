@@ -36,4 +36,4 @@ def initializeRun2():
 
     print("DONE")
 
-initializeRun2()
+#initializeRun2()
