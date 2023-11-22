@@ -28,7 +28,7 @@ void setup() {
 
   // Reset all pins to lowest point
   ResetPins();
-
+  
   // read EEPROM for i2cWireAddress
   int wireAddress = readWireAddress();
   i2cWireAddress = wireAddress;
@@ -38,9 +38,9 @@ void setup() {
 
   // Register a handler for data receive
   Wire.onReceive(receiveEvent);  
-  
+
   // start serial for output
-  Serial.begin(9600);            
+  Serial.begin(9600);               
 }
 
 void ResetPins() {
@@ -92,7 +92,7 @@ void loop() {
       motor4.run(RELEASE);
     }
 
-    Serial.println();
+      Serial.println("Loop");
 
     // Run motors for specified time
     delay(4500);
@@ -164,8 +164,36 @@ int readWireAddress()
 {
   // We store wireAddress at the start of EEPROM
   int wireAddress = EEPROM.read(0);
-  if (wireAddress >= 8 && wireAddress <=23)
+  if (wireAddress != 255)
+  {
     return wireAddress;
+  }
   else
+  {
     return i2cWireAddress;
+  }
+}
+
+void TestMotors()
+{
+  Serial.println(F("Testing motor1..."));
+  TestMotor(motor1);
+  delay(5000);
+  Serial.println(F("Testing motor2..."));
+  TestMotor(motor2);
+  delay(5000);
+  Serial.println(F("Testing motor3..."));
+  TestMotor(motor3);
+  delay(5000);
+  Serial.println(F("Testing motor4..."));
+  TestMotor(motor4);
+}
+
+void TestMotor(AF_DCMotor motor)
+{
+  motor.run(FORWARD);
+  delay(7000);
+  motor.run(BACKWARD);
+  delay(7000);
+  ReleaseAllMotors();
 }
