@@ -5,60 +5,36 @@ from pybricks.robotics import GyroDriveBase, DriveBase
 from pybricks.tools import wait, StopWatch
 from Utilities import *
 
-# This version is the new veriosn as of 11/14 without light show
-RUN3_WAIT_ON=0
 
 
 def run4():
     resetGyro(0)
 
+    _angle=0
+    gyroStraightWithDrive(distanceInCm = 7, speed = 200, targetAngle = _angle) 
+
     _angle = 335
     turnToAngle(_angle, speed=200, oneWheelTurn=True)
 
-    gyroStraightWithDrive(distanceInCm = 56, speed = 400, targetAngle = _angle)
-
-   # turnToAngle(targetAngle=270, speed=400, oneWheelTurn=True)
-    #if RUN3_WAIT_ON == 1:
-       # wait(500)
-
-    #gyroStraightWithDrive(distanceInCm= 25, speed=400, targetAngle=270)
-
+    # Changed 11/16: 52 to 54 to avoid hitting the Sound Mixer
+    gyroStraightWithDrive(distanceInCm = 50, speed = 400, targetAngle = _angle) 
     turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
-
-    #right_med_motor.run_angle(speed=400, rotation_angle=130, wait=False)
+    gyroStraightWithDrive(distanceInCm = 47, speed=400, targetAngle=270, slowDown=True)
     
-    gyroStraightWithDrive(distanceInCm= 47, speed=400, targetAngle=270, slowDown=True)
-    right_med_motor.run_angle(speed=200, rotation_angle=-130)
-
+    # Now drop off the expert.
+    right_med_motor.run_angle(speed=1000, rotation_angle=1200)
     wait(500)
+    right_med_motor.run_angle(speed=1000, rotation_angle=-1200)
 
+    # backoff.
+    gyroStraightWithDrive(distanceInCm=10, speed=400, targetAngle=270, backward=True)
+    gyroStraightWithDrive(distanceInCm=37, speed=400, targetAngle=275, backward=True)
 
-    right_med_motor.run_angle(speed=200, rotation_angle=170)
+    # Code after this is new code.
+    # gyroStraightWithDrive(distanceInCm=5, speed=400, targetAngle=275, backward=True)
+    angle = 8
+    turnToAngle(angle, speed=500)  
+    gyroStraightWithDrive(distanceInCm=90, speed=1000, targetAngle=angle)
 
-    gyroStraightWithDrive(distanceInCm=47, speed=400, targetAngle=275, backward=True)
+#run4()
 
-    _angle = 4
-    turnToAngle(_angle, speed=200)
-    wait(100)
-        
-    gyroStraightWithDrive(distanceInCm=125, speed=400, targetAngle=_angle)
-
-
-
-# runWithTiming(run4, "run4")
-#resetGyro(0)
-
-#right_med_motor.run_angle(speed=500, rotation_angle=-100)
-
-#wait(500)
-
-
-#right_med_motor.run_angle(speed=500, rotation_angle=100)
-
-
-# if RUN3_WAIT_ON == 1:
-#             wait(500)
-
-
-
-        

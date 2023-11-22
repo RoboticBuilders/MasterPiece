@@ -1,17 +1,7 @@
 from Utilities import *
 
 def run6():
-    # pickup Expert Attachment constants
-    PICKUP_EXPERT_ATTACHMENT_DOWN = 1
-    PICKUP_EXPERT_ATTACHMENT_UP = 2
-
-    # Expects the arm to start down.
-    def _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True):
-        if position == PICKUP_EXPERT_ATTACHMENT_DOWN:
-            right_med_motor.run_target(500, 175, Stop.HOLD, wait)
-        else:
-            right_med_motor.run_target(300, 0, Stop.HOLD, wait)
-
+    
     def _positionChicken():
         left_med_motor.run_angle(-500, 950)
     
@@ -19,13 +9,13 @@ def run6():
         angle = 0
 
         # Bring down attachment.
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_DOWN, wait=False)
+        #run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=False)
 
         # drive forward before picking up arm
         gyroStraightWithDrive(distanceInCm = 23, speed = 500, targetAngle = angle)
 
         # Pickup the expert
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
+        run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP)
 
     def _doChickenAndCraftCretor():
         angle = 0

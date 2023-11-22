@@ -20,11 +20,6 @@ def run5():
         # audience. 
         gyroStraightWithDrive(distanceInCm = 65, speed = 1000, targetAngle = angle, backward=True)
 
-    def _resetAttachmentForNextRun():
-        # Reset attachment for the next run. 
-        # Comment in the main program.
-        _positionPickUpExpertAttachment(position=PICKUP_EXPERT_ATTACHMENT_UP)
-
     def _dorun5():
         _doRollingCameraAndDropOffAtMovieSet()
         _goHomeAfterRollingCamera()

@@ -3,6 +3,7 @@ from run1 import *
 from run2 import *
 from run3 import *
 from run4 import *
+from run4 import *
 from run5 import *
 from run6 import *
 from run7 import *
@@ -45,13 +46,14 @@ def _maindriver():
 
         if counter == 1:
             # Movie set run
-            runWithTiming(run2,"run1")
+            #runWithTiming(run2,"run1")
+            runWithTiming(run1,"run1")
         if counter == 2:
             # Sound mixer run
-            runWithTiming(run3,"run2")
+            runWithTiming(run2,"run2")
         if counter == 3:
             # Theater scene change run
-            runWithTiming(run1,"run3")
+            runWithTiming(run3,"run3")
         if counter == 4:
             # Immersive experience run
             runWithTiming(run4,"run4")
@@ -68,27 +70,11 @@ def _maindriver():
         counter = counter + 1
         drive_base.straight(distance=0, then=Stop.BRAKE)
 
+initializeAndWaitForRobotReady()
 stopwatch = StopWatch()
 start_time = stopwatch.time()
-initializeAndWaitForRobotReady()
 _maindriver()
 
 #run4()
 end_time = stopwatch.time()
 print("Total Time: " + str((end_time-start_time)/1000) + " seconds")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
