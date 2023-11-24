@@ -26,21 +26,27 @@ void setup() {
 
   ReleaseAllMotors();
 
+  // start serial for output
+  Serial.begin(9600);  
+  Serial.println("Reseting pins");
+
   // Reset all pins to lowest point
   ResetPins();
   
+  Serial.println("Pins are reset");
+
   // read EEPROM for i2cWireAddress
   int wireAddress = readWireAddress();
   i2cWireAddress = wireAddress;
-  
+  Serial.print("Wire address");
+  Serial.println(wireAddress);
+
   // join I2C bus with the address for this sub Arduino
   Wire.begin(i2cWireAddress);     
 
   // Register a handler for data receive
   Wire.onReceive(receiveEvent);  
-
-  // start serial for output
-  Serial.begin(9600);               
+  Serial.println("Setup completed");          
 }
 
 void ResetPins() {
@@ -59,6 +65,8 @@ void loop() {
   if (motor1_running | motor2_running | motor3_running | motor4_running) {
     // At least one motor should be running. Enter control loop.
     // Run the corresponding motor. Release the other ones.
+
+    ResetPins();
 
     if (motor1_running) {
       Serial.print("Forward | ");
@@ -106,14 +114,17 @@ void loop() {
     ReleaseAllMotors();
 
     // Wait for some time to allow users to feel/see the display
-    delay(6000);
+    //delay(6000);
 
     // Now reset it back to original state
-    ResetPins();
+    // ResetPins();
+  }
+  else {
+    //Serial.println("Nothing to do");
   }
 
   // Delay for the control loop
-  delay(1000);
+  delay(5000);
 }
 
 void ReleaseAllMotors() {
@@ -126,6 +137,8 @@ void ReleaseAllMotors() {
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
+  Serial.print("receive event");
+  Serial.println(howMany);
   while (1 < Wire.available()) {  // loop through all but the last
     char c = Wire.read();         // receive byte as a character
     Serial.print(c);              // print the character
@@ -135,8 +148,17 @@ void receiveEvent(int howMany) {
   Serial.print("Sub reads: ");   // print the integer
   Serial.println(x);             // print the integer
 
+  if (x == -1)
+    return;
+
   // Get height data from the received byte. Each pin uses 2 of the 8 bits in the data stream. The bit operations below extracts these values and adds them to an array.
   int arr[] = { x & 3, x >> 2 & 3, x >> 4 & 3, x >> 6 & 3 };
+
+  // if the command is to reset Pins (all 0s then we can call ResetPins)
+  if (x == 0) {
+    Serial.println("Command to reset pins");
+    ResetPins();
+  }
 
   // Print for debug purposes
   for (int i = 0; i < 4; i++) {
