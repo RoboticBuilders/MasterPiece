@@ -11,7 +11,7 @@ def run4_wedge_aligner():
     _angle=-30
     resetGyro(_angle)
 
-    gyroStraightWithDrive(distanceInCm = 68, speed = 400, targetAngle = _angle)
+    gyroStraightWithDrive(distanceInCm = 63, speed = 400, targetAngle = _angle)
 
     # _angle = 335
     # turnToAngle(_angle, speed=200, oneWheelTurn=True)
@@ -20,7 +20,7 @@ def run4_wedge_aligner():
     # gyroStraightWithDrive(distanceInCm = 50, speed = 400, targetAngle = _angle) 
     # robot.straight(distance=580)
 
-    turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
+    turnToAngle(targetAngle=275, speed=200, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm = 47, speed=200, targetAngle=270, slowDown=True)
     
     # Now drop off the expert.
