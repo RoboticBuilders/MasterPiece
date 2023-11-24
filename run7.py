@@ -16,54 +16,63 @@ def resetCircularMotionArm(wait=True):
     left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=-1*CIRCULAR_MOTION_ARM_DEGREES, wait=wait)
 
 def doMusicConcert():
+    # go forward and turn towards the black line
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*17, targetAngle=0, speed=600)
     turnToAngle(-45)
 
+    # catch the black line
     driveTillLine(speed=300, doCorrection=False, tag="Music Concert")
+
+    # align against the wall to drop off Noah & Audience
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*1, targetAngle=-45, speed=600)
     turnToAngle(targetAngle=0, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*6.5, targetAngle=0, speed=500)
 
-    # lift the arm to deliver the expert
-    left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=-150)    
-    # was 8, then 9.5
+    # lift the arm to deliver the expert and back off
+    left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=-150) 
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*10.5, targetAngle=10, backward=True, speed=400)
+
+    # turn towards the Music Concert
     turnToAngle(45)
-    gyroStraightWithDrive(distanceInCm=CM_PER_INCH*10, targetAngle=45, speed=400)
+
+    # Push the HP and align against it, and turn circular motion arm to do sounds lever
+    gyroStraightWithDrive(distanceInCm=CM_PER_INCH*7, targetAngle=45, speed=400) # 11/23 - was 10
+    driveForTime(timeInMS=500, speed=400)
     turnToAngle(targetAngle=53, forceTurn=FORCETURN_RIGHT, oneWheelTurn=True)
     wait(anyaRun2Wait)
     left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=CIRCULAR_MOTION_ARM_DEGREES)
 
 def doAugmentedReality():
     # resetGyro(angle=45)
-    # Back up from music concert
-    goStraight(MM_PER_INCH*-5, straightSpeed=300)# was 5.5 back (-5.5)
+
+    # Back up from music concert and turn towards Augmented Reality
+    goStraight(MM_PER_INCH*-5, straightSpeed=300)
     _angle=-90
-    #wait(10000)
     turnToAngle(_angle)
+
+    # Reset circular motion arm in parallel to avoid it hitting Craft Creator
     resetCircularMotionArm(wait=False)
 
-    #wait(10000)
-    #37 to ensure that the masterpiece mission doesnt come in the way
-    gyroStraightWithDrive(distanceInCm=35, targetAngle=_angle) #----Changed
-    # gyroStraightWithDrive(distanceInCm=30, targetAngle=_angle)
+    # go to Augmented Reality
+    gyroStraightWithDrive(distanceInCm=35, targetAngle=_angle)
     wait(augmentedRealityWaitTime)
     _angle = -45
     turnToAngle(targetAngle=_angle,oneWheelTurn=True)
+
+    # back up to pull Augmented Reality lever
     gyroStraightWithDrive(distanceInCm=3, targetAngle=_angle)
-    # _angle = 25
+
+    # turn a little more and back up again to make sure the lever caught
     _angle = 25
-    turnToAngle(targetAngle=_angle,oneWheelTurn=True) ## was target angle ((0))  # add on line take off if not work
-    # gyroStraightWithDrive(distanceInCm=3, targetAngle=0) # I might need to delete also test line!!!!!
-    #goStraight(MM_PER_INCH*2)
-    # gyroStraightWithDrive(distanceInCm=5, targetAngle=0)
-    # wait(augmentedRealityWaitTime)
-    #goStraight(MM_PER_INCH*-5.5)  # you might want to try 6 or 6.
+    turnToAngle(targetAngle=_angle,oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle, backward=True)
-    # wait(augmentedRealityWaitTime)
+
+    # go forward to fully push the lever
     _angle = 35
     turnToAngle(targetAngle=_angle,oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle)
+
+    # back up from Augmented Reality
     _angle=30
     turnToAngle(targetAngle=_angle,oneWheelTurn=True, forceTurn=FORCETURN_LEFT)
     gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle, backward=True)
@@ -76,18 +85,23 @@ def resetExpertDropOffArm(numRotations=2):
         right_med_motor.run_angle(speed=-DROP_OFF_SPEED,rotation_angle=numRotations*EXPERT_ARM_TURN_ANGLE)
 
 def ballerina5_ExpertDropOffs():
-    gyroStraightWithDrive(distanceInCm=1)
+    # turn and start driving towards Sound Mixer
     _angle=-90
     turnToAngle(_angle)
     wait(anyaDropOffsWait_B5)
     distGyro = gyroStraightWithDrive(distanceInCm=15*CM_PER_INCH, targetAngle=_angle, speed=500)
     wait(anyaDropOffsWait_B5)
+
+    # try to catch the white line near Immersive Experience
     distToWhiteLine = driveTillHsvRange(maxDistance=3*MM_PER_INCH, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100), tag="expert dropoffs")
     print("Distances covered so far: {}, {}".format(distGyro, distToWhiteLine))
     wait(anyaDropOffsWait_B5)
-    TOTAL_DIST_TO_TRAVEL = 21*MM_PER_INCH # was 17
+
+    # distance from end of Augmented Reality to hitting Sound Mixer
+    TOTAL_DIST_TO_TRAVEL = 21*MM_PER_INCH
+    
+    # if robot still hasn't gone total distance to travel -> go until total distance to travel
     if(distGyro + distToWhiteLine < TOTAL_DIST_TO_TRAVEL):
-        # driveTillLine(speed=200, sensor=left_color, maxDistance=12*MM_PER_INCH)
         gyroStraightWithDrive(distanceInCm=(TOTAL_DIST_TO_TRAVEL - distGyro - distToWhiteLine)/10, targetAngle=_angle, speed=500)
         wait(anyaDropOffsWait_B5)
     else:
@@ -98,21 +112,16 @@ def ballerina5_ExpertDropOffs():
     wait(anyaDropOffsWait_B5)
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*2, targetAngle=_angle)
     wait(anyaDropOffsWait)
+
     _angle=-90
     turnToAngle(_angle)
     wait(anyaDropOffsWait_B5)
     gyroStraightWithDrive(distanceInCm=CM_PER_INCH*7, targetAngle=_angle)
     wait(anyaDropOffsWait)
-    # wait(10000)
-    # turnToAngle(-75)
-    # gyroStraightWithDrive(distanceInCm=-2*CM_PER_INCH, targetAngle=-75)
-    # turnToAngle(-90, oneWheelTurn=True, forceTurn=FORCETURN_RIGHT)
 
-    #New strategy
-    # gyroStraightWithDrive(distanceInCm=5*CM_PER_INCH, targetAngle=-90)
     _angle=-45
-    turnToAngle(_angle)
     dropOneExpert(numDropoffRotations=1, wait=False)
+    turnToAngle(_angle)
     gyroStraightWithDrive(speed=100, distanceInCm=2*CM_PER_INCH, targetAngle=_angle)
     wait(anyaDropOffsWait)
     while(not EXPERT_ARM_CONTROL.done()):
@@ -140,8 +149,6 @@ def mainRun7():
     dropoffs=2
     ballerina5_ExpertDropOffs()
 
-    # dropOneExpert(numDropoffRotations=2, wait=True)
-
     end_time = stopwatch.time()
     print("Time is " + str((end_time-start_time)/1000) + " seconds")
 
@@ -150,18 +157,3 @@ def mainRun7():
     resetExpertDropOffArm()
 
     print("DONE")
-
-
-# print("BATTERY = " + str(hub.battery.voltage()))
-# stopwatch = StopWatch()
-# start_time = stopwatch.time()
-
-# run5()
-# print("---DONE WITH RUN---")
-
-# end_time = stopwatch.time()
-# print("Time is " + str((end_time-start_time)/1000) + " seconds")
-
-# #wait(30000)
-# print("Resetting expert arm...")
-# resetExpertDropOffArm(numRotations=1)

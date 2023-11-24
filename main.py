@@ -46,11 +46,11 @@ def _maindriver():
 
         if counter == 1:
             # Movie set run
-            #runWithTiming(run2,"run1")
-            runWithTiming(run1,"run1")
+            runWithTiming(run2,"run1")
+            # runWithTiming(run2,"run2")
         if counter == 2:
             # Sound mixer run
-            runWithTiming(run2,"run2")
+            runWithTiming(run1,"run2")
         if counter == 3:
             # Theater scene change run
             runWithTiming(run3,"run3")

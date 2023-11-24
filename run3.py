@@ -78,7 +78,7 @@ def goHomeAlternateOfPickUpNoah():
     gyroStraightWithDrive(-40, targetAngle=_angle, speed=1000)  ## it was orignally one line going back -38
     _angle=45
     turnToAngle(_angle)
-    gyroStraightWithDrive(-18, targetAngle=_angle, speed=1000)
+    gyroStraightWithDrive(-23, targetAngle=_angle, speed=1000)
     
 
 # new run1 takes 13 seconds.
