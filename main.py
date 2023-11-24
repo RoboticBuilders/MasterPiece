@@ -45,12 +45,12 @@ def _maindriver():
             print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)))
 
         if counter == 1:
-            # Movie set run
-            runWithTiming(run2,"run1")
+            # Sound Mixer
+            runWithTiming(run1,"run1")
             # runWithTiming(run2,"run2")
         if counter == 2:
-            # Sound mixer run
-            runWithTiming(run1,"run2")
+            # Movie Set
+            runWithTiming(run2,"run2")
         if counter == 3:
             # Theater scene change run
             runWithTiming(run3,"run3")
