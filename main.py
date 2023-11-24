@@ -2,8 +2,8 @@ from Utilities import *
 from run1 import *
 from run2 import *
 from run3 import *
-from run4 import *
-from run4 import *
+# from run4 import *
+from run4_wedge_aligner import *
 from run5 import *
 from run6 import *
 from run7 import *
@@ -56,7 +56,7 @@ def _maindriver():
             runWithTiming(run3,"run3")
         if counter == 4:
             # Immersive experience run
-            runWithTiming(run4,"run4")
+            runWithTiming(run4_wedge_aligner,"run4")
         if counter == 5:
             # Rolling camera run 
             runWithTiming(run5,"run5")

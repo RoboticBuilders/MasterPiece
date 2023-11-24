@@ -11,8 +11,7 @@ def run4_wedge_aligner():
     _angle=-30
     resetGyro(_angle)
 
-    gyroStraightWithDrive(distanceInCm = 68, speed = 400, targetAngle = _angle) 
-    wait(15000)
+    gyroStraightWithDrive(distanceInCm = 68, speed = 400, targetAngle = _angle)
 
     # _angle = 335
     # turnToAngle(_angle, speed=200, oneWheelTurn=True)
@@ -40,6 +39,6 @@ def run4_wedge_aligner():
     gyroStraightWithDrive(distanceInCm=98, speed=1000, targetAngle=angle)
 
 #run4()
-waitForButtonPress()
-runWithTiming(run4_wedge_aligner, "Run 4 Wedge Aligner")
+# waitForButtonPress()
+# runWithTiming(run4_wedge_aligner, "Run 4 Wedge Aligner")
 
