@@ -12,17 +12,17 @@ def _run2_internal():
     #go to the movie set
     # gyroStraightWithDrive(distanceInCm=52, speed=300) # was 54
     drive_base.straight(distance=500)
-    right_med_motor.run_angle(speed=2000, rotation_angle = -1000)
+    right_med_motor.run_angle(speed=2000, rotation_angle = -1300)
     
     #get camera in right position
     gyroStraightWithDrive(distanceInCm=18, speed=300, backward=True)
 
-    turnToAngle(targetAngle=335, speed=200)
+    turnToAngle(targetAngle=320, speed=200)
     right_med_motor.run_angle(2000, rotation_angle=800) # was 400
     #wait(1000)
 
     #turnToAngle(targetAngle=0, speed=200)
-    right_med_motor.run_angle(2000, rotation_angle=300, wait=False)
+    right_med_motor.run_angle(2000, rotation_angle=500, wait=False)
 
     _angle = 0
     # turnToAngle(targetAngle=_angle, speed=100)
