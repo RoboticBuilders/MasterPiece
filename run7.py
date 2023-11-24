@@ -36,8 +36,8 @@ def doMusicConcert():
     turnToAngle(45)
 
     # Push the HP and align against it, and turn circular motion arm to do sounds lever
-    gyroStraightWithDrive(distanceInCm=CM_PER_INCH*7, targetAngle=45, speed=400) # 11/23 - was 10
-    driveForTime(timeInMS=500, speed=400)
+    gyroStraightWithDrive(distanceInCm=CM_PER_INCH*5, targetAngle=45, speed=400) # 11/23 - was 10
+    driveForTime(timeInMS=1000, speed=400)
     turnToAngle(targetAngle=53, forceTurn=FORCETURN_RIGHT, oneWheelTurn=True)
     wait(anyaRun2Wait)
     left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=CIRCULAR_MOTION_ARM_DEGREES)

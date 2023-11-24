@@ -7,20 +7,21 @@ from Utilities import *
 
 
 
-def run4():
-    resetGyro(0)
+def run4_wedge_aligner():
+    _angle=-30
+    resetGyro(_angle)
 
-    _angle=0
-    gyroStraightWithDrive(distanceInCm = 10, speed = 200, targetAngle = _angle) 
+    gyroStraightWithDrive(distanceInCm = 68, speed = 400, targetAngle = _angle) 
+    wait(15000)
 
-    _angle = 335
-    turnToAngle(_angle, speed=200, oneWheelTurn=True)
+    # _angle = 335
+    # turnToAngle(_angle, speed=200, oneWheelTurn=True)
 
     # Changed 11/16: 52 to 54 to avoid hitting the Sound Mixer
     # gyroStraightWithDrive(distanceInCm = 50, speed = 400, targetAngle = _angle) 
-    robot.straight(distance=580)
+    # robot.straight(distance=580)
 
-    turnToAngle(targetAngle=270, speed=200)#, oneWheelTurn=True)
+    turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
     gyroStraightWithDrive(distanceInCm = 47, speed=200, targetAngle=270, slowDown=True)
     
     # Now drop off the expert.
@@ -39,4 +40,6 @@ def run4():
     gyroStraightWithDrive(distanceInCm=98, speed=1000, targetAngle=angle)
 
 #run4()
+waitForButtonPress()
+runWithTiming(run4_wedge_aligner, "Run 4 Wedge Aligner")
 
