@@ -10,7 +10,7 @@ def run2():
     resetGyro(0)
     gyroStraightWithDrive(distanceInCm=38, speed=350)
     #right_med_motor.run_angle(speed=1000, rotation_angle = -1300, wait=False) # was 1000
-    gyroStraightWithDrive(distanceInCm=10, speed=250) 
+    gyroStraightWithDrive(distanceInCm=13, speed=250) 
     right_med_motor.run_angle(speed=2000, rotation_angle = -1300, wait= False)
     gyroStraightWithDrive(distanceInCm=7, speed=250) 
     #come back home

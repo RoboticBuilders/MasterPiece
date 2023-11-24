@@ -660,6 +660,17 @@ def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DO
     else:
         right_med_motor.run_target(300, -150, Stop.HOLD, wait)
 
+
+def driveForTime(timeInMS, speed=DEFAULT_SPEED):
+    stopwatch = StopWatch()
+    start = stopwatch.time()
+    end = 0
+    while end - start < timeInMS:
+        robot.drive(speed=speed, turn_rate=0)
+        end = stopwatch.time()
+
+
+
 # # This version does not use abs() as we were seeing some weird behavior where drive base reset takes
 # # a while, which causes the next gyroStraight call to fail if going backwards or a small distance
 # def gyroStraightWithDrive2(distanceInCm, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
