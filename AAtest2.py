@@ -41,15 +41,7 @@ def run4():
     left_med_motor.run_angle(speed=100, rotation_angle=150, wait=False)
     left_med_motor.run_angle(speed=300, rotation_angle=-150, wait= False)
     gyroStraightWithDrive(distanceInCm=69, speed=400, targetAngle=angle)
-       
 
-'''
-    angle = 0
-    gyroStraightWithDrive(distanceInCm = 40, speed = 250, targetAngle = angle)
-    _positionChicken()
-    '''
-
-#initializeAndWaitForRobotReady()
-# runWithTiming(run4,'run4')
-
-#right_med_motor.run_target(300, 100)
+waitForButtonPress()
+run4()
+# runWithTiming(run4_wedge_aligner, "Run 4 Wedge Aligner")

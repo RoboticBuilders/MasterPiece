@@ -4,10 +4,10 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import GyroDriveBase, DriveBase
 from pybricks.tools import wait, StopWatch
 from Utilities import *
-
-left_med_motor.run_angle(300, 360 * 6)
-wait(5000)
-
+gyroStraightWithDrive(distanceInCm=10, speed=200)
+#left_med_motor.run_angle(600, 360 * 1)
+wait(500)
+#gyroStraightWithDrive(distanceInCm=30, speed=200, backward=True)
 #gyroStraightWithDrive(-10)
 #wait(2000)
 
