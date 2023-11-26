@@ -7,12 +7,11 @@ from Utilities import *
 
 
 
-def run4():
-    resetGyro(0)
+def run4_wedge_aligner():
     _angle=-30
     resetGyro(_angle)
 
-    gyroStraightWithDrive(distanceInCm = 68, speed = 400, targetAngle = _angle)
+    gyroStraightWithDrive(distanceInCm = 63, speed = 400, targetAngle = _angle)
 
     # _angle = 335
     # turnToAngle(_angle, speed=200, oneWheelTurn=True)
@@ -27,7 +26,7 @@ def run4():
     # Now drop off the expert.
     right_med_motor.run_angle(speed=1000, rotation_angle=1200)
     # wait(500)
-    right_med_motor.run_angle(speed=1000, rotation_angle=-1200, wait=False)
+    right_med_motor.run_angle(speed=1000, rotation_angle=-1200)
 
     # backoff.
     gyroStraightWithDrive(distanceInCm=10, speed=400, targetAngle=270, backward=True)
@@ -35,21 +34,11 @@ def run4():
 
     # Code after this is new code.
     # gyroStraightWithDrive(distanceInCm=5, speed=400, targetAngle=275, backward=True)
-    angle = 10
+    angle = 8
     turnToAngle(angle, speed=500)  
-    gyroStraightWithDrive(distanceInCm=31, speed=400, targetAngle=angle)
-    left_med_motor.run_angle(speed=100, rotation_angle=150, wait=False)
-    left_med_motor.run_angle(speed=300, rotation_angle=-150, wait= False)
-    gyroStraightWithDrive(distanceInCm=69, speed=400, targetAngle=angle)
-       
+    gyroStraightWithDrive(distanceInCm=98, speed=1000, targetAngle=angle)
 
-'''
-    angle = 0
-    gyroStraightWithDrive(distanceInCm = 40, speed = 250, targetAngle = angle)
-    _positionChicken()
-    '''
+#run4()
+# waitForButtonPress()
+# runWithTiming(run4_wedge_aligner, "Run 4 Wedge Aligner")
 
-#initializeAndWaitForRobotReady()
-# runWithTiming(run4,'run4')
-
-#right_med_motor.run_target(300, 100)

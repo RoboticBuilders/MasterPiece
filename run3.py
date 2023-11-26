@@ -75,10 +75,10 @@ def goHomeAlternateOfPickUpNoah():
     turnToAngle(_angle)
     left_med_motor.run_angle(500, -150, wait=False)
     #right_med_motor.run_angle(speed=500, rotation_angle = 300, wait=False)
-    gyroStraightWithDrive(-40, targetAngle=_angle, speed=1000)  ## it was orignally one line going back -38
-    _angle=45
-    turnToAngle(_angle)
-    gyroStraightWithDrive(-23, targetAngle=_angle, speed=1000)
+    gyroStraightWithDrive(-60, targetAngle=_angle, speed=1000)  ## it was orignally one line going back -38
+    # _angle=45
+    # turnToAngle(_angle)
+    # gyroStraightWithDrive(-23, targetAngle=_angle, speed=1000)
     
 
 # new run1 takes 13 seconds.
@@ -117,6 +117,7 @@ def run3():
     #
     # go Home
     goHomeAlternateOfPickUpNoah()
+    right_med_motor.run_angle(speed=2000, rotation_angle = 1300) # was 1000
    
 
 # This is code that was outside.

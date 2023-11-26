@@ -5,12 +5,18 @@ from pybricks.robotics import GyroDriveBase, DriveBase
 from pybricks.tools import wait, StopWatch
 from Utilities import *
 
+def armdown():
+    armdown = 3350
+
+def armup():
+    armup = -3350
+
 def run3():
 
     # This function drops of the innovation project, expert, and orange person to the museum.
     def _positionInnovationProjectAndExpertsToMuseum():
 
-        resetGyro(0)
+        left_med_motor.run_angle(300, 360 * -8)
 
         turnToAngle(330, speed=200, oneWheelTurn=True)
 
@@ -19,40 +25,54 @@ def run3():
         turnToAngle(305, speed=200, oneWheelTurn=True)
         wait(500)
 
-        gyroStraightWithDrive(distanceInCm=55, speed=300, targetAngle=305)
+        gyroStraightWithDrive(distanceInCm=60, speed=300, targetAngle=305)
 
         turnToAngle(270, speed=200, oneWheelTurn=True)
         wait(500)
     # This function does the lightshow mission by lifting up the arms.
     def _executeLightShow():
-        gyroStraightWithDrive(distanceInCm=21, speed=200, targetAngle=270, backward=True)
+
+
+        left_med_motor.run_angle(300, 360 * 8)
+        wait(500)
+        
+        gyroStraightWithDrive(distanceInCm=27, speed=300, targetAngle=270, backward=True)
 
         wait(1000)
 
-        left_med_motor.run_angle(300, 360 * 3)
-        left_med_motor.run_angle(600, 360 * 4)
+        left_med_motor.run_angle(300, 360 * -11)
+        wait(500)
 
-        left_med_motor.run_angle(300, -360 * 4)
+        left_med_motor.run_angle(300, 360 * 4)
+        wait(500)
+
+
     # This function does the immersive experience mission.
     def _executeImmersiveExperience():
+
+        
+
         gyroStraightWithDrive(distanceInCm=7, speed=300, targetAngle=270)
 
-        turnToAngle(180, speed=200)
-
-        gyroStraightWithDrive(distanceInCm=20, speed=300, targetAngle=180)
+        left_med_motor.run_angle(300, 360 * -2)
 
 
-        turnToAngle(270, speed=200)
+        turnToAngle(160, speed=200)
 
-        gyroStraightWithDrive(distanceInCm=23, speed=300, targetAngle=270)
+        gyroStraightWithDrive(distanceInCm=25, speed=300, targetAngle=160)
+
+
+        turnToAngle(275, speed=200)
+
+        gyroStraightWithDrive(distanceInCm=27, speed=300, targetAngle=275)
     # This function is when we go to homw 2 and we pick up Emily on the way back.
     def _goHomeWithEmily():
-        gyroStraightWithDrive(distanceInCm=50, speed=300, targetAngle=270, backward=True)
+        gyroStraightWithDrive(distanceInCm=50, speed=300, targetAngle=260, backward=True)
 
         turnToAngle(15, speed=200)
 
         gyroStraightWithDrive(distanceInCm=110, speed=341, targetAngle=15)
-    # This is function runs the entire run.
+    # This is function shows what the code for run3 is.
     def _codeForRun3():
         resetGyro(0)
         _positionInnovationProjectAndExpertsToMuseum()
@@ -61,7 +81,7 @@ def run3():
         _goHomeWithEmily()
 
     _codeForRun3()
-
+# This is function runs the entire run.
 run3()
 
         
