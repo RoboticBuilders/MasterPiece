@@ -38,7 +38,7 @@ void setup() {
   // read EEPROM for i2cWireAddress
   int wireAddress = readWireAddress();
   i2cWireAddress = wireAddress;
-  Serial.print("Wire address");
+  Serial.print("Wire address ");
   Serial.println(wireAddress);
 
   // join I2C bus with the address for this sub Arduino
@@ -46,7 +46,7 @@ void setup() {
 
   // Register a handler for data receive
   Wire.onReceive(receiveEvent);  
-  Serial.println("Setup completed");          
+  Serial.println("Setup completed");   
 }
 
 void ResetPins() {
@@ -56,7 +56,7 @@ void ResetPins() {
   motor3.run(BACKWARD);
   motor4.run(BACKWARD);
 
-  delay(7000);
+  delay(9000);
 
   ReleaseAllMotors();
 }
@@ -103,7 +103,7 @@ void loop() {
       Serial.println("Loop");
 
     // Run motors for specified time
-    delay(4500);
+    delay(7000);
 
     // Reset motor state now that time has elapsed
     motor1_running = false;
