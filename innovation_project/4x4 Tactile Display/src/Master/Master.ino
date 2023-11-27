@@ -3,6 +3,28 @@
 #include <SoftwareSerial.h>
 #include <stdlib.h>
 
+//#define GANRTY_IMAGE 
+
+
+#ifdef  GANRTY_IMAGE
+int images[6][12][20] =
+{
+  {
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+    { 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3},
+    { 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3},
+    { 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3},
+    { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+  },
+}; 
+#else
 int images[6][4][4] = 
                   { 
                     {
@@ -31,6 +53,7 @@ int images[6][4][4] =
                 
                     }
                   };
+#endif
 
 int imageIndex = -1;
 
@@ -39,20 +62,29 @@ String input = String("");
 String lastInput = String("");
 SoftwareSerial BTSerial(10, 11); // RX | TX
 
+// smallest wire address for the 4x4 array
+#ifdef  GANRTY_IMAGE
+int subStartWireAddress = 8;
+#else
+int subStartWireAddress = 20;
+#endif
+
 // Set the LCD address to 0x27 for a 16 chars and 2 line display
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 void setup()
 {
 	// initialize the LCD and turn on backlight
-	lcd.begin();
+  lcd.begin();
 	lcd.backlight();
   
   WriteLcdAndWait("Reset pins", 2);
 
+  Wire.begin();
+  
   Serial.begin(9600);
   BTSerial.begin(19200);
-  Serial.println("Setup");
+  Serial.println("Primary Setup completed");
 }
 
 void WriteLcdAndWait(String text, int waitTimeSeconds) {
@@ -106,23 +138,36 @@ void loop() {
    if (imageIndex == -1)
     return;
 
+#ifdef GANTRY_IMAGE
+
+for (int i = 0; i < 12; i++)
+{
+  // one row in 5 frames
+  WriteToWire(imageIndex, i, subStartWireAddress, 0, 3);
+  WriteToWire(imageIndex, i, subStartWireAddress + 1, 4, 7);
+  WriteToWire(imageIndex, i, subStartWireAddress + 2, 8, 11);
+  WriteToWire(imageIndex, i, subStartWireAddress + 3, 12, 15);
+  WriteToWire(imageIndex, i, subStartWireAddress + 3, 16, 19);
+  delay (10000);
+}
+#else
   // Send height instructions to each sub unit
-  WriteToWire(0, 20);
-  WriteToWire(1, 21);
-  WriteToWire(2, 22);
-  WriteToWire(3, 23);
-  
+  WriteToWire(imageIndex, 0, subStartWireAddress, 0, 3);
+  WriteToWire(imageIndex, 1, subStartWireAddress + 1, 0, 3);
+  WriteToWire(imageIndex, 2, subStartWireAddress + 2, 0, 3);
+  WriteToWire(imageIndex, 3, subStartWireAddress + 3, 0, 3);
+#endif  
   // Wait for the next cycle
   //WriteLcdAndWait("Sent image: " + String(imageIndex), 20);
 
   delay(300);
 }
 
-void WriteToWire(int row, int wireAddress) {
-  Serial.println("Sending data to " + String(wireAddress) + " for imageIndex " + String(imageIndex));
+void WriteToWire(int imageNumber, int row, int wireAddress, int startIndex, int endIndex) {
+  Serial.println("Sending data to " + String(wireAddress) + " for imageNumber " + String(imageNumber));
   delay(1000);
   Wire.beginTransmission(wireAddress); // transmit to device #8
-  byte data = images[imageIndex][row][0] | images[imageIndex][row][1] << 2 | images[imageIndex][row][2] << 4 | images[imageIndex][row][3] << 6;
+  byte data = images[imageNumber][row][0] | images[imageNumber][row][1] << 2 | images[imageNumber][row][2] << 4 | images[imageNumber][row][3] << 6;
   Wire.write(data);              // sends one byte
   Wire.endTransmission();    // stop transmitting
 }
