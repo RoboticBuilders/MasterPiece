@@ -661,13 +661,16 @@ def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DO
         right_med_motor.run_target(300, -150, Stop.HOLD, wait)
 
 
-def driveForTime(timeInMS, speed=DEFAULT_SPEED):
+def driveForTime(timeInMS, stopAtEnd=True, speed=DEFAULT_SPEED, turnRate=0):
     stopwatch = StopWatch()
     start = stopwatch.time()
     end = 0
     while end - start < timeInMS:
-        robot.drive(speed=speed, turn_rate=0)
+        robot.drive(speed=speed, turn_rate=turnRate)
         end = stopwatch.time()
+    
+    if(stopAtEnd):
+        robot.drive(speed=0, turn_rate=0)
 
 
 

@@ -8,11 +8,10 @@ from Utilities import *
 
 
 def run4():
-    resetGyro(0)
     _angle=-30
     resetGyro(_angle)
 
-    gyroStraightWithDrive(distanceInCm = 68, speed = 400, targetAngle = _angle)
+    gyroStraightWithDrive(distanceInCm = 63, speed = 400, targetAngle = _angle)
 
     # _angle = 335
     # turnToAngle(_angle, speed=200, oneWheelTurn=True)
@@ -38,10 +37,15 @@ def run4():
     angle = 10
     turnToAngle(angle, speed=500)  
     gyroStraightWithDrive(distanceInCm=31, speed=400, targetAngle=angle)
-    left_med_motor.run_angle(speed=100, rotation_angle=150, wait=False)
-    left_med_motor.run_angle(speed=300, rotation_angle=-150, wait= False)
+    left_med_motor.run_angle(speed=100, rotation_angle=-150)
+    left_med_motor.run_angle(speed=300, rotation_angle=150)
     gyroStraightWithDrive(distanceInCm=69, speed=400, targetAngle=angle)
-       
+
+def testLighthouseDrop():
+    while True:
+        left_med_motor.run_angle(speed = 100, rotation_angle=150)
+        left_med_motor.run_angle(speed = 300, rotation_angle=-150)
+        wait(1000)       
 
 '''
     angle = 0
@@ -53,3 +57,5 @@ def run4():
 # runWithTiming(run4,'run4')
 
 #right_med_motor.run_target(300, 100)
+
+# testLighthouseDrop()
