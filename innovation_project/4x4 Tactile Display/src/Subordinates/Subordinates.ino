@@ -16,6 +16,7 @@ volatile bool motor1_running = false;
 volatile bool motor2_running = false;
 volatile bool motor3_running = false;
 volatile bool motor4_running = false;
+volatile bool resetPins = false;
 
 void setup() {
   // Set motor speeds
@@ -62,11 +63,16 @@ void ResetPins() {
 }
 
 void loop() {
+  if (resetPins) {
+    ResetPins();
+    resetPins = false;
+    return;   
+  }
+
   if (motor1_running | motor2_running | motor3_running | motor4_running) {
     // At least one motor should be running. Enter control loop.
     // Run the corresponding motor. Release the other ones.
-
-    ResetPins();
+    // ResetPins(); is not called as it is the master who calls for it.
 
     if (motor1_running) {
       Serial.print("Forward | ");
@@ -157,7 +163,7 @@ void receiveEvent(int howMany) {
   // if the command is to reset Pins (all 0s then we can call ResetPins)
   if (x == 0) {
     Serial.println("Command to reset pins");
-    ResetPins();
+    resetPins = true;
   }
 
   // Print for debug purposes

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 //#define GANRTY_IMAGE 
+//#define LCD_AVAILABLE
 
 
 #ifdef  GANRTY_IMAGE
@@ -28,12 +29,6 @@ int images[6][12][20] =
 int images[6][4][4] = 
                   { 
                     {
-                      { 0, 0, 0, 0},
-                      { 0, 0, 0, 0},
-                      { 0, 0, 0, 0},
-                      { 0, 0, 0, 0}
-                    },
-                    {
                       { 3, 3, 3, 3},
                       { 3, 0, 0, 3},
                       { 3, 0, 0, 3},
@@ -46,16 +41,17 @@ int images[6][4][4] =
                       { 0, 3, 3, 0}
                     },
                     {
-                      {3, 0, 3, 0},
-                      {3, 0, 3, 0},
+                      {0, 3, 3, 0},
                       {3, 3, 3, 3},
-                      {0, 0, 3, 0}
+                      {0, 3, 3, 0},
+                      {0, 3, 3, 0}
                 
                     }
                   };
 #endif
 
 int imageIndex = -1;
+int imageIndexForResettingPins = 100;
 
 // Index of the image to display
 String input = String("");
@@ -69,17 +65,18 @@ int subStartWireAddress = 8;
 int subStartWireAddress = 20;
 #endif
 
+#ifdef LCD_AVAILABLE
 // Set the LCD address to 0x27 for a 16 chars and 2 line display
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-
+#endif
 void setup()
 {
+ #ifdef LCD_AVAILABLE 
 	// initialize the LCD and turn on backlight
   lcd.begin();
 	lcd.backlight();
-  
-  WriteLcdAndWait("Reset pins", 2);
-
+   WriteLcdAndWait("Reset pins", 2);
+ #endif
   Wire.begin();
   
   Serial.begin(9600);
@@ -87,6 +84,7 @@ void setup()
   Serial.println("Primary Setup completed");
 }
 
+#ifdef LCD_AVAILABLE
 void WriteLcdAndWait(String text, int waitTimeSeconds) {
 
     for(int i = waitTimeSeconds; i > 0; i--) {
@@ -97,6 +95,7 @@ void WriteLcdAndWait(String text, int waitTimeSeconds) {
       delay(1000);
   }
 }
+#endif
 
 void loop() {  
   
@@ -108,18 +107,30 @@ void loop() {
 
     if (input.equals("0"))
     {
-      imageIndex = 1;
+      imageIndex = 0;
       Serial.println("rectangle");
     }
     else if (input.equals("1"))
     {
-      imageIndex = 2;
+      imageIndex = 1;
       Serial.println("circle");
+    }
+    else if (input.equals("2"))
+    {
+      imageIndex = 2;
+      Serial.println("house");
+    }
+    else if (input.equals("9"))
+    {
+     // Image data to reset pins
+      imageIndex = imageIndexForResettingPins;
+      Serial.println(input);
+      Serial.println("Reset pins - clear");
     }
     else
     {
      // Image data to reset pins
-      imageIndex = 0;
+      imageIndex = imageIndexForResettingPins;
       Serial.println(input);
       Serial.println("Reset pins - clear");
     }
@@ -129,14 +140,14 @@ void loop() {
 
   if ((lastInput.equals("") && input.equals("")) || (lastInput.equals(input)))
   {
-    //Serial.println(F("no input"));
     return;
   }
-
+ 
   lastInput = input;
   
    if (imageIndex == -1)
     return;
+
 
 #ifdef GANTRY_IMAGE
 
@@ -167,7 +178,14 @@ void WriteToWire(int imageNumber, int row, int wireAddress, int startIndex, int 
   Serial.println("Sending data to " + String(wireAddress) + " for imageNumber " + String(imageNumber));
   delay(1000);
   Wire.beginTransmission(wireAddress); // transmit to device #8
-  byte data = images[imageNumber][row][0] | images[imageNumber][row][1] << 2 | images[imageNumber][row][2] << 4 | images[imageNumber][row][3] << 6;
-  Wire.write(data);              // sends one byte
+  
+  byte data = 0; // data for resetting pins
+
+  if (imageNumber != imageIndexForResettingPins)
+  {
+    data = images[imageNumber][row][0] | images[imageNumber][row][1] << 2 | images[imageNumber][row][2] << 4 | images[imageNumber][row][3] << 6;
+  }
+
+  Wire.write(data);          // sends one byte
   Wire.endTransmission();    // stop transmitting
 }
