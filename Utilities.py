@@ -134,7 +134,7 @@ def waitForButtonPress():
 def getHeadingValue():
     return str(hub.imu.heading())
 
-def setDriveBaseSettings(straight_speed, straight_acceleration, turn_rate, turn_acceleration):
+def setDriveBaseSettings(straight_speed, straight_acceleration=DEFAULT_ACCELERATION, turn_rate=DEFAULT_TURN_RATE, turn_acceleration=DEFAULT_TURN_ACCEL):
     drive_base.settings(straight_speed, straight_acceleration, turn_rate, turn_acceleration)
 
 def getDriveBaseSettings():

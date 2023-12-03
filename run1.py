@@ -18,8 +18,23 @@ def run1():
     # gyroStraightWithDrive(distanceInCm=27, speed=500, backward=True, targetAngle=0)
     # robot.turn(45)
     # robot.straight(-100)
+
+    goBackStraight()
+    # goBackCurved()
+
+def goBackStraight():
     gyroStraightWithDrive(distanceInCm=48, speed=500, backward=True, targetAngle=0)
     right_med_motor.run_angle(speed=2000, rotation_angle = 1300)
+
+def goBackCurved():
+    oldSettings = getDriveBaseSettings()
+    setDriveBaseSettings(straight_speed=1000)
+    drive_base.curve(radius=-600, angle=-30, then=Stop.NONE)
+    # res
+    right_med_motor.run_angle(speed=2000, rotation_angle = 1300, wait=False)
+    drive_base.curve(radius=-600, angle=-20)
+    while(not right_med_motor.done()):
+        wait(10)
 
 # This is code that was outside.
 def initializeRun1():
