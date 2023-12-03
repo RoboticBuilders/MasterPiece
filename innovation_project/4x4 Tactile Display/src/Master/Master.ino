@@ -3,11 +3,11 @@
 #include <SoftwareSerial.h>
 #include <stdlib.h>
 
-//#define GANRTY_IMAGE 
+//#define GANTRY_IMAGE 
 //#define LCD_AVAILABLE
 
 
-#ifdef  GANRTY_IMAGE
+#ifdef  GANTRY_IMAGE
 int images[6][12][20] =
 {
   {
@@ -59,7 +59,7 @@ String lastInput = String("");
 SoftwareSerial BTSerial(10, 11); // RX | TX
 
 // smallest wire address for the 4x4 array
-#ifdef  GANRTY_IMAGE
+#ifdef  GANTRY_IMAGE
 int subStartWireAddress = 8;
 #else
 int subStartWireAddress = 20;
