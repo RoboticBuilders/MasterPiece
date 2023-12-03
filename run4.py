@@ -11,7 +11,8 @@ def run4():
     _angle=-30
     resetGyro(_angle)
 
-    gyroStraightWithDrive(distanceInCm = 63, speed = 400, targetAngle = _angle)
+    # gyroStraightWithDrive(distanceInCm = 63, speed = 400, targetAngle = _angle)
+    gyroStraightWithDrive(distanceInCm = 60, speed = 400, targetAngle = _angle)
 
     # _angle = 335
     # turnToAngle(_angle, speed=200, oneWheelTurn=True)
@@ -21,11 +22,10 @@ def run4():
     # robot.straight(distance=580)
 
     turnToAngle(targetAngle=275, speed=200, oneWheelTurn=True)
-    gyroStraightWithDrive(distanceInCm = 47, speed=200, targetAngle=270, slowDown=True)
+    gyroStraightWithDrive(distanceInCm = 45, speed=200, targetAngle=270, slowDown=True) 
     
     # Now drop off the expert.
     right_med_motor.run_angle(speed=1000, rotation_angle=1200)
-    # wait(500)
     right_med_motor.run_angle(speed=1000, rotation_angle=-1200, wait=False)
 
     # backoff.
@@ -35,11 +35,16 @@ def run4():
     # Code after this is new code.
     # gyroStraightWithDrive(distanceInCm=5, speed=400, targetAngle=275, backward=True)
     angle = 10
-    turnToAngle(angle, speed=500)  
-    gyroStraightWithDrive(distanceInCm=31, speed=400, targetAngle=angle)
-    left_med_motor.run_angle(speed=100, rotation_angle=-150)
-    left_med_motor.run_angle(speed=300, rotation_angle=150)
-    gyroStraightWithDrive(distanceInCm=69, speed=400, targetAngle=angle)
+    turnToAngle(angle, speed=500)
+    # catch the black line
+    driveTillLine(speed=300, sensor=right_color, doCorrection=False, maxDistanceMM=240, tag="Light Show")
+    drive_base.straight(distance=100)
+    # gyroStraightWithDrive(distanceInCm=24, speed=400, targetAngle=angle)
+    
+    left_med_motor.run_angle(speed=1000, rotation_angle=500)
+    # wait(1000)
+    left_med_motor.run_angle(speed=1000, rotation_angle=-500, wait=False)
+    gyroStraightWithDrive(distanceInCm=75, speed=1000, targetAngle=angle)
 
 def testLighthouseDrop():
     while True:
@@ -59,3 +64,11 @@ def testLighthouseDrop():
 #right_med_motor.run_target(300, 100)
 
 # testLighthouseDrop()
+
+# left_med_motor.run_angle(speed=300, rotation_angle=-80)
+# wait(1000)
+# left_med_motor.run_angle(speed=300, rotation_angle=80)
+
+# left_med_motor.run_angle(speed=1000, rotation_angle=500)
+# wait(1000)
+# left_med_motor.run_angle(speed=1000, rotation_angle=-500)

@@ -581,7 +581,7 @@ def turnToAngle_AA(absoluteAngle:int, turnRate:int=DEFAULT_TURN_RATE, turnAccele
 
     robot.settings(origSpeed, origAccel, origTurnSpeed, origTurnAccel)
 
-def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Black", maxDistance=0, tag=""):
+def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Black", maxDistanceMM=0, tag=""):
     
     def _compareValue(sensor, value):
         return sensor.hsv().v in value
@@ -596,8 +596,8 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
     origDistanceDrivenMM = drive_base.distance()
     robot.drive(speed = speed, turn_rate = 0)
     while(func(sensor, vRange) != True):
-        if(maxDistance > 0 and (drive_base.distance() - origDistanceDrivenMM > maxDistance)):
-            print("Did not find line but reached maxDistance {} for {}".format(maxDistance, tag))
+        if(maxDistanceMM > 0 and (drive_base.distance() - origDistanceDrivenMM > maxDistanceMM)):
+            print("Did not find line but reached maxDistance {} for {}".format(maxDistanceMM, tag))
             doCorrection = False
             break
         hsv = sensor.hsv()
