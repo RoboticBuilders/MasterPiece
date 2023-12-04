@@ -158,7 +158,7 @@ for (int i = 0; i < 12; i++)
   WriteToWire(imageIndex, i, subStartWireAddress + 1, 4, 7);
   WriteToWire(imageIndex, i, subStartWireAddress + 2, 8, 11);
   WriteToWire(imageIndex, i, subStartWireAddress + 3, 12, 15);
-  WriteToWire(imageIndex, i, subStartWireAddress + 3, 16, 19);
+  WriteToWire(imageIndex, i, subStartWireAddress + 4, 16, 19);
   delay (10000);
 }
 #else
@@ -183,7 +183,7 @@ void WriteToWire(int imageNumber, int row, int wireAddress, int startIndex, int 
 
   if (imageNumber != imageIndexForResettingPins)
   {
-    data = images[imageNumber][row][0] | images[imageNumber][row][1] << 2 | images[imageNumber][row][2] << 4 | images[imageNumber][row][3] << 6;
+    data = images[imageNumber][row][startIndex] | images[imageNumber][row][startIndex + 1] << 2 | images[imageNumber][row][startIndex + 2] << 4 | images[imageNumber][row][startIndex + 3] << 6;
   }
 
   Wire.write(data);          // sends one byte

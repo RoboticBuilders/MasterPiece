@@ -20,10 +20,10 @@ volatile bool resetPins = false;
 
 void setup() {
   // Set motor speeds
-  motor1.setSpeed(500);
-  motor2.setSpeed(500);
-  motor3.setSpeed(500);
-  motor4.setSpeed(500);
+  motor1.setSpeed(255);
+  motor2.setSpeed(255);
+  motor3.setSpeed(255);
+  motor4.setSpeed(255);
 
   ReleaseAllMotors();
 
