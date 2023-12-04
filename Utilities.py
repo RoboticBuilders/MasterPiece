@@ -118,9 +118,7 @@ def getDriveBase():
 
 def stopDriveBase():
     drive_base.drive(speed = 0, turn_rate = 0)
-    #left_motor.hold()
-    #right_motor.hold()
-
+    
 def waitForButtonPress():
     # Wait for any button to be pressed, and save the result.
     pressed = []
@@ -272,7 +270,7 @@ def driveTillDistance(distanceinCM, speed, backward=False, wait=True):
     setDriveBaseSettings(straight_speed, straight_acceleration, turn_rate, turn_acceleration)
 
 def gyroStraightWithDrive(distanceInCm, speed=DEFAULT_SPEED, backward = False, targetAngle = None, 
-                          multiplier=2, slowDown=True, slowDistanceMultipler = 0.2):
+                          multiplier=2, slowDown=True, slowDistanceMultipler = 0.2,detectStall = False):
     global prevValues, correctionPos, savedNums
     stopDriveBase()
     drive_base.reset()
@@ -327,6 +325,8 @@ def gyroStraightWithDrive(distanceInCm, speed=DEFAULT_SPEED, backward = False, t
     distanceDrivenMM = origDistanceDrivenMM
     # print("Initial: {}: {}, {}, {}".format(speed, distanceDrivenMM, origDistanceDrivenMM, distanceInMM))
     while (abs(distanceDrivenMM)-abs(origDistanceDrivenMM) < distanceInMM):
+        if(detectStall == True and drive_base.stalled() == True):
+            break
         distanceDrivenMM = abs(drive_base.distance())
         if (distanceDrivenMM <= distanceInMM20):
             _speed = slowSpeed
