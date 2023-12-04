@@ -51,7 +51,7 @@ def doAugmentedReality():
 
     # Back up from music concert and turn towards Augmented Reality
     hub.display.char("A")
-    goStraight(MM_PER_INCH*5, straightSpeed=300, backward=True)
+    drive_base.straight(distance=-5*MM_PER_INCH)
     hub.display.char("B")
     _angle=-90
     turnToAngle(_angle)
