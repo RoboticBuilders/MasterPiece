@@ -15,7 +15,7 @@ def run6():
         gyroStraightWithDrive(distanceInCm = 23, speed = 500, targetAngle = angle)
 
         # Pickup the expert
-        run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP)
+        run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150)
 
     def _doChickenAndCraftCretor():
         angle = 0

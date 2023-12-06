@@ -653,11 +653,11 @@ RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN = 1
 RUN6_PICKUP_EXPERT_ATTACHMENT_UP = 2
 
 # Expects the arm to start down.
-def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True):
+def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True, speed = 300):
     if position == RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN:
-        right_med_motor.run_target(500, 0, Stop.HOLD, wait)
+        right_med_motor.run_target(speed + 200, 0, Stop.HOLD, wait)
     else:
-        right_med_motor.run_target(300, -150, Stop.HOLD, wait)
+        right_med_motor.run_target(speed, -150, Stop.HOLD, wait)
 
 
 def driveForTime(timeInMS, stopAtEnd=True, speed=DEFAULT_SPEED, turnRate=0):
