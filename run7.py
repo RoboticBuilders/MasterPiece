@@ -40,10 +40,10 @@ def doMusicConcert():
     hub.display.char("X")
     driveForTime(timeInMS=1000, speed=400)
     hub.display.char("Y")
-    driveForTime(timeInMS=200, stopAtEnd=False, speed=200, turnRate=15)
+    # driveForTime(timeInMS=200, stopAtEnd=False, speed=200, turnRate=15)
     # turnToAngle(targetAngle=53, forceTurn=FORCETURN_RIGHT, oneWheelTurn=True)
     hub.display.char("Z")
-    wait(anyaRun2Wait)
+    # wait(anyaRun2Wait)
     left_med_motor.run_angle(speed=CIRCULAR_MOTION_ARM_SPEED,rotation_angle=CIRCULAR_MOTION_ARM_DEGREES)
 
 def doAugmentedReality():
