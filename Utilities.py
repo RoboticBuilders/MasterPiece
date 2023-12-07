@@ -81,14 +81,14 @@ def initializeAndWaitForRobotReady():
     hub.speaker.beep()
 
 def runWithTiming(function,name):
-    sw = StopWatch()
-    sw.resume()
-    startTime = sw.time()
+    #sw = StopWatch()
+    #sw.resume()
+    #startTime = sw.time()
     function()
-    endTime = sw.time()
-    print(name + " : " + str(endTime - startTime))
-    sw.pause()
-    return endTime - startTime
+    #endTime = sw.time()
+    #print(name + " : " + str(endTime - startTime))
+    #sw.pause()
+    #return endTime - startTime
 
 # level can be any number between 0-5
 # 5 = Print the most detailed messages
