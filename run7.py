@@ -135,13 +135,13 @@ def ballerina5_ExpertDropOffs():
     # wait(anyaDropOffsWait)
 
     _angle=-45
-    # dropOneExpert(numDropoffRotations=1, wait=False)
+    dropOneExpert(numDropoffRotations=1, wait=False)
     turnToAngle(_angle)
     gyroStraightWithDrive(speed=100, distanceInCm=2*CM_PER_INCH, targetAngle=_angle)
-    dropOneExpert(numDropoffRotations=1, wait=True)
+    # dropOneExpert(numDropoffRotations=1, wait=True)
     # wait(anyaDropOffsWait)
-    # while(not EXPERT_ARM_CONTROL.done()):
-    #     wait(10)
+    while(not EXPERT_ARM_CONTROL.done()):
+        wait(10)
 
 def run7():
     resetGyro(0)
