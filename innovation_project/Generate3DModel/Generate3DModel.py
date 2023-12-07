@@ -61,9 +61,10 @@ scale_ratio = yp / img.shape[1]
 #   img: The image to process
 #   t1: The first threshold value
 #   t2: The second threshold value
+#   fileName: The name of the output file
 # Returns: An image with edges detected
 #
-def Canny(img, t1, t2):
+def Canny(img, t1, t2, fileName):
 
     # Convert to graycsale
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -78,9 +79,8 @@ def Canny(img, t1, t2):
     final = cv2.merge([edges, edges, edges])    
 
     # Save the image
-    fileName = os.path.basename(imgName).split('/')[-1]
-    p1 = os.path.join(folder, "Canny.jpeg")
-    cv2.imwrite(p1, final)
+
+    cv2.imwrite(fileName, final)
 
     return final
 
@@ -310,10 +310,20 @@ d = os.path.join(folder, "Resized.jpeg")
 cv2.imwrite(d, resized)
 
 # Generate the edge map
-edgeImg = Canny(resized, threshold1, threshold2)
+cannyFile = os.path.join(folder, "Canny.jpeg")
+canny = Canny(resized, threshold1, threshold2, cannyFile)
 
 # Generate the depth map
 depthImg = DepthMap(pil_image)
+
+cod = os.path.join(folder, "Canny_on_depth.jpeg")
+cannyOnDepth = Canny(depthImg, 0, 200, cod)
+
+# Take out canny edges already accounted for in the depth map
+edgeImg = cv2.addWeighted(canny, 1, cannyOnDepth, -1, 0)
+
+cc = os.path.join(folder, "Canny_corrected.jpeg")
+cv2.imwrite(cc, edgeImg)
 
 # Combine the depth map and edge map. Use the edgeRatio variable to control the amount of edge details to show.
 # Say the edgeRatio is 0.1, then the final image will be 90% depth map and 10% edge map.
