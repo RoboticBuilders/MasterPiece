@@ -50,7 +50,7 @@ aspect_ratio = img.shape[0] / img.shape[1]
 
 # Figure out the scale ratio of the target image given the target pixel count.
 # This will give you a target image of 75000 pixels without distorting it.
-yp = math.sqrt(75000 / aspect_ratio)
+yp = math.sqrt(targetPixelCount / aspect_ratio)
 scale_ratio = yp / img.shape[1]
 
 ### Functions
@@ -114,8 +114,13 @@ def Resize(img, scale_ratio):
 # Returns: An image with the depth map
 def DepthMap(image):
 
-    # Setup the model
+    # Setup the Dense Prediction Trasnformer (DPT) model for monocular depth estimation
+    # This code is inspired by the sample the sample at https://huggingface.co/Intel/dpt-large
+
+    # Setup feature extractor for preprocessing
     feature_extractor = DPTFeatureExtractor.from_pretrained("Intel/dpt-large")
+
+    # Setup our depth estimation model
     model = DPTForDepthEstimation.from_pretrained("Intel/dpt-large")
 
     # Get the pixel values
@@ -207,7 +212,7 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
     allFaces = np.array([[0,0,0]])
 
     # The width of each pixel in mm
-    pixedWidth = 0.33
+    pixedWidth = 0.165
 
     # The minimum thickness of the model in mm. This is to prevent the model from being too thin.
     minThickness = 0.5
