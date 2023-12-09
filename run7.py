@@ -17,7 +17,7 @@ def resetCircularMotionArm(wait=True):
 
 def doMusicConcert():
     # go forward and turn towards the black line
-    gyroStraightWithDrive(distanceInCm=CM_PER_INCH*17, targetAngle=0, speed=600)
+    gyroStraightWithDrive(distanceInCm=CM_PER_INCH*17, targetAngle=0, speed=400)
     turnToAngle(-45)
 
     # catch the black line
@@ -102,7 +102,7 @@ def resetExpertDropOffArm(numRotations=2):
 def ballerina5_ExpertDropOffs():
     # turn and start driving towards Sound Mixer
     _angle=-90
-    turnToAngle(_angle)
+    turnToAngle(_angle-5)
     # wait(anyaDropOffsWait_B5)
     distGyro = gyroStraightWithDrive(distanceInCm=15*CM_PER_INCH, targetAngle=_angle, speed=500)
     # wait(anyaDropOffsWait_B5)

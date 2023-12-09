@@ -7,13 +7,13 @@ from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
 def _run2_internal():
-    drive_base.straight(distance=500)
+    drive_base.straight(distance=510)
     right_med_motor.run_angle(speed=2000, rotation_angle = -1300)
     
     #get camera in right position
     gyroStraightWithDrive(distanceInCm=18, speed=300, backward=True)
 
-    turnToAngle(targetAngle=330, speed=200) # Anya: was 320 until 11/25/23, but was coming in way of run4, so reducing angle
+    turnToAngle(targetAngle=330, speed=250) # Anya: was 320 until 11/25/23, but was coming in way of run4, so reducing angle
     right_med_motor.run_angle(2000, rotation_angle=800)
 
     right_med_motor.run_angle(2000, rotation_angle=500, wait=False)
