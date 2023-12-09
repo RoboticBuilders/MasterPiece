@@ -81,14 +81,14 @@ def initializeAndWaitForRobotReady():
     hub.speaker.beep()
 
 def runWithTiming(function,name):
-    sw = StopWatch()
-    sw.resume()
-    startTime = sw.time()
+    #sw = StopWatch()
+    #sw.resume()
+    #startTime = sw.time()
     function()
-    endTime = sw.time()
-    print(name + " : " + str(endTime - startTime))
-    sw.pause()
-    return endTime - startTime
+    #endTime = sw.time()
+    #print(name + " : " + str(endTime - startTime))
+    #sw.pause()
+    #return endTime - startTime
 
 # level can be any number between 0-5
 # 5 = Print the most detailed messages
@@ -653,11 +653,11 @@ RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN = 1
 RUN6_PICKUP_EXPERT_ATTACHMENT_UP = 2
 
 # Expects the arm to start down.
-def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True):
+def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True, speed = 300):
     if position == RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN:
-        right_med_motor.run_target(500, 0, Stop.HOLD, wait)
+        right_med_motor.run_target(speed + 200, 0, Stop.HOLD, wait)
     else:
-        right_med_motor.run_target(300, -150, Stop.HOLD, wait)
+        right_med_motor.run_target(speed, -150, Stop.HOLD, wait)
 
 
 def driveForTime(timeInMS, stopAtEnd=True, speed=DEFAULT_SPEED, turnRate=0):

@@ -9,20 +9,20 @@ from run7 import *
 
 def _maindriver():
     counter = 1
-    arm_change_start_time = 0
-    arm_change_end_time = 0
-    stopwatch = StopWatch()
+    #arm_change_start_time = 0
+    #arm_change_end_time = 0
+    #stopwatch = StopWatch()
     # This start time is going to get overridden in the main loop.
-    start_time = stopwatch.time()
+    #start_time = stopwatch.time()
 
     while True:
         hub.display.number(counter)
         if counter == 8: 
             break
         # Skip printing for the first time the loop runs.
-        if (counter != 1):
-            arm_change_start_time = stopwatch.time()
-            print("Waiting for arm change")
+        #if (counter != 1):
+            #arm_change_start_time = stopwatch.time()
+            #print("Waiting for arm change")
 
         hub.speaker.beep()
         resetRobot()
@@ -34,13 +34,13 @@ def _maindriver():
             continue
 
         # the next few lines are the else loop here it is also the case if the right button is pressed.
-        if (counter != 1):
-            arm_change_end_time = stopwatch.time()    
-            print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)))
+        #if (counter != 1):
+            #arm_change_end_time = stopwatch.time()    
+            #print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)))
 
         if counter == 1:
             # Sound Mixer
-            start_time = stopwatch.time()
+            #start_time = stopwatch.time()
             runWithTiming(run1,"run1")
             # runWithTiming(run2,"run2")
         if counter == 2:
@@ -65,8 +65,8 @@ def _maindriver():
         counter = counter + 1
         drive_base.straight(distance=0, then=Stop.BRAKE)
     
-    end_time = stopwatch.time()
-    print("Total Time: " + str((end_time-start_time)/1000) + " seconds")
+    #end_time = stopwatch.time()
+    #print("Total Time: " + str((end_time-start_time)/1000) + " seconds")
 
 
 initializeAndWaitForRobotReady()

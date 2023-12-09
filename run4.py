@@ -24,8 +24,8 @@ def run4():
     #turnToAngle(targetAngle=275, speed=200, oneWheelTurn=True)
     turnToAngle(targetAngle=270, speed=200, oneWheelTurn=True)
      #Changed Dec 3: distance 45 to 44
-    gyroStraightWithDrive(distanceInCm = 40, speed=200, targetAngle=270, slowDown=True,multiplier = 1) 
-    gyroStraightWithDrive(distanceInCm = 5, speed=100, targetAngle=270, slowDown=True) 
+    gyroStraightWithDrive(distanceInCm = 45, speed=200, targetAngle=270, slowDown=True,multiplier = 1) 
+    # gyroStraightWithDrive(distanceInCm = 5, speed=100, targetAngle=270, slowDown=True) 
     #wait(3000)
     # Now drop off the expert.
     right_med_motor.run_angle(speed=1000, rotation_angle=1200)
@@ -34,7 +34,8 @@ def run4():
     #wait(5000)
     # backoff.
     gyroStraightWithDrive(distanceInCm=10, speed=100, targetAngle=270, backward=True)
-    gyroStraightWithDrive(distanceInCm=34, speed=400, targetAngle=270, backward=True)
+    # was 34
+    gyroStraightWithDrive(distanceInCm=36, speed=400, targetAngle=270, backward=True)
     #gyroStraightWithDrive(distanceInCm=44, speed=400, targetAngle=270, backward=True)
 
     # Code after this is new code.
