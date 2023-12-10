@@ -90,7 +90,7 @@ def doAugmentedReality():
     # back up from Augmented Reality
     _angle=30
     turnToAngle(targetAngle=_angle,oneWheelTurn=True, forceTurn=FORCETURN_LEFT)
-    gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle, backward=True)
+    gyroStraightWithDrive(distanceInCm=14, targetAngle=_angle, backward=True)
 
 def dropOneExpert(numDropoffRotations=1, wait=True):
     right_med_motor.run_angle(speed=DROP_OFF_SPEED,rotation_angle=numDropoffRotations*EXPERT_ARM_TURN_ANGLE, wait=wait)
