@@ -1,21 +1,26 @@
 from Utilities import *
 
-'''
-ALIGNMENT: 2nd black line from left home on close wall
-'''
+TURN_SPEED = 300
+
+def _doSoundMixerWithComplicatedArm():
+    angle = 0
+    gyroStraightWithDrive(distanceInCm = 60, speed = 200, targetAngle = angle)
+
+    # Turn the motor to remove the lock for the left sound mixer.
+    left_med_motor.run_angle(speed=800, rotation_angle=-500)
+
+    # Turn the right motor to pick up the expert
+    right_med_motor.run_angle(speed=2000, rotation_angle=-800)
+
+    # Now backoff.
+    gyroStraightWithDrive(distanceInCm = 50, speed = 800, targetAngle = angle, backward=True)
+
+def _resetBucket():
+    # Turn the right motor to pick up the expert
+    right_med_motor.run_angle(speed=2000, rotation_angle=800)
 
 def run1():
-    gyroStraightWithDrive(distanceInCm = 10, speed = 300, targetAngle = 0)
-    turnToAngle(targetAngle = 45, speed = 300)
+    _doSoundMixerWithComplicatedArm()
 
-    gyroStraightWithDrive(distanceInCm = 25, speed = 300, targetAngle = 45)
-    gyroStraightWithDrive(distanceInCm = 10, speed = 100, targetAngle = 45)
-
-    turnToAngle(targetAngle = 60, speed = 150)
-    turnToAngle(targetAngle = 45, speed = 150)
-
-    gyroStraightWithDrive(distanceInCm = 25, speed = 300, targetAngle = 45, backward = True)
-    turnToAngle(targetAngle = -105, speed = 1000, forceTurn = FORCETURN_LEFT)
-    gyroStraightWithDrive(distanceInCm = 20, speed = 1000, targetAngle = -105)
-
-run1()
+runWithTiming(run1, "Sound Mixer")
+_resetBucket()

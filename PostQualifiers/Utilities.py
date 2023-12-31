@@ -81,14 +81,14 @@ def initializeAndWaitForRobotReady():
     hub.speaker.beep()
 
 def runWithTiming(function,name):
-    #sw = StopWatch()
-    #sw.resume()
-    #startTime = sw.time()
+    sw = StopWatch()
+    sw.resume()
+    startTime = sw.time()
     function()
-    #endTime = sw.time()
-    #print(name + " : " + str(endTime - startTime))
-    #sw.pause()
-    #return endTime - startTime
+    endTime = sw.time()
+    print(name + " : " + str(endTime - startTime))
+    sw.pause()
+    return endTime - startTime
 
 # level can be any number between 0-5
 # 5 = Print the most detailed messages
@@ -756,3 +756,202 @@ def driveForTime(timeInMS, stopAtEnd=True, speed=DEFAULT_SPEED, turnRate=0):
     
 #     # return distance driven to caller
 #     return (drive_base.distance() - origDistanceDrivenMM)
+
+
+def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False, targetAngle = 0, 
+                          multiplier=2, gradualAcceleration=True, 
+                          slowDown=True, slowDistanceMultipler = 0, printDebugMesssages=False,
+                          skipCorrectionCalculation = False,
+                          tillBlackLine = False,
+                          detectStall = False,
+                          stop = Stop.HOLD):
+                         
+    global prevValues, correctionPos, savedNums
+    savedNums = 5
+    prevValues = []
+    correctionPos  = 0
+
+    def _getValueInternal():
+        return left_color.hsv().v
+
+    def _stopDriveBaseInternal(stop=Stop.HOLD):
+        drive_base.straight(distance=0,then=stop)
+        if (stop == Stop.HOLD):
+            left_motor.hold()
+            right_motor.hold()
+
+
+    # Convert angle to zero to 359 space.
+    # negative angles are also converted into zero to 359 space.
+    def _convertAngleTo360Internal(angle):
+        negative = False
+        if angle < 0:
+            angle = abs(angle)
+            negative = True
+
+        degreesLessThan360 = angle
+        if angle >= 360:
+            degreesLessThan360 = angle % 360
+        
+        if negative == True:
+            degreesLessThan360 = 360 - degreesLessThan360
+
+        return degreesLessThan360
+                          
+
+    def _getCorrectionForDriveInternal(targetAngle, correctionMultiplier, adjustCorrection = False, 
+                          printDebugMesssages = False):
+        global prevValues, correctionPos, savedNums
+        currentAngle = hub.imu.heading()
+        currentAngle = _convertAngleTo360Internal(currentAngle)
+        avgCorrection = 0
+
+        if targetAngle >= currentAngle:
+            rightTurnDegrees = targetAngle - currentAngle
+            leftTurnDegrees = 360 - targetAngle + currentAngle
+        else: 
+            leftTurnDegrees = currentAngle - targetAngle
+            rightTurnDegrees = 360 - currentAngle + targetAngle
+
+        # Figure out the degrees to turn using the correction and the 
+        # shortest turning side. Either left or Right.
+        degreesToTurn = 0  
+        if (rightTurnDegrees < leftTurnDegrees):
+            degreesToTurn = rightTurnDegrees 
+        else:
+            degreesToTurn = -1*leftTurnDegrees
+
+        if (printDebugMesssages == True):
+            print("degreesToTurn=" + str(degreesToTurn) + " current_angle=" + str(currentAngle) + 
+                " target_angle="+str(targetAngle))
+
+        correction = degreesToTurn
+        newCorrection = int(correction * correctionMultiplier)
+        if adjustCorrection == True:
+            if correction > 2 or correction < -2:
+                avgCorrection = sum(prevValues) / savedNums
+                newCorrection = (correction + avgCorrection/2) * correctionMultiplier
+                if correctionPos < savedNums:
+                    prevValues.append(correction)
+                else:
+                    #print(str(correctionPos))
+                    prevValues[correctionPos % savedNums] = correction
+                correctionPos = correctionPos + 1
+        #print("GetCorrectionForDrive: CurrentAngle: " + str(currentAngle) + " and targetAngle: " + str(targetAngle) + " correction: " + str(correction) + " averageCorrection: " + str(avgCorrection) + " newCorrection: " + str(newCorrection))
+        if newCorrection > 20:
+            newCorrection = 20
+        return newCorrection
+
+    if backward == True:
+        drive_base.settings(straight_speed=400,straight_acceleration=300,
+                        turn_rate=400,turn_acceleration=(100, 400))
+
+
+    def blackStoppingCondition():
+        #light = getReflectedLight()
+        light = _getValueInternal()
+        return light <= BLACK_COLOR
+
+    drive_base.reset()
+    #stopDriveBase(stop)
+    prevValues = []
+    correctionPos  = 0
+    savedNums = 5
+    counter = 0
+
+    if (slowDown == False):
+        slowDistanceMultipleInternal = 0
+    else:
+        slowDistanceMultipleInternal = (0.4 / 500) * (speed - 500) + 0.4
+
+    # If the user has given as slowDistanceMultiplier use that.
+    if (slowDistanceMultipler != 0):
+        slowDistanceMultipleInternal = slowDistanceMultipler
+
+    distanceInMM=distance * 10
+    startSlowDistanceMM = 20
+    finalSlowDistanceMM = 20
+    slowDownDistanceMM = distanceInMM * slowDistanceMultipleInternal
+    midDistanceMM = distanceInMM - startSlowDistanceMM - finalSlowDistanceMM - slowDownDistanceMM
+    
+    # Slow speed is used for both the start and final distances.
+    slowSpeed = 100
+    midSpeed = speed
+
+    # Calculate the speed reduction per distance travelled. We do
+    # this upfront, to enable integer multiplicaation in the loop.
+    # deceleration is always a +ve number.
+    if (slowDownDistanceMM != 0):
+        deceleration = (midSpeed - slowSpeed) / slowDownDistanceMM
+
+    if (backward): 
+        slowSpeed = slowSpeed * -1
+        midSpeed = midSpeed * -1
+    
+    if (printDebugMesssages):
+        print(
+          "distanceInMM: " + str(distanceInMM) + 
+          " startSlowDistanceMM: " + str(startSlowDistanceMM) +
+          " midDistanceMM: " + str(midDistanceMM) +
+          " slowDownDistanceMM: " + str(slowDownDistanceMM) +
+          " finalSlowDistanceMM: " + str(finalSlowDistanceMM) +
+          " slowSpeed: " + str(slowSpeed) +
+          " midSpeed: " + str(midSpeed))
+    
+    distanceDrivenMM = drive_base.distance()
+    drive_base.drive(speed = slowSpeed, turn_rate = 0)
+
+    stopCondition = False
+    if (printDebugMesssages == True):
+        print("distancedrivenMM: " + str(distanceDrivenMM) + " distanceInMM: " +  str(distanceInMM))
+    while (distanceDrivenMM < distanceInMM):
+        stopCondition = blackStoppingCondition()
+        if (tillBlackLine == True and stopCondition == True):
+            break
+        elif (detectStall == True and drive_base.stalled() == True):
+            break
+
+        distanceDrivenMM = abs(drive_base.distance())
+
+        # If the total distance to travel is small, just use the slowSpeed 
+        # and override all the other speeds.
+        if (distanceInMM <= 50):  
+            speed = slowSpeed
+        elif (distanceDrivenMM <= startSlowDistanceMM):
+            speed = slowSpeed
+        elif (distanceDrivenMM <= midDistanceMM + startSlowDistanceMM):
+            speed = midSpeed
+        elif (slowDown == True and 
+              distanceDrivenMM <= midDistanceMM + startSlowDistanceMM + slowDownDistanceMM):
+            if (backward == False):
+                speed = midSpeed - (deceleration * (distanceDrivenMM - (midDistanceMM + startSlowDistanceMM)))
+            else:
+                speed = midSpeed + (deceleration * (distanceDrivenMM - (midDistanceMM + startSlowDistanceMM)))    
+        elif (distanceDrivenMM <= distanceInMM):
+            speed = slowSpeed
+         
+        if skipCorrectionCalculation == False:
+            correction = _getCorrectionForDriveInternal(targetAngle, correctionMultiplier = multiplier, 
+                                           adjustCorrection = True, 
+                                           printDebugMesssages=printDebugMesssages)
+        else:
+            correction = 0
+
+        # Override correction if its small.
+        #if (correction < 1): 
+        #    correction = 0
+        #if(counter % 100 == 0):
+        #    print("correction=" + str(correction) + " speed=" + str(speed)
+        #          + " distanceDrivenMM=" + str(distanceDrivenMM))
+        counter = counter + 1
+        drive_base.drive(speed = speed, turn_rate = correction)
+        wait(5)
+
+    drive_base.stop()
+    _stopDriveBaseInternal(stop)
+
+    if backward == True:
+        drive_base.settings(straight_speed=400,straight_acceleration=1000,
+                        turn_rate=400,turn_acceleration=(150, 400))
+
+    return stopCondition 
