@@ -1,73 +1,62 @@
 from Utilities import *
 
-DRIVE_SPEED = 400
-TURN_SPEED = 500
+TURN_SPEED = 300
 
-
-def goHome():
-    #Go home with curve
-    drive_base.settings(1000, 1000, 1000, 1000)
-    drive_base.curve(radius = -160,angle = -45,then=Stop.COAST)
-    drive_base.curve(radius = -360,angle = -90)
-    '''
-    angle = -45
-    # backup from movie set
-    gyroStraightWithDrive(distanceInCm = 10, speed = 1000, targetAngle = angle, backward = True)
-    # Now turn a little and backup all the way between 3d cinema and sound mixer
-    angle = 15
-    turnToAngle(targetAngle = angle, speed = TURN_SPEED)
-    gyroStraightWithDrive(distanceInCm = 40, speed = 1000, targetAngle = angle, backward = True)
-    '''
-    # Raise the arm
-    right_med_motor.run_angle(speed=2000, rotation_angle = 800,wait=False)
-    
-
-
-def goToScenceChangeFromHome():
-    # Go straight
+def _doSoundMixerWithComplicatedArm():
     angle = 0
-    gyroStraightWithDrive(distanceInCm=26, targetAngle=angle, speed=1000)
-    # Turn towards sound mixer and drive straight
-    angle = 55
-    turnToAngle(targetAngle=angle,speed=TURN_SPEED)
-    gyroStraightWithDrive(distanceInCm=10, targetAngle=angle, speed=1000)
-    #Catch the black line between 3d cinema and sound mixer
-    driveTillLine(speed=200, doCorrection=False, sensor=right_color, blackOrWhite="Black")
-    # Now move towards the movie set
-    angle = 0
-    turnToAngle(targetAngle=angle,speed=TURN_SPEED)
-    gyroStraightWithDrive(distanceInCm=10, targetAngle=angle, speed=800)
-    #Catch the black line in front of movie set
-    driveTillLine(speed=200, doCorrection=False, sensor=right_color, blackOrWhite="Black")
-    gyroStraightWithDrive(distanceInCm=2, targetAngle=angle, speed=300)
-    # Now turn towards movie set
-    angle = -45
-    turnToAngle(targetAngle=angle,speed=TURN_SPEED)
+    gyroStraightWithDriveWithAccurateDistance(distance = 35, speed = 800, targetAngle = angle, stop = Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 400, targetAngle = angle)
 
-def goToScenceChangeFromHomeFaster():
-    angle = 7
-    gyroStraightWithDrive(distanceInCm=35, targetAngle=angle, speed=1000)
-    driveTillLine(speed=400, doCorrection=False, sensor=right_color, blackOrWhite="Black")
-    gyroStraightWithDrive(distanceInCm=2, targetAngle=angle, speed=300)
-    angle = -45
-    turnToAngle(targetAngle=angle,speed=TURN_SPEED)
+    # Turn the motor to remove the lock for the left sound mixer.
+    # Do this in parallel with the expert pick up.
+    left_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=False)
+
+    # Turn the right motor to pick up the expert
+    right_med_motor.run_angle(speed=2000, rotation_angle=-800)
+
+    # Make sure that the stopper has been removed.
+    while left_med_motor.done() == False:
+        continue
+
+    # Now backoff.
+    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 1000, targetAngle = angle, backward=True,
+                                              stop = Stop.COAST)
+
+    # Now drive back home.
+    drive_base.settings(500, 1000, 500, 1000)
+    drive_base.curve(radius = -500, angle = -30)
+
+
+def _doSoundMixerWithComplicatedArmWithCurve():
+    drive_base.settings(500, 1000, 500, 1000)
+    drive_base.curve(radius = 140,angle = -55)
     
+    gyroStraightWithDriveWithAccurateDistance(distance = 25, speed = 500, targetAngle = -45)
+    gyroStraightWithDriveWithAccurateDistance(distance = 15, speed = 100, targetAngle = -45)
 
+    # Turn the motor to remove the lock for the left sound mixer.
+    left_med_motor.run_angle(speed=800, rotation_angle=-800)
 
-def _doSceneChange():
+    # Turn the right motor to pick up the expert
+    right_med_motor.run_angle(speed=2000, rotation_angle=-800)
     angle = -45
-    gyroStraightWithDrive(distanceInCm=8, targetAngle=angle, speed=300)
-    right_med_motor.run_angle(speed=2000, rotation_angle = -800)
+    # Now backoff.
+    gyroStraightWithDrive(distanceInCm = 50, speed = 800, targetAngle = angle, backward=True)
+    #drive_base.settings(1000, 1000, 1000, 1000)
+    #drive_base.curve(radius = -600,angle = -45)
+
+
+def _resetBucket():
+    # Turn the right motor to pick up the expert
+    right_med_motor.run_angle(speed=2000, rotation_angle=800)
+def _resetLeftMotor():
+    left_med_motor.run_angle(speed=2000, rotation_angle=800)
 
 def run2():
-    #right_med_motor.run_angle(speed=2000, rotation_angle = 800)
-    #goToScenceChangeFromHome()
-    goToScenceChangeFromHomeFaster()
-    _doSceneChange()
-    goHome()
+    resetRobot()
+    _doSoundMixerWithComplicatedArm()
+    _resetBucket()
+    _resetLeftMotor()
 
-runWithTiming(run2,"SceneChange")
-    
-
-
-
+#runWithTiming(run2, "Sound Mixer")
+#_resetBucket()

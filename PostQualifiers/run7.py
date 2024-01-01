@@ -99,7 +99,7 @@ def expertDrops():
     gyroStraightWithDriveWithAccurateDistance(distance = 4, speed = 200, targetAngle = _angle)
 
 def run7():
-    resetGyro(0)
+    resetRobot()
     musicConcert()
     augmentedReality()
     expertDrops()
@@ -118,5 +118,5 @@ def mainRun7():
 
     print("DONE")
 
-waitForButtonPress()
-mainRun7()
+# waitForButtonPress()
+# mainRun7()

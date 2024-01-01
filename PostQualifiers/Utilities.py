@@ -601,7 +601,7 @@ def driveTillLine(speed, doCorrection=True, sensor=left_color, blackOrWhite="Bla
             break
         hsv = sensor.hsv()
         #print(hsv)
-    print("Stopping at (h,s,v) = {} for {}".format(sensor.hsv(), tag))
+    #print("Stopping at (h,s,v) = {} for {}".format(sensor.hsv(), tag))
 
     robot.stop()
     robot.straight(distance=0, then=Stop.BRAKE, wait=True)

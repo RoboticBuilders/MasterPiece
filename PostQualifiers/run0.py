@@ -8,20 +8,12 @@ def _3dCinemaAndTwoFacesDropoff():
     gyroStraightWithDrive(distanceInCm = 25, speed = 300, targetAngle = angle,backward=True) 
 
 
-def _run0():
+def run0():
+    resetRobot()
     _3dCinemaAndTwoFacesDropoff()
 
-def _pushRollingCameraLever():
-    # We just push the static arm with the bucket to drop the lever
-
-    angle = 0
-    right_med_motor.run_angle(speed=2000, rotation_angle=-600)
-    
-    right_med_motor.run_angle(speed=2000, rotation_angle=600)
-
-def _run0point5():
-    _pushRollingCameraLever()
+#runWithTiming(run0,"3DCinema")
 
 #runWithTiming(_run0,"3DCinema")
-runWithTiming(_run0point5,"Lever")
+#runWithTiming(_run0point5,"Lever")
 #_run0point5()

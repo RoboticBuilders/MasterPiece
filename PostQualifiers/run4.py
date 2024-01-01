@@ -63,8 +63,25 @@ def lightShowTestWith8ToothGear():
     wait(100)
 
     #right_med_motor.run_angle(speed=600, rotation_angle=-3600, wait = True)
-    left_med_motor.run_angle(speed=500, rotation_angle=-4500, wait = True)
+    left_med_motor.run_angle(speed=500, rotation_angle=-4000, wait = True)
     
+def lightShowTestWithLoad():
+    # NO LOAD: 13.7
+    # JUST HITTING LIGHT SHOW: 
+    # MOVING LIGHT SHOW: 
+    orgSpeed,orgAccel,orgTorque = left_med_motor.control.limits()
+    left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = 1000)
+    left_med_motor.run_angle(speed = 600, rotation_angle = -2700, wait = False)
+
+    total_load = 0
+    occurances = 0
+    while left_med_motor.done() == False:
+        total_load += left_med_motor.load()
+        occurances += 1
+        wait(10)
+
+    print("Average Load: " + str(total_load / occurances))
+
 def immersiveExperianceFromSide():
     left_med_motor.run_angle(speed=2000, rotation_angle=10000)
     left_med_motor.run_angle(speed=2000, rotation_angle=-10000)
@@ -123,63 +140,70 @@ def run4():
 def rollingCamera():
     angle=0
     right_med_motor.run_angle(speed=2000, rotation_angle=-400)
-    gyroStraightWithDriveWithAccurateDistance(distance=48, speed=300, targetAngle=angle)
-    right_med_motor.run_angle(speed=2000, rotation_angle=-400)
-    gyroStraightWithDriveWithAccurateDistance(distance=15, speed=300, targetAngle=angle, backward = True)
+    gyroStraightWithDriveWithAccurateDistance(distance=43, speed=650, targetAngle=angle)
+    right_med_motor.run_angle(speed=2000, rotation_angle=-400,wait=False)
+    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=1000, targetAngle=angle, backward = True)
 
-    angle=-35
+    angle=-20
     turnToAngle(targetAngle=angle,speed=400)
+    gyroStraightWithDriveWithAccurateDistance(distance=1, speed=100, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=400)
 
 def museum():
-    angle=-35
-    gyroStraightWithDriveWithAccurateDistance(distance=30, speed=400, targetAngle=angle)
+    angle=-40
+    gyroStraightWithDriveWithAccurateDistance(distance=30, speed=650, targetAngle=angle)
+    right_med_motor.run_angle(speed=2000, rotation_angle=-200)
 
     angle=-60
-    turnToAngle(targetAngle=angle,speed=400)
-    gyroStraightWithDriveWithAccurateDistance(distance=40, speed=400, targetAngle=angle)
+    turnToAngle(targetAngle=angle,speed=600)
+    gyroStraightWithDriveWithAccurateDistance(distance=40, speed=650, targetAngle=angle)
 
     angle=-48
-    turnToAngle(targetAngle=angle,speed=400)
-    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=400, targetAngle=angle)
+    turnToAngle(targetAngle=angle,speed=600)
+    gyroStraightWithDriveWithAccurateDistance(distance=13, speed=650, targetAngle=angle)
     
-    left_med_motor.run_angle(speed=1000, rotation_angle=1500)
+    left_med_motor.run_angle(speed=500, rotation_angle=500)
+
     angle=-90
+    turnToAngle(targetAngle=angle, speed=600)
+    gyroStraightWithDriveWithAccurateDistance(distance=4, speed=650, targetAngle=angle)
 
-    turnToAngle(targetAngle=angle, speed=400)
-    gyroStraightWithDriveWithAccurateDistance(distance=4, speed=400, targetAngle=angle)
-    
-
-    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=400, targetAngle=angle,backward=True)
-    right_med_motor.run_angle(speed=1000, rotation_angle=400)
+    gyroStraightWithDriveWithAccurateDistance(distance=2, speed=650, targetAngle=angle,backward=True)
+    right_med_motor.run_angle(speed=2000, rotation_angle=600)
     
     
 
 def lightShow():
     # Now after the pedestal drop off, drive backwards towards the light show. Using drivebase.straight as its more accurate for distance
+    # Currently the lightshow is set to run at 1000 speed. In the speed testing for lightshow the times taken were:
+    # speed 600 - time->4.8sec
+    # speed 800 - time-> 3.8 sec
+    # speed 1000 - time ->3.5 sec
     
     angle=-90
     #drive_base.settings(200, 500, 200, 500)
     #drive_base.straight(distance = -280)
-    gyroStraightWithDriveWithAccurateDistance(distance=25, speed=400, targetAngle=angle,backward=True,stop=Stop.COAST)
-    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=200, targetAngle=angle,backward=True)
+    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=9, speed=200, targetAngle=angle,backward=True)
     wait(100)
     # Now we are at the light show, spin the lightshow from the back spinny arm.
-    left_med_motor.run_angle(speed=500, rotation_angle=-4500, wait = True)
+    orgSpeed,orgAccel,orgTorque = left_med_motor.control.limits()
+    left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = 1000)
+    left_med_motor.run_angle(speed=1000, rotation_angle=-2700, wait = True)
+    left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = orgTorque)
     #right_med_motor.run_angle(speed=600, rotation_angle=-600)
 
 def immersiveExperience():
     # Now move ahead from the light show
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=400, targetAngle=angle)
-    right_med_motor.run_angle(speed=1000, rotation_angle=600,wait=False)
+    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=700, targetAngle=angle)
     # Turn towards immersive experience
     angle=180
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=15, speed=400, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=23, speed=400, targetAngle=angle)
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=400, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=400, targetAngle=angle)
     #drive_base.settings(200, 500, 200, 500)
     #drive_base.straight(distance = -200)
     
@@ -187,13 +211,13 @@ def immersiveExperience():
     #left_med_motor.run_angle(speed=2000, rotation_angle=1800)
 
 def goHome():
-    gyroStraightWithDrive(distanceInCm=10, speed=100, targetAngle=270, backward=True)
+    # gyroStraightWithDrive(distanceInCm=10, speed=100, targetAngle=270, backward=True)
     # was 34
-    gyroStraightWithDrive(distanceInCm=36, speed=400, targetAngle=270, backward=True)
+    gyroStraightWithDriveWithAccurateDistance(distanceInCm=44, speed=800, targetAngle=270, backward=True)
 
-    angle = 10
+    angle = 3
     turnToAngle(angle, speed=500)
-    gyroStraightWithDrive(distanceInCm=100, speed=1000, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distanceInCm=100, speed=1000, targetAngle=angle)
 
     '''
     angle=-90
@@ -360,21 +384,32 @@ def museumStartingPointingForward():
 
 def resetBucket(angle = 800):
     right_med_motor.run_angle(speed=1000, rotation_angle=angle)
+def testleftmotor():
+    left_med_motor.run_angle(speed=500, rotation_angle=500)
 
+def testlightShowtime():
+    orgSpeed,orgAccel,orgTorque = left_med_motor.control.limits()
+    left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = 1000)
+    left_med_motor.run_angle(speed=1000, rotation_angle=-2700, wait = True)
+    left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = orgTorque)
 def run4():
-    initializeAndWaitForRobotReady()
+    resetRobot()
     rollingCamera()
     museum()
-    # lightShow()
-    #immersiveExperience()
-    #goHome()
+    lightShow()
+    immersiveExperience()
+    goHome()
 
 def run4Between3dCimenaAndSoundMixer():
     museumStartingPointingForward()
 
 runWithTiming(run4,"Run4")
-#lightShowTestWith8ToothGear()
+# lightShowTestWith8ToothGear()
+
+#lightShowTestWithLoad()
 
 #runWithTiming(lightShowTest, "Light Show")
 #resetBucket(angle = 400)
+#runWithTiming(testlightShowtime, "lightshowtime")
+
 
