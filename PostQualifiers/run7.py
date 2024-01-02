@@ -28,7 +28,7 @@ def musicConcert():
     gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*10.5, targetAngle=0, speed=500, slowDown = False)
 
     # lift the arm to deliver the expert and back off
-    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*8.5, targetAngle=10, backward=True, speed=400)
+    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*10.5, targetAngle=10, backward=True, speed=400)
 
     # turn towards the Music Concert
     turnToAngle(45)

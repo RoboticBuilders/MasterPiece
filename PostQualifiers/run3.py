@@ -70,7 +70,3 @@ def run3():
     goHome()
 
 # runWithTiming(run3,"SceneChange")
-    
-
-
-
