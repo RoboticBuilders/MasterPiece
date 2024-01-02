@@ -764,6 +764,7 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
                           skipCorrectionCalculation = False,
                           tillBlackLine = False,
                           detectStall = False,
+                          useSlowerAccelerationForBackward = True, # Use this parameter when you want to just go fast home.
                           stop = Stop.HOLD):
                          
     global prevValues, correctionPos, savedNums
@@ -842,10 +843,9 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
             newCorrection = 20
         return newCorrection
 
-    if backward == True:
+    if backward == True and useSlowerAccelerationForBackward == True:
         drive_base.settings(straight_speed=400,straight_acceleration=300,
                         turn_rate=400,turn_acceleration=(100, 400))
-
 
     def blackStoppingCondition():
         #light = getReflectedLight()
@@ -950,7 +950,7 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
     drive_base.stop()
     _stopDriveBaseInternal(stop)
 
-    if backward == True:
+    if backward == True and useSlowerAccelerationForBackward == True:
         drive_base.settings(straight_speed=400,straight_acceleration=1000,
                         turn_rate=400,turn_acceleration=(150, 400))
 

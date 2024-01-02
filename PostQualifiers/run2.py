@@ -19,7 +19,7 @@ def _doSoundMixerWithComplicatedArm():
         continue
 
     # Now backoff.
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 1000, targetAngle = angle, backward=True,
+    gyroStraightWithDriveWithAccurateDistance(distance = 23, speed = 1000, targetAngle = angle, backward=True,
                                               stop = Stop.COAST)
 
     # Now drive back home.

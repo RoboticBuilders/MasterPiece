@@ -102,13 +102,16 @@ def ThreeDCinemaUsingStaticArm():
     gyroStraightWithDrive(distanceInCm = 30 , speed=400, targetAngle=angle)
 
 def movieCameraAndRollingCameraStopper():
-    left_med_motor.run_angle(speed=2000, rotation_angle=-1000)
+    # Bring down the bucket in parallel
+    left_med_motor.run_angle(speed=2000, rotation_angle=-1000, wait=False)
 
+    # Now pull back the camera and turn.
     angle = 0
     gyroStraightWithDrive(distanceInCm = 10, speed=200, targetAngle=angle,backward=True)    
     angle = -20
     turnToAngle(targetAngle=angle, speed=400)
 
+    # Now bring up the bucket to release the camera.
     left_med_motor.run_angle(speed=2000, rotation_angle=1000)
 
 def run4():
@@ -138,35 +141,45 @@ def run4():
 
 #   RUN4 With Spinner and Slider
 def rollingCamera():
+    # First bring down the bucket.
     angle=0
-    right_med_motor.run_angle(speed=2000, rotation_angle=-400)
-    gyroStraightWithDriveWithAccurateDistance(distance=43, speed=650, targetAngle=angle)
-    right_med_motor.run_angle(speed=2000, rotation_angle=-400,wait=False)
-    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=1000, targetAngle=angle, backward = True)
+    right_med_motor.run_angle(speed=2000, rotation_angle=-400, wait = False)
 
+    # Now drive towards the rolling camera and bring down the 
+    gyroStraightWithDriveWithAccurateDistance(distance=43, speed=650, targetAngle=angle)
+    right_med_motor.run_angle(speed=2000, rotation_angle=-400)
+    
+    # Now backup and pull the camera and turn it into its place.
+    gyroStraightWithDriveWithAccurateDistance(distance=15, speed=1000, targetAngle=angle, backward = True)
     angle=-20
     turnToAngle(targetAngle=angle,speed=400)
+
+    # Now move forward a little before opening hte bucket. This is needed
+    # to ensure that the camera is not snagged on the bucket.
     gyroStraightWithDriveWithAccurateDistance(distance=1, speed=100, targetAngle=angle)
+
+    # Now bring up the bucket, before driving away.
+    # TODO consider doing part of this in parallel.
     right_med_motor.run_angle(speed=2000, rotation_angle=400)
 
 def museum():
     angle=-40
-    gyroStraightWithDriveWithAccurateDistance(distance=30, speed=650, targetAngle=angle)
-    right_med_motor.run_angle(speed=2000, rotation_angle=-200)
+    gyroStraightWithDriveWithAccurateDistance(distance=32, speed=650, targetAngle=angle)
+    right_med_motor.run_angle(speed=2000, rotation_angle=-200,wait=False)
 
     angle=-60
-    turnToAngle(targetAngle=angle,speed=600)
+    turnToAngle(targetAngle=angle, speed=600)
     gyroStraightWithDriveWithAccurateDistance(distance=40, speed=650, targetAngle=angle)
 
-    angle=-48
+    angle=-40
     turnToAngle(targetAngle=angle,speed=600)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed=650, targetAngle=angle)
-    
+    # Drop off the expert and audience
     left_med_motor.run_angle(speed=500, rotation_angle=500)
 
     angle=-90
     turnToAngle(targetAngle=angle, speed=600)
-    gyroStraightWithDriveWithAccurateDistance(distance=4, speed=650, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=2, speed=650, targetAngle=angle)
 
     gyroStraightWithDriveWithAccurateDistance(distance=2, speed=650, targetAngle=angle,backward=True)
     right_med_motor.run_angle(speed=2000, rotation_angle=600)
@@ -183,7 +196,7 @@ def lightShow():
     angle=-90
     #drive_base.settings(200, 500, 200, 500)
     #drive_base.straight(distance = -280)
-    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
     gyroStraightWithDriveWithAccurateDistance(distance=9, speed=200, targetAngle=angle,backward=True)
     wait(100)
     # Now we are at the light show, spin the lightshow from the back spinny arm.
@@ -198,12 +211,12 @@ def immersiveExperience():
     angle=-90
     gyroStraightWithDriveWithAccurateDistance(distance=6, speed=700, targetAngle=angle)
     # Turn towards immersive experience
-    angle=180
+    angle=175
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=23, speed=400, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=22.5, speed=400, targetAngle=angle)
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=400, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=400, targetAngle=angle)
     #drive_base.settings(200, 500, 200, 500)
     #drive_base.straight(distance = -200)
     
@@ -213,11 +226,15 @@ def immersiveExperience():
 def goHome():
     # gyroStraightWithDrive(distanceInCm=10, speed=100, targetAngle=270, backward=True)
     # was 34
-    gyroStraightWithDriveWithAccurateDistance(distanceInCm=44, speed=800, targetAngle=270, backward=True)
+    gyroStraightWithDriveWithAccurateDistance(distance=48, speed=800, targetAngle=270, backward=True)
 
-    angle = 3
+    # Drive backward at a slight angle to ensure that we are catching the
+    # expert when going home.
+    angle = 185
     turnToAngle(angle, speed=500)
-    gyroStraightWithDriveWithAccurateDistance(distanceInCm=100, speed=1000, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=100, speed=1000, targetAngle=angle, 
+                                              slowDown = False, backward = True,
+                                              useSlowerAccelerationForBackward = False)
 
     '''
     angle=-90
@@ -392,6 +409,7 @@ def testlightShowtime():
     left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = 1000)
     left_med_motor.run_angle(speed=1000, rotation_angle=-2700, wait = True)
     left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = orgTorque)
+
 def run4():
     resetRobot()
     rollingCamera()
