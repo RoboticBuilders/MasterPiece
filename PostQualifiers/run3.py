@@ -8,7 +8,7 @@ def goHome():
     #Go home with curve
     drive_base.settings(1000, 1000, 1000, 1000)
     drive_base.curve(radius = -160,angle = -45,then=Stop.COAST)
-    drive_base.curve(radius = -460,angle = -90)
+    drive_base.curve(radius = -460,angle = -70)
     '''
     angle = -45
     # backup from movie set
@@ -48,7 +48,7 @@ def goToScenceChangeFromHomeFaster():
     angle = 7
     gyroStraightWithDrive(distanceInCm=35, targetAngle=angle, speed=1000)
     driveTillLine(speed=400, doCorrection=False, sensor=right_color, blackOrWhite="Black")
-    gyroStraightWithDrive(distanceInCm=2, targetAngle=angle, speed=300)
+    gyroStraightWithDrive(distanceInCm=3, targetAngle=angle, speed=300)
     angle = -45
     turnToAngle(targetAngle=angle,speed=TURN_SPEED)
     #Raise the bucket
