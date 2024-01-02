@@ -421,11 +421,9 @@ def run4():
 def run4Between3dCimenaAndSoundMixer():
     museumStartingPointingForward()
 
-runWithTiming(run4,"Run4")
+#runWithTiming(run4,"Run4")
 # lightShowTestWith8ToothGear()
-
 #lightShowTestWithLoad()
-
 #runWithTiming(lightShowTest, "Light Show")
 #resetBucket(angle = 400)
 #runWithTiming(testlightShowtime, "lightshowtime")
