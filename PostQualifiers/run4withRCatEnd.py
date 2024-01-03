@@ -252,12 +252,20 @@ def immersiveExperience():
 def goHome():
     # gyroStraightWithDrive(distanceInCm=10, speed=100, targetAngle=270, backward=True)
     # was 34
-    gyroStraightWithDriveWithAccurateDistance(distance=45, speed=800, targetAngle=270, backward=True)
+    gyroStraightWithDriveWithAccurateDistance(distance=48, speed=800, targetAngle=270, backward=True)
 
     # Drive backward at a slight angle to ensure that we are catching the
     # expert when going home.
+    angle = 70
+    turnToAngle(targetAngle= angle, speed=300, forceTurn = FORCETURN_LEFT)
+    right_med_motor.run_angle(speed=2000, rotation_angle=-700)
+
+    angle = 145
+    turnToAngle(targetAngle= angle, speed=300)
+    right_med_motor.run_angle(speed=2000, rotation_angle=700)
+
     angle = 187
-    turnToAngle(angle, speed=500)
+    turnToAngle(targetAngle= angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=100, speed=1000, targetAngle=angle, 
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False)
@@ -270,32 +278,6 @@ def goHome():
     turnToAngle(targetAngle=angle, speed=600)
     gyroStraightWithDriveWithAccurateDistance(distance=100, speed=700, targetAngle=angle)
     '''
-# We are not doing augmented reality right now
-def augmentedReality():
-    angle = 0
-    right_med_motor.run_angle(speed=700, rotation_angle=-200)
-    gyroStraightWithDrive(distanceInCm = 34, speed = 300, targetAngle = angle)
-
-    angle = -90
-    turnToAngle(targetAngle = angle, speed = 300)
-    gyroStraightWithDrive(distanceInCm = 5, speed = 150, targetAngle = angle)
-    
-    angle = 0
-    turnToAngle(targetAngle = angle, speed = 700)
-
-    angle=-80
-    turnToAngle(targetAngle = angle, speed = 500)
-    gyroStraightWithDrive(distanceInCm = 7, speed = 300, targetAngle = angle, backward = True)
-    
-    angle = 0
-    turnToAngle(targetAngle = angle, speed = 300)
-    right_med_motor.run_angle(speed=700, rotation_angle=800)
-    gyroStraightWithDrive(distanceInCm = 60, speed = 400, targetAngle = angle)
-
-def goHomeWithAugmentedReality():
-    angle = 90
-    turnToAngle(targetAngle = angle, speed = 1000)
-    gyroStraightWithDrive(distanceInCm = 50, speed = 1000, targetAngle = angle)
 
 def goHomeWithExpertPickup():
     angle = 270
@@ -314,15 +296,6 @@ def goHomeWithExpertPickup():
     turnToAngle(targetAngle=angle, speed=400)
     gyroStraightWithDrive(distanceInCm=35, speed=400, targetAngle=angle)
 
-#RUN4 With flush on Light show
-def flushOnLightShow():
-    angle=-40
-    turnToAngle(targetAngle=angle, speed=400)
-    gyroStraightWithDrive(distanceInCm=25, speed=700, targetAngle=angle)
-    #Lower bucket arm completly
-    right_med_motor.run_angle(speed=2000, rotation_angle=-400)
-    #Crash into the light show
-    gyroStraightWithDrive(distanceInCm=10, speed=100, targetAngle=angle)
 
 def museumAfterFlushOnLightShow():
     angle=-40
@@ -354,67 +327,6 @@ def catchLineBesideLightShowAndCurveToMuseum():
     drive_base.settings(400, 400, 400, 400)
     drive_base.curve(radius=-160, angle=-90,then=Stop.COAST)
     drive_base.curve(radius=-170, angle=-92)
-
-def dropoffPedestal():
-
-    # Now we are in front of the museum after the curve.
-    # Turn towards museum, drive forward to be within the museum target area and open the bucket to drop the pedestal.
-    angle=-90
-    turnToAngle(targetAngle=angle, speed=400)
-    gyroStraightWithDrive(distanceInCm=13, speed=600, targetAngle=angle)
-    right_med_motor.run_angle(speed=800, rotation_angle=700)
-
-#RUN4 With thether scene change type path
-def museumStartingPointingForward():
-    # First lower the bucket a little.
-    right_med_motor.run_angle(speed=2000, rotation_angle=-400)
-
-    # Now drive forward at a slight angle.
-    angle=7
-    gyroStraightWithDriveWithAccurateDistance(distance=55, speed=800, backward = False, targetAngle = angle, 
-                                              stop = Stop.COAST)
-
-    # Now drive till the black line.
-    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=800, backward = False, targetAngle = angle, 
-                                              tillBlackLine = True,
-                                              stop = Stop.HOLD)
-
-    # Now Lower the bucket fully.
-    right_med_motor.run_angle(speed=2000, rotation_angle=-400)
-
-    # Drive forward a little more so we can turn 90,
-    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=400, backward = False, targetAngle = angle, 
-                                              stop = Stop.HOLD)
-
-    # Now turn towards the LightShow
-    angle = 90
-    turnToAngle(targetAngle = angle, speed=400)
-
-    # Now drive till the museum
-    gyroStraightWithDriveWithAccurateDistance(distance=62, speed=800, backward = False, targetAngle = angle, 
-                                              stop = Stop.HOLD)
-
-    # Now turn to drop off the museum.
-    angle = 0
-    turnToAngle(targetAngle = angle, speed=400)
-
-    # Now drive forward before dropping off the units.
-    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=800, backward = False, targetAngle = angle, 
-                                              stop = Stop.HOLD)
-
-    # Now lift the bucket.
-    right_med_motor.run_angle(speed=2000, rotation_angle=800)
-
-    # Now backp till the light sho0w.
-    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=500, backward = True, targetAngle = angle, 
-                                              stop = Stop.HOLD)
-
-    # Now slowly backoff.
-    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=200, backward = True, targetAngle = angle, 
-                                              stop = Stop.HOLD)
-
-    # Now turn the light show
-    right_med_motor.run_angle(speed=1000, rotation_angle=-600)
 
 
 def resetBucket(angle = 800):
@@ -452,6 +364,48 @@ def testAudienceDropOffAtLightShow():
     wait(2000)
     gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=0)
 
+def goToMuseumFromHome():
+    #Lower the bucket first
+    right_med_motor.run_angle(speed=2000, rotation_angle=-400,wait=False)
+    angle = 0
+    gyroStraightWithDriveWithAccurateDistance(distance=40, speed=650, targetAngle=angle)
+    # Now turn towards the light show
+    angle=-60
+    turnToAngle(targetAngle=angle, speed=600)
+    #Lower the arm to avoid the lightshow
+    right_med_motor.run_angle(speed=2000, rotation_angle=-200,wait=False)
+
+    # Drive all the way to the cross the lightshow
+    gyroStraightWithDriveWithAccurateDistance(distance=60, speed=650, targetAngle=angle)
+
+    
+    # Now turn towards the museum
+    angle=-40
+    turnToAngle(targetAngle=angle,speed=600)
+    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=650, targetAngle=angle)
+    
+    # Drop off the expert and audience
+    right_med_motor.run_angle(speed=2000, rotation_angle=400)
+    left_med_motor.run_angle(speed=500, rotation_angle=500)
+
+    angle=-90
+    turnToAngle(targetAngle=angle, speed=600)
+    #gyroStraightWithDriveWithAccurateDistance(distance=2, speed=650, targetAngle=angle)
+
+    gyroStraightWithDriveWithAccurateDistance(distance=2, speed=650, targetAngle=angle,backward=True)
+    
+    # Reset the bucket and left motor
+    right_med_motor.run_angle(speed=2000, rotation_angle=200)
+    #left_med_motor.run_angle(speed=500, rotation_angle=-500)
+
+def newrun4():
+    goToMuseumFromHome()
+    lightShow()
+    immersiveExperience()
+    goHome()
+
+
+runWithTiming(newrun4,"Run4")
 #run4()
 #runWithTiming(run4,"Run4")
 # lightShowTestWith8ToothGear()
@@ -460,6 +414,8 @@ def testAudienceDropOffAtLightShow():
 #resetBucket(angle = 400)
 #testAudienceDropOffAtLightShow()
 #runWithTiming(testlightShowtime, "lightshowtime")
+
+
 
 
 
