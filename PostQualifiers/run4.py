@@ -261,15 +261,21 @@ def goHome():
     gyroStraightWithDriveWithAccurateDistance(distance=100, speed=1000, targetAngle=angle, 
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False)
+    
+def goHomeWithCurve():
+    # Backoff from the Immersive experience.
+    gyroStraightWithDriveWithAccurateDistance(distance=28, speed=800, targetAngle=270, backward=True)
 
-    '''
-    angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=50, speed=700, targetAngle=angle, backward=True)
+    # Curve around the light show to avoid hitting the camera and also go home.
+    drive_base.curve(radius = -200, angle = 90)
 
-    angle=0
-    turnToAngle(targetAngle=angle, speed=600)
-    gyroStraightWithDriveWithAccurateDistance(distance=100, speed=700, targetAngle=angle)
-    '''
+    # Drive backward at a slight angle to ensure that we are catching the
+    # expert when going home.
+    angle = 187
+    gyroStraightWithDriveWithAccurateDistance(distance=90, speed=1000, targetAngle=angle, 
+                                              slowDown = False, backward = True,
+                                              useSlowerAccelerationForBackward = False)
+
 # We are not doing augmented reality right now
 def augmentedReality():
     angle = 0
@@ -434,15 +440,8 @@ def run4():
     museumfaster()
     lightShow()
     immersiveExperience()
-    goHome()
-    '''
-    runWithTiming(rollingCamera,"rollingCamera")
-    runWithTiming(museumfaster,"museum")
-    runWithTiming(lightShow,"lightShow")
-    runWithTiming(immersiveExperience,"immersiveExperience")
-    runWithTiming(goHome,"goHome")
-    '''
-
+    goHomeWithCurve()
+    
 def run4Between3dCimenaAndSoundMixer():
     museumStartingPointingForward()
 
