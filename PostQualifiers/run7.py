@@ -7,7 +7,7 @@ def musicConcert():
 
     hub.display.number(1)
 
-    turnToAngle(-45, speed = 300)
+    turnToAngle(targetAngle = -45, speed = 300)
 
     hub.display.number(2)
 
@@ -31,11 +31,13 @@ def musicConcert():
     gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*10.5, targetAngle=10, backward=True, speed=400)
 
     # turn towards the Music Concert
-    turnToAngle(45)
+    turnToAngle(targetAngle = 45, speed = 300)
 
     # Push the HP and align against it, and turn circular motion arm to do sounds lever
-    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*5, targetAngle=45, speed=300) # 11/23 - was 10
+    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*5, targetAngle=45, speed=300)
     driveForTime(timeInMS=1000, speed=300)
+
+    # Wait for a little and run Flippy to turn the speakers
     wait(100)
     left_med_motor.run_angle(-1000, 1500)
 
@@ -118,5 +120,5 @@ def mainRun7():
 
     print("DONE")
 
-# waitForButtonPress()
-# mainRun7()
+#waitForButtonPress()
+#mainRun7()

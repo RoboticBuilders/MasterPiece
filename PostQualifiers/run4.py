@@ -161,9 +161,6 @@ def rollingCamera():
     # Now bring up the bucket, before driving away.
     # TODO consider doing part of this in parallel.
     right_med_motor.run_angle(speed=2000, rotation_angle=400)
-    
-
-
 
 def museum():
     angle=-40
@@ -193,15 +190,11 @@ def museum():
     gyroStraightWithDriveWithAccurateDistance(distance=2, speed=650, targetAngle=angle,backward=True)
     right_med_motor.run_angle(speed=2000, rotation_angle=200)
 
-    
-
-
-
 def museumfaster():
     #Lower the arm to avoid the lightshow
     right_med_motor.run_angle(speed=2000, rotation_angle=-200,wait=False)
     #Use a curve to reach in front of the immersive experience
-    drive_base.curve(radius=650,angle = -60)
+    drive_base.curve(radius=660,angle = -60)
     
     # Now turn to drop off at museum
     angle=-40
@@ -242,14 +235,14 @@ def lightShow():
 def immersiveExperience():
     # Now move ahead from the light show
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=700, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=9, speed=500, targetAngle=angle)
     # Turn towards immersive experience
-    angle=175
+    angle=170
     turnToAngle(targetAngle=angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=22.5, speed=400, targetAngle=angle)
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=400, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=13, speed=400, targetAngle=angle)
     #drive_base.settings(200, 500, 200, 500)
     #drive_base.straight(distance = -200)
     
@@ -437,11 +430,18 @@ def testlightShowtime():
 
 def run4():
     resetRobot()
+    rollingCamera()
+    museumfaster()
+    lightShow()
+    immersiveExperience()
+    goHome()
+    '''
     runWithTiming(rollingCamera,"rollingCamera")
     runWithTiming(museumfaster,"museum")
     runWithTiming(lightShow,"lightShow")
     runWithTiming(immersiveExperience,"immersiveExperience")
     runWithTiming(goHome,"goHome")
+    '''
 
 def run4Between3dCimenaAndSoundMixer():
     museumStartingPointingForward()
@@ -452,7 +452,7 @@ def testAudienceDropOffAtLightShow():
     wait(2000)
     gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=0)
 
-run4()
+#run4()
 #runWithTiming(run4,"Run4")
 # lightShowTestWith8ToothGear()
 #lightShowTestWithLoad()
