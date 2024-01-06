@@ -90,14 +90,19 @@ def runUntilStall():
     print("Drive baases stopped")
     drive_base.stop()
 
+def printHSVValues(sensor=left_color):
+    while  True:
+        print("(h,s,v) = {}, color: {}".format(sensor.hsv(), sensor.color()))
+   
 initializeAndWaitForRobotReady()
 hub.imu.reset_heading(90)
 #squareTest()
-turnTest()
+#turnTest()
 #testDriveStraight()
 #testDriveTillBlackline()
 #printColorValues()
 #testPositionUtil()
 #testFollowBlackLine()
 #runUntilStall()
+printHSVValues()
 

@@ -82,32 +82,6 @@ def lightShowTestWithLoad():
 
     print("Average Load: " + str(total_load / occurances))
 
-
-
-
-def run4():
-    # ALIGNMENT: 3rd dark black line from the from the back wall
-    gyroStraightWithDrive(distanceInCm = 48, speed = 500, targetAngle = 0)
-    turnToAngle(targetAngle = -30, speed = 500)
-    gyroStraightWithDrive(distanceInCm = 25, speed = 500, targetAngle = -30)
-    turnToAngle(targetAngle = -90, speed = 500)
-    gyroStraightWithDrive(distanceInCm = 40, speed = 500, targetAngle = -90)
-    turnToAngle(targetAngle = -45, speed = 500)
-    gyroStraightWithDrive(distanceInCm = 10, speed = 500, targetAngle = -45)
-
-    left_med_motor.run_angle(speed=2000, rotation_angle=-3000)
-    left_med_motor.run_angle(speed=2000, rotation_angle=1800)
-
-    gyroStraight(distanceInCm = 5, speed = 500, targetAngle = -45)
-    turnToAngle(targetAngle = -90, speed = 500)
-
-    right_med_motor.run_angle(speed = 1000, rotation_angle = 1000)
-
-    gyroStraight(distanceInCm = 15, speed = 300, targetAngle = -90)
-    gyroStraight(distanceInCm = 7, speed = 50, targetAngle = -90)
-
-    right_med_motor.run_angle(speed=1000, rotation_angle=3500)
-
 #   RUN4 With Spinner and Slider
 def rollingCamera():
     # First bring down the bucket.
@@ -119,14 +93,16 @@ def rollingCamera():
     right_med_motor.run_angle(speed=2000, rotation_angle=-400)
     
     # Now backup and pull the camera and turn it into its place.
-    gyroStraightWithDriveWithAccurateDistance(distance=15, speed=1000, targetAngle=angle, backward = True)
-    angle=-15
-    turnToAngle(targetAngle=angle,speed=400)
+    gyroStraightWithDriveWithAccurateDistance(distance=15, speed=500, targetAngle=angle, backward = True)
+    angle=-20
+    #turnToAngle(targetAngle=angle,speed=400,left_correction=0.01,right_correction=0.01)
+    drive_base.turn(angle = -20)
     
 
     # Now move forward a little before opening hte bucket. This is needed
     # to ensure that the camera is not snagged on the bucket.
-    gyroStraightWithDriveWithAccurateDistance(distance=1, speed=100, targetAngle=angle)
+    # Removed because this might be causing the stall
+    #gyroStraightWithDriveWithAccurateDistance(distance=1, speed=300, targetAngle=angle)
    
 
     #drive_base.straight(distance = 10)
@@ -192,7 +168,7 @@ def goTomuseumwith2turns():
 
 def museumfaster():
     angle  = -15
-    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=1000, targetAngle=angle, backward = True)
+    gyroStraightWithDriveWithAccurateDistance(distance=4, speed=1000, targetAngle=angle, backward = True)
     angle=-20
     turnToAngle(targetAngle=angle,speed=400)
     
@@ -220,13 +196,13 @@ def museumfaster():
 def museumwithpedestaloutside():
     #angle  = -15
     #gyroStraightWithDriveWithAccurateDistance(distance=5, speed=1000, targetAngle=angle, backward = True)
-    angle=-20
-    turnToAngle(targetAngle=angle,speed=400)
+    #angle=-20
+    #turnToAngle(targetAngle=angle,speed=400)
     
     #Lower the arm to avoid the lightshow
     #right_med_motor.run_angle(speed=100, rotation_angle=-200,wait=False)
     #Use a curve to reach in front of the immersive experience
-    drive_base.curve(radius=550,angle = -60)
+    drive_base.curve(radius=580,angle = -60)
     #right_med_motor.run_angle(speed=2000, rotation_angle=-200,wait=True)
     
     #wait(5000)
@@ -240,9 +216,9 @@ def museumwithpedestaloutside():
 
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
-    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=650, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=650, targetAngle=angle)
 
-    #gyroStraightWithDriveWithAccurateDistance(distance=2, speed=650, targetAngle=angle,backward=True)
+    gyroStraightWithDriveWithAccurateDistance(distance=2, speed=650, targetAngle=angle,backward=True)
     right_med_motor.run_angle(speed=2000, rotation_angle=600)
     
 
@@ -462,12 +438,7 @@ def testAudienceDropOffAtLightShow():
     gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=0)
 
 
-# stopwatch = StopWatch()
-# start_time = stopwatch.time()
-# run4()
-# end_time = stopwatch.time()
-# print("Time is " + str((end_time-start_time)/1000) + " seconds")
-#runWithTiming(run4,"Run4")
+runWithTiming(run4,"Run4")
 # lightShowTestWith8ToothGear()
 #lightShowTestWithLoad()
 #runWithTiming(lightShowTest, "Light Show")

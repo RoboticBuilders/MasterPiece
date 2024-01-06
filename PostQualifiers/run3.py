@@ -7,11 +7,11 @@ def goHome():
     drive_base.curve(radius = -650, angle = -55)
     
     # Raise the arm
-    right_med_motor.run_angle(speed=2000, rotation_angle = 800)
+    right_med_motor.run_angle(speed=2000, rotation_angle = 750)
 
 def goToScenceChangeFromHomeFaster():
     # Drive towards the scene change, catch the line.
-    angle = 10
+    angle = 11
     gyroStraightWithDriveWithAccurateDistance(distance=35, speed=500, targetAngle=angle, gradualAcceleration = False,
                                               backward=False, stop=Stop.COAST, slowDown = False)
 
