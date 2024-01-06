@@ -1,45 +1,46 @@
 from Utilities import *
 
-TURN_SPEED = 300
-DRIVE_SPEED = 400
-
-def threeDCinema():
-    angle = 0
-    gyroStraightWithDrive(distanceInCm = 20, speed = DRIVE_SPEED, targetAngle = angle)
-
-    angle = -55
-    turnToAngle(targetAngle = angle, speed = TURN_SPEED)
-    gyroStraightWithDrive(distanceInCm = 20, speed = DRIVE_SPEED, targetAngle = angle)
-
-    angle = 0
-    turnToAngle(targetAngle = angle, speed = 1000)
-
-def theaterSceneChange():
-    angle = -45
-    turnToAngle(targetAngle = angle, speed = TURN_SPEED)
-    gyroStraightWithDrive(distanceInCm = 25, speed = DRIVE_SPEED, targetAngle = angle, backward = True)
-
-    angle = 27
-    turnToAngle(targetAngle = angle, speed = TURN_SPEED)
-    gyroStraightWithDrive(distanceInCm = 60, speed = DRIVE_SPEED, targetAngle = angle)
-    
-    angle = -45
-    turnToAngle(targetAngle = angle, speed = TURN_SPEED)
-    gyroStraightWithDrive(distanceInCm = 20, speed = 200, targetAngle = angle)
-
-    angle = -90
-    turnToAngle(targetAngle = angle, speed = 200)
-    gyroStraightWithDrive(distanceInCm = 12, speed = 300, targetAngle = angle, backward = True)
-
 def goHome():
-    angle = -145
-    turnToAngle(targetAngle = angle, speed = 750)
-    gyroStraightWithDrive(distanceInCm = 60, speed = 1000, targetAngle = angle)
+    # Go home with curve
+    drive_base.settings(1000, 1000, 1000, 1000)
+    drive_base.curve(radius = -160, angle = -45, then=Stop.COAST)
+    drive_base.curve(radius = -650, angle = -55)
+    
+    # Raise the arm
+    right_med_motor.run_angle(speed=2000, rotation_angle = 800)
+
+def goToScenceChangeFromHomeFaster():
+    # Drive towards the scene change, catch the line.
+    angle = 10
+    gyroStraightWithDriveWithAccurateDistance(distance=35, speed=500, targetAngle=angle, gradualAcceleration = False,
+                                              backward=False, stop=Stop.COAST, slowDown = False)
+
+    # Drive till the black line. Notice the tillBlackLine = True.                                              
+    gyroStraightWithDriveWithAccurateDistance(distance=25, speed=500, targetAngle=angle,
+                                              backward=False, tillBlackLine=True, stop=Stop.COAST)
+    
+    # Go forward a litle more
+    gyroStraightWithDrive(distanceInCm=3, targetAngle=angle, speed=300)
+
+    # Turn towards the scene change.
+    angle = -45
+    turnToAngle(targetAngle=angle, speed=500)
+    
+def _doSceneChange():
+    
+    # Start bringing down the bucket when we move forward to push the scene.
+    angle = -45
+    right_med_motor.run_angle(speed=2000, rotation_angle = -800, wait = False)
+    gyroStraightWithDrive(distanceInCm=8, targetAngle=angle, speed=300)
+    
+    # wait for the bucket to come down.
+    while (right_med_motor.done() == False):
+        continue
 
 def run3():
-    threeDCinema()
-    theaterSceneChange()
+    resetRobot()
+    goToScenceChangeFromHomeFaster()
+    _doSceneChange()
     goHome()
 
-#run3()
-# gyroStraightWithDrive(distanceInCm = 28, speed = DRIVE_SPEED, targetAngle = 0)
+# runWithTiming(run3,"SceneChange")
