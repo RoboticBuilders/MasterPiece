@@ -8,7 +8,7 @@ from run5 import *
 from run6 import *
 from run7 import *
 
-# ************** IMPORTNAT ********************************
+# ************** IMPORTANT ********************************
 # The right bucket design should be such that it is 4.5 centimeters outside from the bucket wall.
 
 def _maindriver():
@@ -46,13 +46,13 @@ def _maindriver():
         if counter == 0:
             # 3DCinema
             start_time = stopwatch.time()
-            runWithTiming(run2, "SoundMixer")
+            runWithTiming(run0, "SoundMixer")
         if counter == 1:
             # Rolling Camera Lever
-            runWithTiming(run0, "3DCinema")
+            runWithTiming(run1, "3DCinema")
         if counter == 2:
             # SoundMixer
-            runWithTiming(run1, "Rolling Camera Lever")
+            runWithTiming(run2, "Rolling Camera Lever")
         if counter == 3:
             # Theater scene change run
             runWithTiming(run3,"SceneChange")
