@@ -462,11 +462,11 @@ def testAudienceDropOffAtLightShow():
     gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=0)
 
 
-stopwatch = StopWatch()
-start_time = stopwatch.time()
-run4()
-end_time = stopwatch.time()
-print("Time is " + str((end_time-start_time)/1000) + " seconds")
+# stopwatch = StopWatch()
+# start_time = stopwatch.time()
+# run4()
+# end_time = stopwatch.time()
+# print("Time is " + str((end_time-start_time)/1000) + " seconds")
 #runWithTiming(run4,"Run4")
 # lightShowTestWith8ToothGear()
 #lightShowTestWithLoad()

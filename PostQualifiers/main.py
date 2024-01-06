@@ -8,7 +8,7 @@ from run5 import *
 from run6 import *
 from run7 import *
 
-# ************** IMPORTNAT ********************************
+# ************** IMPORTANT ********************************
 # The right bucket design should be such that it is 4.5 centimeters outside from the bucket wall.
 
 def _maindriver():
