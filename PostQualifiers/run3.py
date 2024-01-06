@@ -12,7 +12,7 @@ def goHome():
 def goToScenceChangeFromHomeFaster():
     # Drive towards the scene change, catch the line.
     angle = 10
-    gyroStraightWithDriveWithAccurateDistance(distance=35, speed=2000, targetAngle=angle, gradualAcceleration = False,
+    gyroStraightWithDriveWithAccurateDistance(distance=35, speed=500, targetAngle=angle, gradualAcceleration = False,
                                               backward=False, stop=Stop.COAST, slowDown = False)
 
     # Drive till the black line. Notice the tillBlackLine = True.                                              

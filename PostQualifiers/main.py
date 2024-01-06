@@ -23,27 +23,29 @@ def _maindriver():
         hub.display.number(counter)
         if counter == 8: 
             break
+
+        # Beep that we are ready for button press.
+        hub.speaker.beep()
+
         # Skip printing for the first time the loop runs.
         if (counter != 0):
             arm_change_start_time = stopwatch.time()
-            #print("Waiting for arm change")
-
-        hub.speaker.beep()
-        resetRobot()
-        #print("Waiting for right button press...")
+        
         button = waitForButtonPress()
+        resetRobot()
 
-        if button==Button.LEFT:
-            counter=counter+1
+        if button == Button.LEFT:
+            counter = counter + 1
             continue
 
-        # the next few lines are the else loop here it is also the case if the right button is pressed.
+        # The next few lines are the else loop here it is also the case if the right button is pressed.
         if (counter != 0):
             arm_change_end_time = stopwatch.time()    
             print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)))
 
         if counter == 0:
             # 3DCinema
+            start_time = stopwatch.time()
             runWithTiming(run2, "SoundMixer")
         if counter == 1:
             # Rolling Camera Lever

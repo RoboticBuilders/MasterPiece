@@ -90,8 +90,8 @@ def expertDrops():
         gyroStraightWithDrive(distanceInCm=(TOTAL_DIST_TO_TRAVEL - distGyro - distToWhiteLine)/10, targetAngle=_angle, speed=500)
     else:
         print("No need to correct distance to {}".format(TOTAL_DIST_TO_TRAVEL))
-
-    right_med_motor.run_angle(speed = -600, rotation_angle = 1500, then = Stop.COAST, wait = False)
+    # Now updated to negative for the new attachment
+    right_med_motor.run_angle(speed = -600, rotation_angle = -1500, then = Stop.COAST, wait = False)
 
     gyroStraightWithDriveWithAccurateDistance(distance = 18, speed = 500, targetAngle = _angle)
 
@@ -121,4 +121,4 @@ def mainRun7():
     print("DONE")
 
 #waitForButtonPress()
-#mainRun7()
+mainRun7()
