@@ -40,10 +40,10 @@ def waitForLeftMotor():
     while left_med_motor.done() == False:
         continue
 
-def run2():
+def run0():
     resetRobot()
     _doSoundMixerWithComplicatedArm()
     _resetBucket()
 
-#runWithTiming(run2, "Sound Mixer")
+#runWithTiming(run0, "Sound Mixer")
 #_resetBucket()

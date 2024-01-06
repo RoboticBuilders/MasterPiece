@@ -7,7 +7,8 @@ def _pushRollingCameraLever():
     right_med_motor.run_angle(speed=2000, rotation_angle=-600)
     
     right_med_motor.run_angle(speed=2000, rotation_angle=600)
-def run1():
+
+def run2():
     _pushRollingCameraLever()
 
-#runWithTiming(run1,"Lever")
+#runWithTiming(run2,"Lever")
