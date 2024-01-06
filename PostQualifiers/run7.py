@@ -39,7 +39,10 @@ def musicConcert():
 
     # Wait for a little and run Flippy to turn the speakers
     wait(100)
+
     left_med_motor.run_angle(-1000, 1500)
+
+    wait(100)
 
 def augmentedReality():
     # Back up from music concert and turn towards Augmented Reality
@@ -51,19 +54,25 @@ def augmentedReality():
     # go to Augmented Reality
     # gyroStraightWithDrive(distanceInCm=33, targetAngle=_angle, speed = 500)
     gyroStraightWithDriveWithAccurateDistance(distance = 33, speed = 600, targetAngle = _angle)
+
     _angle = -45
     turnToAngle(targetAngle=_angle,oneWheelTurn=True)
 
     # back up to pull Augmented Reality lever
     gyroStraightWithDriveWithAccurateDistance(distance=7, speed = 500, targetAngle=_angle)
 
-    _angle = 0
-    turnToAngle(targetAngle = _angle, speed = 300)
-    gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 700, targetAngle = 0, backward = True)
+    wait(120)
+    # turnToAngle(targetAngle = _angle, speed = 300)
+    drive_base.turn(45)
+    # gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 700, targetAngle = 0, backward = True)
+    drive_base.settings(500, 700, 500, 700)
+    drive_base.straight(-100)
 
     # turn a little more and back up again to make sure the lever caught
     _angle = 20
-    turnToAngle(targetAngle=_angle,oneWheelTurn=True, speed = 700)
+    # turnToAngle(targetAngle=_angle,oneWheelTurn=True, speed = 700)
+    wait(120)
+    drive_base.turn(20)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed = 500, targetAngle=_angle)
     # turnToAngle(targetAngle = _angle, speed = 300)
     # gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle, backward=True)
