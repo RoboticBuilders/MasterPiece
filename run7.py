@@ -168,5 +168,5 @@ def mainRun7():
 
     print("DONE")
 
-# waitForButtonPress()
-# mainRun7()
+#waitForButtonPress()
+#mainRun7()

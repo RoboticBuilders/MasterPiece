@@ -109,10 +109,10 @@ def augmentedReality():
     while not drive_base.done():
         if drive_base.stalled():
             drive_base.stop()
-    gyroStraightWithDriveWithAccurateDistance(distance = 5, speed = 700, targetAngle = 0, backward = True)        
-    angle = -80
+    gyroStraightWithDriveWithAccurateDistance(distance = 6, speed = 700, targetAngle = 0, backward = True)        
+    angle = -90
     turnToAngle(targetAngle=angle,speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 300, targetAngle = angle, backward = True)     
+    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 300, targetAngle = angle,backward = True)     
 
     '''
     

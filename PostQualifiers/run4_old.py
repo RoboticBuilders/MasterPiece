@@ -21,13 +21,28 @@ def rollingCamera():
     # when we turn.
     gyroStraightWithDriveWithAccurateDistance(distance=20, speed=800, targetAngle=angle, backward = True)
     gyroStraightWithDriveWithAccurateDistance(distance=5, speed=800, targetAngle=angle)
-    angle = -30
+    angle = -20
     turnToAngle(targetAngle=angle,speed=400)
+    #turnToAngle(targetAngle=angle,speed=400,left_correction=0.01,right_correction=0.01)
+    #drive_base.turn(angle = -20)
     
+
+    # Now move forward a little before opening hte bucket. This is needed
+    # to ensure that the camera is not snagged on the bucket.
+    # Removed because this might be causing the stall
+    #gyroStraightWithDriveWithAccurateDistance(distance=1, speed=300, targetAngle=angle)
+  
+    #drive_base.straight(distance = 10)
+
     # Now bring up the bucket, before driving away.
     # TODO consider doing part of this in parallel.
     right_med_motor.run_angle(speed=2000, rotation_angle=420)
-    
+    '''  Commented to try going to museum via theatre scene change 
+    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=1000, targetAngle=angle, backward = True)
+    angle=-20
+    turnToAngle(targetAngle=angle,speed=400)
+    '''
+
 def museumwithpedestaloutside():
     #angle  = -15
     #gyroStraightWithDriveWithAccurateDistance(distance=5, speed=1000, targetAngle=angle, backward = True)
@@ -37,7 +52,7 @@ def museumwithpedestaloutside():
     #Lower the arm to avoid the lightshow
     #right_med_motor.run_angle(speed=100, rotation_angle=-200,wait=False)
     #Use a curve to reach in front of the immersive experience
-    drive_base.curve(radius = 825, angle = -40)
+    drive_base.curve(radius=580, angle = -60)
     #right_med_motor.run_angle(speed=2000, rotation_angle=-200,wait=True)
     
     #wait(5000)
@@ -414,30 +429,17 @@ def testAudienceDropOffAtLightShow():
 def resetBucket(angle = 800):
     right_med_motor.run_angle(speed=1000, rotation_angle=angle)
 
-def testBucket():
-    while True:
-        # Brind down the bucket.
-        right_med_motor.run_angle(speed=2000, rotation_angle=-400)
-        wait(200)
-        right_med_motor.run_angle(speed=2000, rotation_angle=-400)
-        wait(2000)
-        right_med_motor.run_angle(speed=2000, rotation_angle=800)
-        wait(2000)
-
-
-
 def run4():
     resetRobot()
     #hub.imu.reset_heading(-90)
     runWithTiming(rollingCamera,"rolling camera")
     runWithTiming(museumwithpedestaloutside,"museumwithpedestaloutside")
-    #runWithTiming(lightShow, "lightshow")
-    #runWithTiming(immersiveExperience, "ImmersiveExperience")
-    #runWithTiming(goHomeWithCurve, "goHomeWithCurve")
+    runWithTiming(lightShow, "lightshow")
+    runWithTiming(immersiveExperience, "ImmersiveExperience")
+    runWithTiming(goHomeWithCurve, "goHomeWithCurve")
     
 waitForButtonPress()
 runWithTiming(run4,"Run4")
-#testBucket()
 # lightShowTestWith8ToothGear()
 #lightShowTestWithLoad()
 #runWithTiming(lightShowTest, "Light Show")
