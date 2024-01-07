@@ -763,6 +763,7 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
                           slowDown=True, slowDistanceMultipler = 0, printDebugMesssages=False,
                           skipCorrectionCalculation = False,
                           tillBlackLine = False,
+                          color_sensor = left_color,
                           detectStall = False,
                           useSlowerAccelerationForBackward = True, # Use this parameter when you want to just go fast home.
                           stop = Stop.HOLD):
@@ -772,8 +773,8 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
     prevValues = []
     correctionPos  = 0
 
-    def _getValueInternal():
-        return left_color.hsv().v
+    def _getValueInternal(color_sensor):
+        return color_sensor.hsv().v
 
     def _stopDriveBaseInternal(stop=Stop.HOLD):
         drive_base.straight(distance=0,then=stop)
@@ -847,9 +848,9 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
         drive_base.settings(straight_speed=400,straight_acceleration=300,
                         turn_rate=400,turn_acceleration=(100, 400))
 
-    def blackStoppingCondition():
+    def blackStoppingCondition(color_sensor):
         #light = getReflectedLight()
-        light = _getValueInternal()
+        light = _getValueInternal(color_sensor)
         return light <= BLACK_COLOR
 
     drive_base.reset()
@@ -905,7 +906,7 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
     if (printDebugMesssages == True):
         print("distancedrivenMM: " + str(distanceDrivenMM) + " distanceInMM: " +  str(distanceInMM))
     while (distanceDrivenMM < distanceInMM):
-        stopCondition = blackStoppingCondition()
+        stopCondition = blackStoppingCondition(color_sensor)
         if (tillBlackLine == True and stopCondition == True):
             break
         elif (detectStall == True and drive_base.stalled() == True):

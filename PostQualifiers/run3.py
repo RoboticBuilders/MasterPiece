@@ -4,10 +4,11 @@ def goHome():
     # Go home with curve
     drive_base.settings(1000, 1000, 1000, 1000)
     drive_base.curve(radius = -160, angle = -45, then=Stop.COAST)
-    drive_base.curve(radius = -650, angle = -55)
+    #Radius was -650 and angle was -50
+    drive_base.curve(radius = -700, angle = -50)
     
     # Raise the arm
-    right_med_motor.run_angle(speed=2000, rotation_angle = 750)
+    right_med_motor.run_angle(speed=2000, rotation_angle = 800)
 
 def goToScenceChangeFromHomeFaster():
     # Drive towards the scene change, catch the line.
@@ -16,13 +17,14 @@ def goToScenceChangeFromHomeFaster():
                                               backward=False, stop=Stop.COAST, slowDown = False)
 
     # Drive till the black line. Notice the tillBlackLine = True.                                              
-    gyroStraightWithDriveWithAccurateDistance(distance=25, speed=500, targetAngle=angle,
-                                              backward=False, tillBlackLine=True, stop=Stop.COAST)
+    if(gyroStraightWithDriveWithAccurateDistance(distance=25, speed=500, targetAngle=angle,
+                                              backward=False, tillBlackLine=True, stop=Stop.COAST) == False):
+        print("Missed black line catch infront of the scene change.")
     
     # Go forward a litle more
     gyroStraightWithDrive(distanceInCm=3, targetAngle=angle, speed=300)
 
-    # Turn towards the scene change.
+    # Turn towards the scene change. 
     angle = -45
     turnToAngle(targetAngle=angle, speed=500)
     
