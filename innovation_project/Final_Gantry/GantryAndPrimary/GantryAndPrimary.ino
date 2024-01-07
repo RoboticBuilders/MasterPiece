@@ -1,4 +1,6 @@
 #include <Stepper.h>
+#include <Wire.h> 
+#include <SoftwareSerial.h>
 
 // gantry motor initialization
 const int STEPS_PER_REV = 240;
@@ -23,6 +25,28 @@ Stepper stepper(STEPS_PER_REV, motorIn1, motorIn2, motorIn3, motorIn4);
 // control variables
 bool gantryHasRun = true;
 
+int images[1][20][20] =
+{
+  {
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+    { 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3},
+    { 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3},
+    { 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3},
+    { 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3},
+    { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+  },
+};
+
 // Index of the image to display
 int imageIndex = -1;
 int imageIndexForResettingPins = 100;
@@ -31,7 +55,7 @@ String btInput = String("");
 String lastBTInput = String("");
 SoftwareSerial BTSerial(10, 11); // RX | TX
 
-int secondaryStartWireAddress = 51;
+int secondaryStartWireAddress = 50;
 
 void setup() {
   Wire.begin();
@@ -42,7 +66,7 @@ void setup() {
 }
 
 void loop() {
-  / for now we just render one image
+  // for now we just render one image
   if (BTSerial.available()) {
     btInput = BTSerial.readString();
     Serial.print("input = ");
@@ -63,6 +87,8 @@ void loop() {
 
     delay(1000);
   }
+  btInput = "0";
+  imageIndex = 0;
 
   if ((lastBTInput.equals("") && btInput.equals("")) || (lastBTInput.equals(btInput)))
   {
@@ -78,15 +104,16 @@ void loop() {
   {
     // one row in 5 frames
     WriteToWire(imageIndex, i, secondaryStartWireAddress, 0, 3);
-    WriteToWire(imageIndex, i, secondaryStartWireAddress + 1, 4, 7);
-    WriteToWire(imageIndex, i, secondaryStartWireAddress + 2, 8, 11);
-    WriteToWire(imageIndex, i, secondaryStartWireAddress + 3, 12, 15);
-    WriteToWire(imageIndex, i, secondaryStartWireAddress + 4, 16, 19);
+    //WriteToWire(imageIndex, i, secondaryStartWireAddress + 1, 4, 7);
+    //WriteToWire(imageIndex, i, secondaryStartWireAddress + 2, 8, 11);
+    //WriteToWire(imageIndex, i, secondaryStartWireAddress + 3, 12, 15);
+    //WriteToWire(imageIndex, i, secondaryStartWireAddress + 4, 16, 19);
+    // Wait for all motor arrays to render the row
+    delay(10000);
+    moveBewelScrewInSteps (1, GantryDirection::AwayFromMotor, 0);
   }
 
-    // Wait for all motor arrays to render the row
-  delay(10000);
-  moveBewelScrewInSteps (1, GantryDirection::AwayFromMotor, 0);
+
   delay(1000);
        
 }
@@ -102,25 +129,20 @@ void moveBewelScrewInSteps(int numberOfGantrySteps, GantryDirection direction, i
     }
 }
 
-int images[6][20][20] =
-{
+void WriteToWire(int imageNumber, int row, int wireAddress, int startIndex, int endIndex) {
+  Serial.println("Sending data to " + String(wireAddress) + " for imageNumber " + String(imageNumber));
+  delay(1000);
+  Wire.beginTransmission(wireAddress); // transmit to device #8
+  
+  byte data = 0; // data for resetting pins
+
+  if (imageNumber != imageIndexForResettingPins)
   {
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-    { 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3},
-    { 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3},
-    { 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3},
-    { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-  },
-}; 
+    data = images[imageNumber][row][startIndex] | images[imageNumber][row][startIndex + 1] << 2 | images[imageNumber][row][startIndex + 2] << 4 | images[imageNumber][row][startIndex + 3] << 6;
+  }
+  Serial.print("data = ");
+  Serial.println(data);
+  Wire.write(data);          // sends one byte
+  Wire.endTransmission();    // stop transmitting
+}
 

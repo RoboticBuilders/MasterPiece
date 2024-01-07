@@ -11,7 +11,7 @@ AccelStepper stepper2(1, 3, 6); // Y
 AccelStepper stepper3(1, 4, 7); // Z
 AccelStepper stepper4(1, 12, 13); // A
 
-AccelStepper steppersArray[] = {stepper1, stepper2, stepper3, stepper4};
+AccelStepper steppersArray[4];
 
   // Create instance of MultiStepper to control Motors
 MultiStepper steppersControl;
@@ -22,15 +22,20 @@ int i2cWireAddress = 51;
 // An array to store the target positions for each stepper motor
 long goToPositions[4];
 bool pinPositionsReceived = false;
+bool executeTest = false;
 bool testExecuted = false;
 
 void setup() {
   Serial.begin(9600);
 
+   Serial.println("Starting setup");
+   delay(300);
+
   // read EEPROM for i2cWireAddress
   int wireAddress = readWireAddress();
   i2cWireAddress = wireAddress;
   Serial.print("Wire address "); Serial.println(wireAddress);
+  delay(300);
 
   // join I2C bus with the address for this sub Arduino
   Wire.begin(i2cWireAddress);     
@@ -42,17 +47,23 @@ void setup() {
   disableMotorOutputs();
   resetPositionsArray();
 
-  Serial.println("Setup completed");   
+  Serial.println("Setup completed");
+  delay(300);   
 }
 
 void loop() {
 
-  if (testExecuted == true) {
-    return;
+  if (executeTest == true) {
+    if (testExecuted == true) {
+      return;
+    }
+    else {
+    Serial.println("Starting test");
+    delay(300);
+    TestMotors();
+    testExecuted = true;
+    }
   }
-
-  TestMotors();
-  testExecuted = true;
 
   if (pinPositionsReceived == false) {
     delay(300);
@@ -63,30 +74,51 @@ void loop() {
   enableMotorOutputs();
   steppersControl.moveTo(goToPositions); // Calculates the required speed for all motors
   steppersControl.runSpeedToPosition(); // Blocks until all steppers are in position
-  delay(1000);
+  Serial.println("Pins moved to the positions ...");
 
-  stopMotors();
   delay(2000);
 
-  // bring motors back to zero positions
+ // bring motors back to zero positions
   resetPositionsArray();
+  Serial.println("Pin positions reset ...");
   steppersControl.moveTo(goToPositions);
+  steppersControl.runSpeedToPosition();
+  Serial.println("Pins moved back to zero ...");
+  
+  stopMotors();
   disableMotorOutputs();
 
   pinPositionsReceived = false;
 
   delay(1000);
+}
 
+void TestMotors()
+{
+  goToPositions[0] = -100;
+  goToPositions[1] = -100;
+  goToPositions[2] = -40;
+  goToPositions[3] = -50;
+  pinPositionsReceived = true;
 }
 
 // initalize motors and setup the accelerator
 void initializeMotors() {
+  steppersArray[0] = stepper1;
+  steppersArray[1] = stepper2;
+  steppersArray[2] = stepper3;
+  steppersArray[3] = stepper4;
+
   for (int i = 0; i < 4; i++) {
-    // set max speed value for the steppers
-    AccelStepper stepper = steppersArray[i];
-    stepper.setMaxSpeed(100);
-    stepper.setCurrentPosition(0);
-    steppersControl.addStepper(stepper);
+    steppersArray[i].setMaxSpeed(100);
+  }
+
+  for (int i = 0; i < 4; i++) {
+    steppersArray[i].setCurrentPosition(0);
+  }
+
+  for (int i = 0; i < 4; i++) {
+    steppersControl.addStepper(steppersArray[i]);
   }
 }
 
@@ -146,7 +178,7 @@ void receiveEvent(int howMany) {
   for (int i = 0; i < 4; i++) {
     goToPositions[i] = 0;
     if (arr[i] > 0) {
-      goToPositions[i] = 50;
+      goToPositions[i] = -100;
       pinPositionsReceived = true;
     }
   }
@@ -162,13 +194,3 @@ int readWireAddress() {
     return i2cWireAddress;
   }
 }
-
-void TestMotors()
-{
-  goToPositions[0] = 20;
-  goToPositions[1] = 30;
-  goToPositions[3] = 40;
-  goToPositions[4] = 50;
-  pinPositionsReceived = true;
-}
-
