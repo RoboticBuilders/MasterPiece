@@ -69,7 +69,8 @@ def musicConcert():
     gyroStraightWithDriveWithAccurateDistance(distance=26, targetAngle=0, speed=500, slowDown = False)
 
     # lift the arm to deliver the expert and back off
-    gyroStraightWithDriveWithAccurateDistance(distance=26, targetAngle=10, backward=True, speed=400)
+    gyroStraightWithDriveWithAccurateDistance(distance=7, targetAngle=10, backward=True, speed=400)
+    gyroStraightWithDriveWithAccurateDistance(distance=19, targetAngle=-20, backward=True, speed=400)
 
     # turn towards the Music Concert
     turnToAngle(targetAngle = 45, speed = 300)
@@ -94,47 +95,32 @@ def augmentedReality():
 
     # go to Augmented Reality
     # gyroStraightWithDrive(distanceInCm=33, targetAngle=_angle, speed = 500)
-    gyroStraightWithDriveWithAccurateDistance(distance = 33, speed = 600, targetAngle = _angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 37, speed = 800, targetAngle = _angle)
 
     _angle = -45
     turnToAngle(targetAngle=_angle,oneWheelTurn=True)
 
    # Now move forward to be setup to pull the augmented reality lever
-    gyroStraightWithDriveWithAccurateDistance(distance=7, speed = 500, targetAngle=_angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=6, speed = 500, targetAngle=_angle)
 
     wait(120)
     # turnToAngle(targetAngle = _angle, speed = 300)
-    drive_base.turn(angle = 45, wait = False)
+    drive_base.turn(angle = 35, wait = False)
 
     while not drive_base.done():
         if drive_base.stalled():
             drive_base.stop()
-    gyroStraightWithDriveWithAccurateDistance(distance = 6, speed = 700, targetAngle = 0, backward = True)        
+    gyroStraightWithDriveWithAccurateDistance(distance = 6, speed = 700, targetAngle = 0, backward = True)
+
     angle = -90
     turnToAngle(targetAngle=angle,speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 300, targetAngle = angle,backward = True)     
+    gyroStraightWithDriveWithAccurateDistance(distance = 33, speed = 800, targetAngle = angle,backward = True)
 
-    '''
-    
-    drive_base.settings(500, 700, 500, 700)
-    drive_base.straight(-70)
-
-    # turn a little more and back up again to make sure the lever caught
-    _angle = 30
-    # turnToAngle(targetAngle=_angle,oneWheelTurn=True, speed = 700)
-    wait(120)
-    drive_base.turn(30)
-    # gyroStraightWithDriveWithAccurateDistance(distance=13, speed = 500, targetAngle=_angle)
-    drive_base.use_gyro(False)
-    drive_base.straight(100)
-    
-    _angle = hub.imu.reset_heading(hub.imu.heading())
-        
-    drive_base.straight(-80)
-    drive_base.use_gyro(True)
-    '''
+    turnToAngle(targetAngle = 0, speed = 1000)
+    turnToAngle(targetAngle = -85, speed = 750)
 
 def expertDrops():
+    gyroStraightWithDriveWithAccurateDistance(distance = 33, speed = 700, targetAngle = -85)
     # turn and start driving towards Sound Mixer
     _angle=-90
     turnToAngle(_angle-5)
@@ -160,13 +146,13 @@ def expertDrops():
     _angle = -45
     turnToAngle(targetAngle = _angle, speed = 300)
 
-    gyroStraightWithDriveWithAccurateDistance(distance = 5.5, speed = 200, targetAngle = _angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 7.5, speed = 200, targetAngle = _angle)
 
 def run7():
     resetRobot()
     musicConcert()
     augmentedReality()
-    #expertDrops()
+    expertDrops()
 
 def mainRun7():
     initializeAndWaitForRobotReady()
