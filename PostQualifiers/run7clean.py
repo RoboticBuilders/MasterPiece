@@ -3,44 +3,48 @@ from Utilities import *
 
 # THis is not working code that we are trying to make work with a flappy arm.
 
-'''
 def musicConcert():
     # go forward and turn towards the black line
-    angle = 0
-    gyroStraightWithDriveWithAccurateDistance(distance=38, targetAngle=angle, speed=500)
-    angle = -45
-    turnToAngle(targetAngle = angle,speed = 300)
+    gyroStraightWithDriveWithAccurateDistance(distance=43, targetAngle=0, speed=700)
+
+    #hub.display.number(1)
+
+    turnToAngle(targetAngle = -45, speed = 700)
+
+    #hub.display.number(2)
+
+    # # catch the black line
+    # driveTillLine(speed=500, doCorrection=False, tag="Music Concert")
+
+    #hub.display.number(3)
+
+    gyroStraightWithDriveWithAccurateDistance(distance = 22, speed = 500, targetAngle = -45)
+
+    drive_base.curve(radius = 300, angle = 45)
+
+    wait(250)
+
+    #hub.display.number(5)
     
-    # Now catch the black line
-    gyroStraightWithDriveWithAccurateDistance(distance = 30,targetAngle = angle, speed = 300,tillBlackLine = True)
-    
-    # Move forward to pass the black line
-    gyroStraightWithDriveWithAccurateDistance(distance=3, targetAngle=angle, speed=300)
-    angle = 0
-    turnToAngle(targetAngle=angle,speed=300)
-    
-    # Now drop off the expert
-    gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=angle, speed=500, stop=Stop.COAST, slowDown = False)
-    gyroStraightWithDriveWithAccurateDistance(distance=6, targetAngle=angle, speed=300)
-    angle = 10
-    
-    # Now backoff to go to music concert
-    gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=angle, backward=True, speed=400)
-    
-    angle = 50
-    # Turn towards music concert
-    turnToAngle(targetAngle = angle, speed = 300)
+    gyroStraightWithDriveWithAccurateDistance(distance=26, targetAngle=0, speed=500, slowDown = False)
+
+    # lift the arm to deliver the expert and back off
+    gyroStraightWithDriveWithAccurateDistance(distance=7, targetAngle=10, backward=True, speed=400)
+    gyroStraightWithDriveWithAccurateDistance(distance=19, targetAngle=-20, backward=True, speed=400)
+
+    # turn towards the Music Concert
+    turnToAngle(targetAngle = 45, speed = 300)
 
     # Push the HP and align against it, and turn circular motion arm to do sounds lever
     gyroStraightWithDriveWithAccurateDistance(distance=13, targetAngle=45, speed=300)
     driveForTime(timeInMS=1000, speed=300)
+
     # Wait for a little and run Flippy to turn the speakers
     wait(100)
 
     left_med_motor.run_angle(-1000, 1500)
 
     wait(100)
-'''
 
 def musicconcertnew():
     angle = -20
@@ -105,7 +109,6 @@ def musicconcertnew():
 
 
 def augmentedReality():
-    '''
     # Back up from music concert and turn towards Augmented Reality
     angle = 45
     if (gyroStraightWithDriveWithAccurateDistance(distance=15, targetAngle = angle, speed=300, 
@@ -121,7 +124,6 @@ def augmentedReality():
     # go to Augmented Reality
     # gyroStraightWithDrive(distanceInCm=33, targetAngle=_angle, speed = 500)
     gyroStraightWithDriveWithAccurateDistance(distance = 36, speed = 800, targetAngle = angle)
-    '''
     
     _angle = -45
     turnToAngle(targetAngle=_angle,oneWheelTurn=True)
@@ -178,11 +180,11 @@ def resetFlippy():
 
 def run7():
     resetRobot()
-    hub.imu.reset_heading(-90)
+    musicConcert()
     #musicconcertnew()
     #resetFlippy()
     augmentedReality()
-    #expertDrops()
+    expertDrops()
 
 def mainRun7():
     initializeAndWaitForRobotReady()
