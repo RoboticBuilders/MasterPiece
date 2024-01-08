@@ -1,3 +1,4 @@
+from PostQualifiers.Utilities import gyroStraightWithDriveWithAccurateDistance
 from pybricks.hubs import PrimeHub
 from pybricks.pupdevices import Motor
 from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
@@ -75,6 +76,7 @@ def immersiveExperience():
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed=400, targetAngle=angle)
+    driveForTime(timeInMS=500)
     
 def goHomeWithCurve():
     # Backoff from the Immersive experience.
