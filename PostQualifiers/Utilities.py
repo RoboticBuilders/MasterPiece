@@ -35,7 +35,7 @@ DEFAULT_TURN_ACCEL = 300
 
 # Color defaults
 BLACK_COLOR = 24
-WHITE_COLOR = 90
+WHITE_COLOR = 85
 
 CM_PER_INCH = 2.54
 MM_PER_INCH = CM_PER_INCH*10
@@ -763,6 +763,7 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
                           slowDown=True, slowDistanceMultipler = 0, printDebugMesssages=False,
                           skipCorrectionCalculation = False,
                           tillBlackLine = False,
+                          tillWhiteLine = False,
                           color_sensor = left_color,
                           detectStall = False,
                           useSlowerAccelerationForBackward = True, # Use this parameter when you want to just go fast home.
@@ -853,6 +854,19 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
         light = _getValueInternal(color_sensor)
         return light <= BLACK_COLOR
 
+    def whiteStoppingCondition(color_sensor):
+        #light = getReflectedLight()
+        light = _getValueInternal(color_sensor)
+        return light >= WHITE_COLOR
+
+    stopping_condition_function = None
+    if (tillBlackLine == True and tillWhiteLine == True):
+        raise ValueError("Only tillBlackLine or tillWhiteLine should be true, not both.")
+    elif (tillBlackLine == True):
+        stopping_condition_function = blackStoppingCondition
+    elif (tillWhiteLine == True):
+        stopping_condition_function = whiteStoppingCondition
+
     drive_base.reset()
     #stopDriveBase(stop)
     prevValues = []
@@ -906,8 +920,11 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
     if (printDebugMesssages == True):
         print("distancedrivenMM: " + str(distanceDrivenMM) + " distanceInMM: " +  str(distanceInMM))
     while (distanceDrivenMM < distanceInMM):
-        stopCondition = blackStoppingCondition(color_sensor)
-        if (tillBlackLine == True and stopCondition == True):
+        if (tillBlackLine == True or tillWhiteLine == True):
+            stopCondition = stopping_condition_function(color_sensor)
+
+
+        if ((tillBlackLine == True or tillWhiteLine == True) and stopCondition == True):
             break
         elif (detectStall == True and drive_base.stalled() == True):
             break

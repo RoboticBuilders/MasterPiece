@@ -95,7 +95,7 @@ def printHSVValues(sensor=left_color):
         print("(h,s,v) = {}, color: {}".format(sensor.hsv(), sensor.color()))
    
 initializeAndWaitForRobotReady()
-hub.imu.reset_heading(90)
+hub.imu.reset_heading(0)
 #squareTest()
 #turnTest()
 #testDriveStraight()
@@ -104,5 +104,7 @@ hub.imu.reset_heading(90)
 #testPositionUtil()
 #testFollowBlackLine()
 #runUntilStall()
-printHSVValues()
+#printHSVValues()
+#if (gyroStraightWithDriveWithAccurateDistance(distance = 30, speed = 300, targetAngle = 0, backward = True, tillWhiteLine = True) == False):
+#    print("Did not find white")
 
