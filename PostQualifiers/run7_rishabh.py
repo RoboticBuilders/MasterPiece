@@ -1,42 +1,84 @@
 from pybricks.tools import wait, StopWatch
 from Utilities import *
 
-# THis is code older than run7_rishabh.py and run7clean.py
+### This is working code that we used on Jan 6th tests. 
+
+
+'''
+def musicConcert():
+    # go forward and turn towards the black line
+    angle = 0
+    gyroStraightWithDriveWithAccurateDistance(distance=38, targetAngle=angle, speed=500)
+    angle = -45
+    turnToAngle(targetAngle = angle,speed = 300)
+    
+    # Now catch the black line
+    gyroStraightWithDriveWithAccurateDistance(distance = 30,targetAngle = angle, speed = 300,tillBlackLine = True)
+    
+    # Move forward to pass the black line
+    gyroStraightWithDriveWithAccurateDistance(distance=3, targetAngle=angle, speed=300)
+    angle = 0
+    turnToAngle(targetAngle=angle,speed=300)
+    
+    # Now drop off the expert
+    gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=angle, speed=500, stop=Stop.COAST, slowDown = False)
+    gyroStraightWithDriveWithAccurateDistance(distance=6, targetAngle=angle, speed=300)
+    angle = 10
+    
+    # Now backoff to go to music concert
+    gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=angle, backward=True, speed=400)
+    
+    angle = 50
+    # Turn towards music concert
+    turnToAngle(targetAngle = angle, speed = 300)
+
+    # Push the HP and align against it, and turn circular motion arm to do sounds lever
+    gyroStraightWithDriveWithAccurateDistance(distance=13, targetAngle=45, speed=300)
+    driveForTime(timeInMS=1000, speed=300)
+    # Wait for a little and run Flippy to turn the speakers
+    wait(100)
+
+    left_med_motor.run_angle(-1000, 1500)
+
+    wait(100)
+'''
+
+
 
 def musicConcert():
     # go forward and turn towards the black line
-    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*17, targetAngle=0, speed=500)
+    gyroStraightWithDriveWithAccurateDistance(distance=43, targetAngle=0, speed=500)
 
-    hub.display.number(1)
+    #hub.display.number(1)
 
     turnToAngle(targetAngle = -45, speed = 300)
 
-    hub.display.number(2)
+    #hub.display.number(2)
 
     # catch the black line
     driveTillLine(speed=400, doCorrection=False, tag="Music Concert")
 
-    hub.display.number(3)
+    #hub.display.number(3)
 
     # align against the wall to drop off Noah & Audience
-    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*1, targetAngle=-45, speed=500)
+    gyroStraightWithDriveWithAccurateDistance(distance=3, targetAngle=-45, speed=500)
 
-    hub.display.number(4)
+    #hub.display.number(4)
 
-    turnToAngle(targetAngle=0, oneWheelTurn=False, speed = 300)
+    turnToAngle(targetAngle=0, speed = 300)
 
-    hub.display.number(5)
+    #hub.display.number(5)
     
-    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*10.5, targetAngle=0, speed=500, slowDown = False)
+    gyroStraightWithDriveWithAccurateDistance(distance=26, targetAngle=0, speed=500, slowDown = False)
 
     # lift the arm to deliver the expert and back off
-    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*10.5, targetAngle=10, backward=True, speed=400)
+    gyroStraightWithDriveWithAccurateDistance(distance=26, targetAngle=10, backward=True, speed=400)
 
     # turn towards the Music Concert
     turnToAngle(targetAngle = 45, speed = 300)
 
     # Push the HP and align against it, and turn circular motion arm to do sounds lever
-    gyroStraightWithDriveWithAccurateDistance(distance=CM_PER_INCH*5, targetAngle=45, speed=300)
+    gyroStraightWithDriveWithAccurateDistance(distance=13, targetAngle=45, speed=300)
     driveForTime(timeInMS=1000, speed=300)
 
     # Wait for a little and run Flippy to turn the speakers
@@ -60,32 +102,40 @@ def augmentedReality():
     _angle = -45
     turnToAngle(targetAngle=_angle,oneWheelTurn=True)
 
-    # back up to pull Augmented Reality lever
+   # Now move forward to be setup to pull the augmented reality lever
     gyroStraightWithDriveWithAccurateDistance(distance=7, speed = 500, targetAngle=_angle)
 
     wait(120)
     # turnToAngle(targetAngle = _angle, speed = 300)
-    drive_base.turn(45)
-    # gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 700, targetAngle = 0, backward = True)
+    drive_base.turn(angle = 45, wait = False)
+
+    while not drive_base.done():
+        if drive_base.stalled():
+            drive_base.stop()
+    gyroStraightWithDriveWithAccurateDistance(distance = 6, speed = 700, targetAngle = 0, backward = True)        
+    angle = -90
+    turnToAngle(targetAngle=angle,speed=300)
+    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 300, targetAngle = angle,backward = True)     
+
+    '''
+    
     drive_base.settings(500, 700, 500, 700)
     drive_base.straight(-70)
 
     # turn a little more and back up again to make sure the lever caught
-    _angle = 20
+    _angle = 30
     # turnToAngle(targetAngle=_angle,oneWheelTurn=True, speed = 700)
     wait(120)
-    drive_base.turn(20)
+    drive_base.turn(30)
     # gyroStraightWithDriveWithAccurateDistance(distance=13, speed = 500, targetAngle=_angle)
     drive_base.use_gyro(False)
     drive_base.straight(100)
-    # turnToAngle(targetAngle = _angle, speed = 300)
-    # gyroStraightWithDrive(distanceInCm=12, targetAngle=_angle, backward=True)
     
-    # _angle = hub.imu.heading()
-    # gyroStraightWithDriveWithAccurateDistance(distance = 8, speed = 300, targetAngle = _angle, backward = True, multiplier = 0.1)
-    
-    drive_base.straight(-100)
+    _angle = hub.imu.reset_heading(hub.imu.heading())
+        
+    drive_base.straight(-80)
     drive_base.use_gyro(True)
+    '''
 
 def expertDrops():
     # turn and start driving towards Sound Mixer
@@ -119,7 +169,7 @@ def run7():
     resetRobot()
     musicConcert()
     augmentedReality()
-    expertDrops()
+    #expertDrops()
 
 def mainRun7():
     initializeAndWaitForRobotReady()
@@ -135,5 +185,6 @@ def mainRun7():
 
     print("DONE")
 
-#waitForButtonPress()
-# mainRun7()
+waitForButtonPress()
+mainRun7()
+#drive_base.curve(radius=-120,angle = 90)
