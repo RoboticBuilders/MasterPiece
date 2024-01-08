@@ -103,17 +103,24 @@ def musicconcertnew():
 
 
 def augmentedReality():
+    '''
     # Back up from music concert and turn towards Augmented Reality
-    driveTillBlackLine(speed=300, distanceInCM=15, target_angle=45, backward=True)
+    angle = 45
+    if (gyroStraightWithDriveWithAccurateDistance(distance=15, targetAngle = angle, speed=300, 
+                                    tillBlackLine = True, backward=True,
+                                    color_sensor = left_color) == False):
+        print("Missed black line catch when backing from music concert")
     left_med_motor.run_angle(speed = 1000, rotation_angle = 1500, wait = False)
+    gyroStraightWithDriveWithAccurateDistance(distance = 2, speed = 800, targetAngle = angle,backward=True)
     angle = -90
     turnToAngle(targetAngle = angle, speed = 500)
 
-    '''
+    
     # go to Augmented Reality
     # gyroStraightWithDrive(distanceInCm=33, targetAngle=_angle, speed = 500)
-    gyroStraightWithDriveWithAccurateDistance(distance = 36, speed = 800, targetAngle = _angle)
-
+    gyroStraightWithDriveWithAccurateDistance(distance = 36, speed = 800, targetAngle = angle)
+    '''
+    
     _angle = -45
     turnToAngle(targetAngle=_angle,oneWheelTurn=True)
 
@@ -135,7 +142,7 @@ def augmentedReality():
 
     turnToAngle(targetAngle = 0, speed = 1000)
     turnToAngle(targetAngle = -90, speed = 750)
-    '''
+    
 
 def expertDrops():
     gyroStraightWithDriveWithAccurateDistance(distance = 30, speed = 700, targetAngle = -90)
@@ -169,7 +176,8 @@ def resetFlippy():
 
 def run7():
     resetRobot()
-    musicconcertnew()
+    hub.imu.reset_heading(-90)
+    #musicconcertnew()
     #resetFlippy()
     augmentedReality()
     #expertDrops()
