@@ -44,7 +44,7 @@ def museumwithpedestaloutside():
 
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
-    gyroStraightWithDriveWithAccurateDistance(distance=4, speed=650, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=650, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=400)
   
 def lightShow():
@@ -55,7 +55,7 @@ def lightShow():
     # speed 1000 - time ->3.5 sec
     
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=14, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
     gyroStraightWithDriveWithAccurateDistance(distance=11, speed=200, targetAngle=angle,backward=True)
     wait(100)
     # Now we are at the light show, spin the lightshow from the back spinny arm.
@@ -98,10 +98,6 @@ def goHomeWithCurve():
                                               useSlowerAccelerationForBackward = False)
     
     
-
-
-
-
 def OLD():
 
     '''
@@ -408,8 +404,6 @@ def OLD():
         wait(2000)
         gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=0)
     '''
-
-
 
 
 def resetBucket(angle = 800):
