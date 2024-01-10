@@ -5,10 +5,10 @@ def goHome():
     drive_base.settings(1000, 1000, 1000, 1000)
     drive_base.curve(radius = -160, angle = -45, then=Stop.COAST)
     #Radius was -650 and angle was -50
-    drive_base.curve(radius = -700, angle = -50)
+    drive_base.curve(radius = -740, angle = -50)
     
     # Raise the arm
-    right_med_motor.run_angle(speed=2000, rotation_angle = 800)
+    right_med_motor.run_angle(speed=2000, rotation_angle = 800, wait = False)
 
 def goToScenceChangeFromHomeFaster():
     # Drive towards the scene change, catch the line.
