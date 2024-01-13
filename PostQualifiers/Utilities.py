@@ -184,7 +184,8 @@ def _convertAngleTo360(angle):
 #def turnToAngle(targetAngle, speed=300, turn_acceleration=200, turn_deceleration=400, 
 #                right_correction=0.07, left_correction = 0.07, forceTurn = FORCETURN_NONE):
 def turnToAngle(targetAngle, speed=300, turn_acceleration=200, turn_deceleration=400, 
-                right_correction=0.07, left_correction = 0.07, forceTurn = FORCETURN_NONE, oneWheelTurn = False):
+                right_correction=0.07, left_correction = 0.07, forceTurn = FORCETURN_NONE, oneWheelTurn = False,
+                then = Stop.COAST):
     """
     Turns the robot to the specified absolute angle.
     It calculates if the right or the left turn is the closest
@@ -229,7 +230,7 @@ def turnToAngle(targetAngle, speed=300, turn_acceleration=200, turn_deceleration
     #print("Before drive_base turn currentAngle = " + str(currentAngle) + " degreesToTurn= " + str(degreesToTurn) + "current heading before turn= " + str( hub.imu.heading()) )
     # Use the gyro drive base to turn.
     if oneWheelTurn == False:
-        drive_base.turn(degreesToTurn, then=Stop.HOLD, wait=True)
+        drive_base.turn(degreesToTurn, then=then, wait=True)
 
     if oneWheelTurn == True:
         if forceTurn == FORCETURN_RIGHT:

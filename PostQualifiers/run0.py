@@ -27,7 +27,7 @@ def _doSoundMixerWithComplicatedArm():
     # attachment
     _resetLeftMotor(wait = False)
     drive_base.settings(500, 1000, 500, 1000)
-    drive_base.curve(radius = -550, angle = -40)
+    drive_base.curve(radius = -530, angle = -40)
 
 def _resetBucket():
     # Turn the right motor to pick up the expert
