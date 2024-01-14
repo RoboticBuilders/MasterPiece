@@ -4,9 +4,9 @@
 
 // gantry motor initialization
 const int STEPS_PER_REV = 240;
-const int numberOfMotorStepsForOneGantryStep = 120;
+const int numberOfMotorStepsForOneGantryStep = 960;
 
-const int motorSpeed = 20;
+const int motorSpeed = 70;
 const int TotalNumberOfGantryStepsForFullSpan = 30;
 
 const int motorIn1 = 2;
@@ -25,26 +25,44 @@ Stepper stepper(STEPS_PER_REV, motorIn1, motorIn2, motorIn3, motorIn4);
 // control variables
 bool gantryHasRun = true;
 
-int images[1][20][20] =
+int images[1][16][16] =
 {
   {
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-    { 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3},
-    { 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 3},
-    { 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3},
-    { 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3},
-    { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0},
+    { 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0},
+    { 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0},
+    { 0, 0, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
   },
+
+  /* House Array from Aanya
+  {
+    [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [ 0,  0,  0,  3,  3,  0,  0,  0,  0,  0,  3,  0,  0,  0],
+    [ 0,  0,  0,  3,  3,  3,  3,  3,  3,  3,  3,  3,  0,  0],
+    [ 0,  0,  3,  3,  3,  3,  0,  0,  0,  0,  0,  0,  3,  0],
+    [ 0,  3,  3,  3,  3,  3,  3,  0,  0,  0,  0,  0,  0,  0],
+    [ 0,  3,  0,  3,  3,  0,  3,  0,  0,  0,  0,  0,  0,  0],
+    [ 3,  3,  0,  0,  0,  0,  3,  3,  0,  0,  0,  0,  0,  3],
+    [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  3,  3,  3,  3,  3],
+    [ 0,  0,  3,  3,  3,  3,  0,  0,  0,  3,  3,  3,  3,  0],
+    [ 0,  0,  3,  0,  0,  3,  0,  0,  0,  3,  0,  0,  3,  0],
+    [ 0,  0,  3,  3,  3,  3,  0,  3,  0,  3,  0,  0,  3,  0],
+    [ 0,  0,  3,  3,  3,  3,  0,  0,  0,  3,  3,  3,  0,  0],
+    [ 0,  3,  3,  0,  0,  0,  0,  0,  0,  0,  3,  3,  3,  3],
+    [ 3,  3,  0,  3,  0,  3,  3,  3,  3,  3,  3,  3,  3,  3]
+  } */
 };
 
 // Index of the image to display
@@ -55,7 +73,7 @@ String btInput = String("");
 String lastBTInput = String("");
 SoftwareSerial BTSerial(10, 11); // RX | TX
 
-int secondaryStartWireAddress = 50;
+int secondaryStartWireAddress = 51;
 
 void setup() {
   Wire.begin();
@@ -85,7 +103,7 @@ void loop() {
       Serial.println("Reset pins - clear");
     }
 
-    delay(1000);
+    delay(300);
   }
   btInput = "0";
   imageIndex = 0;
@@ -100,17 +118,17 @@ void loop() {
   if (imageIndex == -1)
     return;
 
-  for (int i = 0; i < 20; i++)
+  for (int i = 0; i < 6; i++)
   {
     // one row in 5 frames
     WriteToWire(imageIndex, i, secondaryStartWireAddress, 0, 3);
-    //WriteToWire(imageIndex, i, secondaryStartWireAddress + 1, 4, 7);
-    //WriteToWire(imageIndex, i, secondaryStartWireAddress + 2, 8, 11);
-    //WriteToWire(imageIndex, i, secondaryStartWireAddress + 3, 12, 15);
+    WriteToWire(imageIndex, i, secondaryStartWireAddress + 1, 4, 7);
+    WriteToWire(imageIndex, i, secondaryStartWireAddress + 2, 8, 11);
+    WriteToWire(imageIndex, i, secondaryStartWireAddress + 3, 12, 15);
     //WriteToWire(imageIndex, i, secondaryStartWireAddress + 4, 16, 19);
     // Wait for all motor arrays to render the row
-    delay(10000);
-    moveBewelScrewInSteps (1, GantryDirection::AwayFromMotor, 0);
+    delay(3000);
+    moveBewelScrewInSteps (1, GantryDirection::TowardsMotor, 0);
   }
 
 

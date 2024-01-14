@@ -6,8 +6,9 @@
 #define STEPPER_ENABLE_PIN 8 
 
 // Define the stepper motor and the pins that is connected to
-AccelStepper stepper1(1, 2, 5); // X (Typeof driver: with 2 pins, STEP, DIR)
-AccelStepper stepper2(1, 3, 6); // Y
+// order of motors in the gantry sets is YXZA - right to left
+AccelStepper stepper1(1, 3, 6); // Y (Typeof driver: with 2 pins, STEP, DIR)
+AccelStepper stepper2(1, 2, 5); // X 
 AccelStepper stepper3(1, 4, 7); // Z
 AccelStepper stepper4(1, 12, 13); // A
 
@@ -73,10 +74,16 @@ void loop() {
   Serial.println("Pin positions received ...");
   enableMotorOutputs();
   steppersControl.moveTo(goToPositions); // Calculates the required speed for all motors
+  Serial.print("goToPositions = ");
+    // Print for debug purposes
+  for (int i = 0; i < 4; i++) {
+    Serial.print(goToPositions[i]);
+  }
+  Serial.println();
   steppersControl.runSpeedToPosition(); // Blocks until all steppers are in position
   Serial.println("Pins moved to the positions ...");
 
-  delay(2000);
+  //delay(2000);
 
  // bring motors back to zero positions
   resetPositionsArray();
@@ -95,10 +102,10 @@ void loop() {
 
 void TestMotors()
 {
-  goToPositions[0] = -100;
-  goToPositions[1] = -100;
-  goToPositions[2] = -40;
-  goToPositions[3] = -50;
+  goToPositions[0] = -300;
+  goToPositions[1] = -300;
+  goToPositions[2] = -300;
+  goToPositions[3] = -300;
   pinPositionsReceived = true;
 }
 
@@ -110,7 +117,7 @@ void initializeMotors() {
   steppersArray[3] = stepper4;
 
   for (int i = 0; i < 4; i++) {
-    steppersArray[i].setMaxSpeed(100);
+    steppersArray[i].setMaxSpeed(200);
   }
 
   for (int i = 0; i < 4; i++) {
@@ -175,13 +182,17 @@ void receiveEvent(int howMany) {
   // Set motor state for each motor that has a height >=1. The control loop uses this info to run the pin to the right height.
   // Currently, this state is a boolean corresponding to UP or DOWN, but we could change it to a int with 4 levels of height with the 2 bits we have
   // We can also redo the code here to accept 4 bytes instead of 1 to give each motor 1/256 units of motion - overkill for our motor setup.
+  bool pinPositionsSet = false;
+  pinPositionsReceived = false;
   for (int i = 0; i < 4; i++) {
     goToPositions[i] = 0;
     if (arr[i] > 0) {
-      goToPositions[i] = -100;
-      pinPositionsReceived = true;
+      goToPositions[i] = -300;
+      pinPositionsSet = true;
     }
   }
+  pinPositionsReceived = pinPositionsSet;
+  
 }
 
 int readWireAddress() {
