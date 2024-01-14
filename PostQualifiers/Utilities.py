@@ -35,7 +35,7 @@ DEFAULT_TURN_ACCEL = 300
 
 # Color defaults
 BLACK_COLOR = 24
-WHITE_COLOR = 90
+WHITE_COLOR = 82
 
 CM_PER_INCH = 2.54
 MM_PER_INCH = CM_PER_INCH*10
@@ -184,7 +184,8 @@ def _convertAngleTo360(angle):
 #def turnToAngle(targetAngle, speed=300, turn_acceleration=200, turn_deceleration=400, 
 #                right_correction=0.07, left_correction = 0.07, forceTurn = FORCETURN_NONE):
 def turnToAngle(targetAngle, speed=300, turn_acceleration=200, turn_deceleration=400, 
-                right_correction=0.07, left_correction = 0.07, forceTurn = FORCETURN_NONE, oneWheelTurn = False):
+                right_correction=0.07, left_correction = 0.07, forceTurn = FORCETURN_NONE, oneWheelTurn = False,
+                then = Stop.COAST):
     """
     Turns the robot to the specified absolute angle.
     It calculates if the right or the left turn is the closest
@@ -229,7 +230,7 @@ def turnToAngle(targetAngle, speed=300, turn_acceleration=200, turn_deceleration
     #print("Before drive_base turn currentAngle = " + str(currentAngle) + " degreesToTurn= " + str(degreesToTurn) + "current heading before turn= " + str( hub.imu.heading()) )
     # Use the gyro drive base to turn.
     if oneWheelTurn == False:
-        drive_base.turn(degreesToTurn, then=Stop.HOLD, wait=True)
+        drive_base.turn(degreesToTurn, then=then, wait=True)
 
     if oneWheelTurn == True:
         if forceTurn == FORCETURN_RIGHT:
@@ -763,6 +764,8 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
                           slowDown=True, slowDistanceMultipler = 0, printDebugMesssages=False,
                           skipCorrectionCalculation = False,
                           tillBlackLine = False,
+                          tillWhiteLine = False,
+                          color_sensor = left_color,
                           detectStall = False,
                           useSlowerAccelerationForBackward = True, # Use this parameter when you want to just go fast home.
                           stop = Stop.HOLD):
@@ -772,8 +775,8 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
     prevValues = []
     correctionPos  = 0
 
-    def _getValueInternal():
-        return left_color.hsv().v
+    def _getValueInternal(color_sensor):
+        return color_sensor.hsv().v
 
     def _stopDriveBaseInternal(stop=Stop.HOLD):
         drive_base.straight(distance=0,then=stop)
@@ -847,10 +850,23 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
         drive_base.settings(straight_speed=400,straight_acceleration=300,
                         turn_rate=400,turn_acceleration=(100, 400))
 
-    def blackStoppingCondition():
+    def blackStoppingCondition(color_sensor):
         #light = getReflectedLight()
-        light = _getValueInternal()
+        light = _getValueInternal(color_sensor)
         return light <= BLACK_COLOR
+
+    def whiteStoppingCondition(color_sensor):
+        #light = getReflectedLight()
+        light = _getValueInternal(color_sensor)
+        return light >= WHITE_COLOR
+
+    stopping_condition_function = None
+    if (tillBlackLine == True and tillWhiteLine == True):
+        raise ValueError("Only tillBlackLine or tillWhiteLine should be true, not both.")
+    elif (tillBlackLine == True):
+        stopping_condition_function = blackStoppingCondition
+    elif (tillWhiteLine == True):
+        stopping_condition_function = whiteStoppingCondition
 
     drive_base.reset()
     #stopDriveBase(stop)
@@ -905,8 +921,11 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
     if (printDebugMesssages == True):
         print("distancedrivenMM: " + str(distanceDrivenMM) + " distanceInMM: " +  str(distanceInMM))
     while (distanceDrivenMM < distanceInMM):
-        stopCondition = blackStoppingCondition()
-        if (tillBlackLine == True and stopCondition == True):
+        if (tillBlackLine == True or tillWhiteLine == True):
+            stopCondition = stopping_condition_function(color_sensor)
+
+
+        if ((tillBlackLine == True or tillWhiteLine == True) and stopCondition == True):
             break
         elif (detectStall == True and drive_base.stalled() == True):
             break

@@ -93,9 +93,19 @@ def runUntilStall():
 def printHSVValues(sensor=left_color):
     while  True:
         print("(h,s,v) = {}, color: {}".format(sensor.hsv(), sensor.color()))
+        wait(100)
+
+def testOrangePersonDropOff():
+    while (True):
+        waitForButtonPress()
+        angle = 0
+        gyroStraightWithDriveWithAccurateDistance(distance=20, speed=500, targetAngle=angle, backward = True)
+        wait(2000)
+        gyroStraightWithDriveWithAccurateDistance(distance=20, speed=500, targetAngle=angle)
+
    
 initializeAndWaitForRobotReady()
-hub.imu.reset_heading(90)
+hub.imu.reset_heading(0)
 #squareTest()
 #turnTest()
 #testDriveStraight()
@@ -104,5 +114,8 @@ hub.imu.reset_heading(90)
 #testPositionUtil()
 #testFollowBlackLine()
 #runUntilStall()
-printHSVValues()
+#printHSVValues(right_color)
+#if (gyroStraightWithDriveWithAccurateDistance(distance = 30, speed = 300, targetAngle = 0, backward = True, tillWhiteLine = True) == False):
+#    print("Did not find white")
+testOrangePersonDropOff()
 
