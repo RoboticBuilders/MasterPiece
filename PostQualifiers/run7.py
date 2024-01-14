@@ -24,16 +24,17 @@ def musicconcert():
     gyroStraightWithDriveWithAccurateDistance(distance=25, targetAngle=angle, backward=True, speed=400)
 
     # turn towards the Music Concert
-    turnToAngle(targetAngle = 45, speed = 300)
+    angle = 45
+    turnToAngle(targetAngle = angle, speed = 300)
+    wait(100)
 
     # Push the HP and align against it, and turn circular motion arm to do sounds lever
-    #gyroStraightWithDriveWithAccurateDistance(distance=13, targetAngle=45, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=25, targetAngle=45, speed=300)
+    gyroStraightWithDriveWithAccurateDistance(distance=27, targetAngle=angle, speed=300)
     #driveForTime(timeInMS=500, speed=200)
 
     # Wait for a little and run Flippy to turn the speakers
     wait(100)
-    left_med_motor.run_angle(-1000, 1800)
+    left_med_motor.run_angle(-1000, 1900)
     wait(100)
     
 def augmentedReality():
@@ -43,7 +44,9 @@ def augmentedReality():
                                     tillBlackLine = True, backward=True,
                                     color_sensor = left_color) == False):
         print("Missed black line catch when backing from music concert")
-    left_med_motor.run_angle(speed = 1000, rotation_angle = 1800, wait = False)
+
+    # Bring up flippy.
+    left_med_motor.run_angle(speed = 1000, rotation_angle = 1900, wait = False)
     gyroStraightWithDriveWithAccurateDistance(distance = 3, speed = 200, targetAngle = angle, backward=True)
 
     # Now drive towars the augmented reality
@@ -73,8 +76,6 @@ def augmentedReality():
         print("run7: augmentedReality: Did not find whiteline infront of augmented reality when backing up at the end.")
    
     turnToAngle(targetAngle = -90, speed = 750)
-
-
 
 def augmentedRealitynew():
     # Back up from music concert and turn towards Augmented Reality
@@ -121,7 +122,6 @@ def augmentedRealitynew():
    
     turnToAngle(targetAngle = -90, speed = 750)   
     
-   
 def expertDropsnew():
     # Travel a total of 100cm till the Sound mixer. 
     # We travel straight first, to get past the light show, then
@@ -132,13 +132,22 @@ def expertDropsnew():
     
     angle = -100
     turnToAngle(targetAngle=angle, speed=600, then = Stop.COAST)
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 700, targetAngle = angle, stop = Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance = 18, speed = 700, targetAngle = angle, stop = Stop.COAST)
 
     angle = -65
     turnToAngle(targetAngle=angle, speed=600, then = Stop.COAST)
-    gyroStraightWithDriveWithAccurateDistance(distance = 27, speed = 700, targetAngle = angle, stop = Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance = 29, speed = 700, targetAngle = angle, stop = Stop.COAST)
 
-    
+    # Now turn towards the wall and align.
+    angle = 0
+    turnToAngle(targetAngle=angle, speed=300, then = Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=19, targetAngle=angle, speed=300)
+
+    # now open the arms.
+    right_med_motor.run_angle(speed = -400, rotation_angle = 600, wait=False)
+    gyroStraightWithDriveWithAccurateDistance(distance=15, backward=True, targetAngle=0, speed=300)
+    turnToAngle(targetAngle=-38, speed=300)
+
     ''' NOT USED *************
     # We want to travel a total distance of 100cm. There is a white line catch in the middle
     # that we do to ensure that we have accurately travelled the distance of 100cm.
@@ -154,18 +163,8 @@ def expertDropsnew():
     print("Run7: expertDropsnew: distanceRemaining = " + str(distanceRemaining_CM))
     gyroStraightWithDriveWithAccurateDistance(distance = distanceRemaining_CM, speed = 500, targetAngle = angle)
     '''
-    
 
-    # Now turn towards the wall and align.
-    angle = 0
-    turnToAngle(targetAngle=angle, speed=300, then = Stop.COAST)
-    gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=angle, speed=300)
-
-    # now open the arms.
-    right_med_motor.run_angle(speed = 400, rotation_angle = 600, wait=False)
-    gyroStraightWithDriveWithAccurateDistance(distance=15, backward=True, targetAngle=0, speed=300)
-    turnToAngle(targetAngle=-45, speed=300)
-    
+  
 
 def expertDropsWithCurve():
     # Travel a total of 100cm till the Sound mixer. 
@@ -224,10 +223,28 @@ def resetFlippy():
 def PullInTheAugmentedRealityLever():
     # Now open the slider to bring in the augmented reality.
     #Changed from 550 to 540 since it was stalling sometimes
-    right_med_motor.run_angle(speed = 600, rotation_angle = 500)
+    right_med_motor.run_angle(speed = -400, rotation_angle = 492)
     wait(100)
     # Close slider to open the augmented reality.
-    right_med_motor.run_angle(speed = -600, rotation_angle = 500)
+    right_med_motor.run_angle(speed = 400, rotation_angle = 492)
+
+def PullInTheAugmentedLeverWithStallDetect():
+    # Now move out to pull the lever
+    right_med_motor.run(400)
+    distance_to_travel = 400
+    dist_travelled = 0
+    init_distance = abs(right_med_motor.angle())
+    #print(init_distance)
+    while(right_med_motor.stalled() == False and dist_travelled < distance_to_travel):
+        curr = abs(right_med_motor.angle())
+        print(curr)
+        dist_travelled = curr - init_distance
+
+    right_med_motor.hold()    
+
+    wait(100)
+    # Now pull the lever in...
+    right_med_motor.run_angle(speed = -400, rotation_angle = 400)
 
 def testSliderOpenAndClose():
     while (True):
@@ -236,6 +253,7 @@ def testSliderOpenAndClose():
 
 def run7():
     resetRobot()
+    #testCrazyMovement()
     #hub.imu.reset_heading(45)
     musicconcert()
     augmentedRealitynew()
@@ -254,6 +272,8 @@ def mainRun7():
     print("Time is " + str((end_time-start_time)/1000) + " seconds")
 
     print("DONE")
+
+#testSliderOpenAndClose()
 
 #gyroStraightWithDriveWithAccurateDistance(distance = 18, speed = 700, targetAngle = 0)
 #drive_base.curve(radius=330,angle = 90)

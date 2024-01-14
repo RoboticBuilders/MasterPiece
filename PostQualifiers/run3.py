@@ -3,7 +3,7 @@ from Utilities import *
 def goHome():
     # Go home with curve
     drive_base.settings(1000, 1000, 1000, 1000)
-    drive_base.curve(radius = -160, angle = -45, then=Stop.COAST)
+    drive_base.curve(radius = -155, angle = -45, then=Stop.COAST)
     #Radius was -650 and angle was -50
     drive_base.curve(radius = -740, angle = -50)
     
