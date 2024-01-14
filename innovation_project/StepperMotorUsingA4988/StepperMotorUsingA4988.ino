@@ -3,11 +3,22 @@
 
 #define STEPPER_ENABLE_PIN 8 
 
+#define GANTRY_SHIELD
+
 // Define the stepper motor and the pins that is connected to
-AccelStepper stepper1(1, 2, 5); // X (Typeof driver: with 2 pins, STEP, DIR)
-AccelStepper stepper2(1, 3, 6); // Y
+#ifdef GANTRY_SHIELD
+// order of motors in the gantry sets is YXZA - right to left
+AccelStepper stepper1(1, 3, 6); // Y
+AccelStepper stepper2(1, 2, 5); // X (Typeof driver: with 2 pins, STEP, DIR)
 AccelStepper stepper3(1, 4, 7); // Z
 AccelStepper stepper4(1, 12, 13); // A
+#else
+// present order on the orginal shield is ZAXY
+AccelStepper stepper1(1, 4, 7); // Z (Typeof driver: with 2 pins, STEP, DIR)
+AccelStepper stepper2(1, 12, 13); // A
+AccelStepper stepper3(1, 2, 5); // X
+AccelStepper stepper4(1, 3, 6); // Y
+#endif
 
 AccelStepper steppersArr[] = {stepper1, stepper2, stepper3, stepper4};
 
@@ -15,6 +26,8 @@ AccelStepper steppersArr[] = {stepper1, stepper2, stepper3, stepper4};
 MultiStepper steppersControl;  // Create instance of MultiStepper
 
 long gotoposition[4]; // An array to store the target positions for each stepper motor
+
+long loopCount = 0;
 
 void setup() {
 
@@ -54,6 +67,7 @@ void setup() {
 
 void loop() {
 
+
   stepper1.enableOutputs();
   stepper2.enableOutputs();
   stepper3.enableOutputs();
@@ -62,8 +76,8 @@ void loop() {
   // Store the target positions in the "gotopostion" array
   gotoposition[0] = 100;  // 800 steps - full rotation with quater-step resolution
   gotoposition[1] = 100;
-  gotoposition[2] = 80;
-  gotoposition[3] = 80;
+  gotoposition[2] = 100;
+  gotoposition[3] = 100;
 
   Serial.println("Starting ...");
   steppersControl.moveTo(gotoposition); // Calculates the required speed for all motors
