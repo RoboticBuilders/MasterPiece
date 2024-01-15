@@ -30,7 +30,7 @@ def rollingCamera():
     
 def museumwithpedestaloutside():
     #Use a curve to reach in front of the immersive experience
-    drive_base.curve(radius = 630, angle = -50)
+    drive_base.curve(radius = 600, angle = -50)
        
     #wait(5000)
     # Now turn to drop off at museum
@@ -89,14 +89,15 @@ def goHomeWithCurve():
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False,stop=Stop.COAST)
     
-    angle = 160
-    gyroStraightWithDriveWithAccurateDistance(distance=35, speed=1000, targetAngle=angle, 
+    angle = 150
+    gyroStraightWithDriveWithAccurateDistance(distance=38, speed=1000, targetAngle=angle, 
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False)
   
     
 def resetBucket(angle = 800):
     right_med_motor.run_angle(speed=1000, rotation_angle=angle)
+
 
 def testBucket():
     while True:
