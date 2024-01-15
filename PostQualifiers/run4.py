@@ -66,7 +66,7 @@ def lightShow():
 def immersiveExperience():
     # Now move ahead from the light show
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=500, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=500, targetAngle=angle)
     # Turn towards immersive experience
     angle=170
     turnToAngle(targetAngle=angle, speed=300)
@@ -89,11 +89,15 @@ def goHomeWithCurve():
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False,stop=Stop.COAST)
     
-    angle = 150
-    gyroStraightWithDriveWithAccurateDistance(distance=38, speed=1000, targetAngle=angle, 
+    angle = 160
+    gyroStraightWithDriveWithAccurateDistance(distance=23, speed=1000, targetAngle=angle, 
+                                              slowDown = False, backward = True,
+                                              useSlowerAccelerationForBackward = False, stop = Stop.COAST)
+
+    angle = 180
+    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=1000, targetAngle=angle, 
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False)
-  
     
 def resetBucket(angle = 800):
     right_med_motor.run_angle(speed=1000, rotation_angle=angle)
