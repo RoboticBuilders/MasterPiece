@@ -30,13 +30,13 @@ def rollingCamera():
     
 def museumwithpedestaloutside():
     #Use a curve to reach in front of the immersive experience
-    drive_base.curve(radius = 640, angle = -50)
+    drive_base.curve(radius = 600, angle = -50)
        
     #wait(5000)
     # Now turn to drop off at museum
     angle = -40
     turnToAngle(targetAngle=angle,speed=600)
-    gyroStraightWithDriveWithAccurateDistance(distance=30, speed=1000, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=29, speed=1000, targetAngle=angle)
     # Drop off the expert and audience
     
     left_med_motor.run_angle(speed=500, rotation_angle=500)
@@ -66,7 +66,7 @@ def lightShow():
 def immersiveExperience():
     # Now move ahead from the light show
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=500, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=500, targetAngle=angle)
     # Turn towards immersive experience
     angle=170
     turnToAngle(targetAngle=angle, speed=300)
@@ -89,14 +89,19 @@ def goHomeWithCurve():
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False,stop=Stop.COAST)
     
-    angle = 165
-    gyroStraightWithDriveWithAccurateDistance(distance=35, speed=1000, targetAngle=angle, 
+    angle = 160
+    gyroStraightWithDriveWithAccurateDistance(distance=23, speed=1000, targetAngle=angle, 
+                                              slowDown = False, backward = True,
+                                              useSlowerAccelerationForBackward = False, stop = Stop.COAST)
+
+    angle = 180
+    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=1000, targetAngle=angle, 
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False)
-  
     
 def resetBucket(angle = 800):
     right_med_motor.run_angle(speed=1000, rotation_angle=angle)
+
 
 def testBucket():
     while True:
