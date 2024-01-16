@@ -2,6 +2,7 @@
 #include <Wire.h> 
 #include <SoftwareSerial.h>
 
+
 // gantry motor initialization
 const int STEPS_PER_REV = 240;
 const int numberOfMotorStepsForOneGantryStep = 960;
@@ -139,6 +140,7 @@ void loop() {
     moveBewelScrewInSteps (1, GantryDirection::TowardsMotor, 0);
   }
 
+  moveBewelScrewInSteps (6, GantryDirection::AwayFromMotor, 0);
 
   delay(1000);
        
