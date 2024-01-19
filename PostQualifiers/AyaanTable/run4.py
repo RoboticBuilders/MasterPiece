@@ -36,16 +36,16 @@ def museumwithpedestaloutside():
        
     #wait(5000)
     # Now turn to drop off at museum
-    angle = -40
+    angle = -35
     turnToAngle(targetAngle=angle,speed=600)
-    gyroStraightWithDriveWithAccurateDistance(distance=27, speed=1000, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=29, speed=1000, targetAngle=angle)
     # Drop off the expert and audience
     
     left_med_motor.run_angle(speed=500, rotation_angle=500)
 
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
-    # gyroStraightWithDriveWithAccurateDistance(distance=8, speed=650, targetAngle=angle)
+    #gyroStraightWithDriveWithAccurateDistance(distance=5, speed=650, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=400)
   
 def lightShow():

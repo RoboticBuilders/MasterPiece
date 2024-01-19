@@ -149,7 +149,7 @@ def expertDropsnew():
     turnToAngle(targetAngle=angle, speed=500)
     distToWhiteLineMM = driveTillHsvRange(maxDistance=160, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100), tag="expert dropoffs")
     
-    gyroStraightWithDriveWithAccurateDistance(distance = 17, speed = 500, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 25, speed = 500, targetAngle = angle)
     
     # Now turn towards the wall and align.
     angle = 0
