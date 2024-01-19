@@ -53,23 +53,24 @@ int images[1][16][16] =
  
 int images[1][16][16] =
 {
+  //  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
   {
-    { 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0},
-    { 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0},
-    { 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0},
-    { 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    { 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0},  // 0
+    { 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0},  // 1
+    { 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0},  // 2
+    { 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0},  // 3
+    { 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0},  // 4
+    { 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0},  // 5
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 6
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 7
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 8
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 9
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 0
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 1
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 2
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 3
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},  // 4
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}   // 5
   }
 };
 #endif
@@ -89,27 +90,27 @@ void setup() {
   Serial.begin(9600);
   BTSerial.begin(19200);
  
-  Serial.println("Primary Setup completed");
+  Serial.println(F("Primary Setup completed"));
 }
 
 void loop() {
   // for now we just render one image
   if (BTSerial.available()) {
     btInput = BTSerial.readString();
-    Serial.print("input = ");
+    Serial.print(F("input = "));
     Serial.println(btInput);
 
     if (btInput.equals("0"))
     {
       imageIndex = 0;
-      Serial.println("rectangle");
+      Serial.println(F("rectangle"));
     }
     else
     {
      // Image data to reset pins
       imageIndex = imageIndexForResettingPins;
       Serial.println(btInput);
-      Serial.println("Reset pins - clear");
+      Serial.println(F("Reset pins - clear"));
     }
 
     delay(300);
@@ -127,7 +128,7 @@ void loop() {
   if (imageIndex == -1)
     return;
 
-  for (int i = 5; i >= 0; i--)
+  for (int i = 0; i <6; i++)
   {
     // one row in 5 frames
     WriteToWire(imageIndex, i, secondaryStartWireAddress, 0, 3);
@@ -137,10 +138,10 @@ void loop() {
     //WriteToWire(imageIndex, i, secondaryStartWireAddress + 4, 16, 19);
     // Wait for all motor arrays to render the row
     delay(3000);
-    moveBewelScrewInSteps (1, GantryDirection::TowardsMotor, 0);
+    moveBewelScrewInSteps(1, GantryDirection::TowardsMotor, 0);
   }
 
-  moveBewelScrewInSteps (6, GantryDirection::AwayFromMotor, 0);
+  moveBewelScrewInSteps(6, GantryDirection::AwayFromMotor, 0);
 
   delay(1000);
        
@@ -159,7 +160,6 @@ void moveBewelScrewInSteps(int numberOfGantrySteps, GantryDirection direction, i
 
 void WriteToWire(int imageNumber, int row, int wireAddress, int startIndex, int endIndex) {
   Serial.println("Sending data to " + String(wireAddress) + " for imageNumber " + String(imageNumber));
-  delay(1000);
   Wire.beginTransmission(wireAddress); // transmit to device #8
   
   byte data = 0; // data for resetting pins
@@ -168,7 +168,7 @@ void WriteToWire(int imageNumber, int row, int wireAddress, int startIndex, int 
   {
     data = images[imageNumber][row][startIndex] | images[imageNumber][row][startIndex + 1] << 2 | images[imageNumber][row][startIndex + 2] << 4 | images[imageNumber][row][startIndex + 3] << 6;
   }
-  Serial.print("data = ");
+  Serial.print(F("data = "));
   Serial.println(data);
   Wire.write(data);          // sends one byte
   Wire.endTransmission();    // stop transmitting

@@ -29,13 +29,13 @@ bool testExecuted = false;
 void setup() {
   Serial.begin(9600);
 
-   Serial.println("Starting setup");
+   Serial.println(F("Starting setup"));
    delay(300);
 
   // read EEPROM for i2cWireAddress
   int wireAddress = readWireAddress();
   i2cWireAddress = wireAddress;
-  Serial.print("Wire address "); Serial.println(wireAddress);
+  Serial.print(F("Wire address ")); Serial.println(wireAddress);
   delay(300);
 
   // join I2C bus with the address for this sub Arduino
@@ -48,7 +48,7 @@ void setup() {
   disableMotorOutputs();
   resetPositionsArray();
 
-  Serial.println("Setup completed");
+  Serial.println(F("Setup completed"));
   delay(300);   
 }
 
@@ -59,7 +59,7 @@ void loop() {
       return;
     }
     else {
-    Serial.println("Starting test");
+    Serial.println(F("Starting test"));
     delay(300);
     TestMotors();
     testExecuted = true;
@@ -71,7 +71,7 @@ void loop() {
     return;
   }
 
-  Serial.println("Pin positions received ...");
+  Serial.println(F("Pin positions received ..."));
   enableMotorOutputs();
   steppersControl.moveTo(goToPositions); // Calculates the required speed for all motors
   Serial.print("goToPositions = ");
@@ -81,16 +81,16 @@ void loop() {
   }
   Serial.println();
   steppersControl.runSpeedToPosition(); // Blocks until all steppers are in position
-  Serial.println("Pins moved to the positions ...");
+  Serial.println(F("Pins moved to the positions ..."));
 
   //delay(2000);
 
  // bring motors back to zero positions
   resetPositionsArray();
-  Serial.println("Pin positions reset ...");
+  Serial.println(F("Pin positions reset ..."));
   steppersControl.moveTo(goToPositions);
   steppersControl.runSpeedToPosition();
-  Serial.println("Pins moved back to zero ...");
+  Serial.println(F("Pins moved back to zero ..."));
   
   stopMotors();
   disableMotorOutputs();
@@ -156,7 +156,7 @@ void resetPositionsArray() {
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
-  Serial.print("received event: "); Serial.println(howMany);
+  Serial.print(F("received event: ")); Serial.println(howMany);
 
   while (1 < Wire.available()) {  // loop through all but the last
     char c = Wire.read();         // receive byte as a character
@@ -164,7 +164,7 @@ void receiveEvent(int howMany) {
   }
 
   int x = Wire.read();           // receive byte as an integer
-  Serial.print("Sub reads: ");   // print the integer
+  Serial.print(F("Sub reads: "));   // print the integer
   Serial.println(x);             // print the integer
 
   if (x == -1)
