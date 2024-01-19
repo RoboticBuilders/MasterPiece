@@ -215,14 +215,14 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
     # Loop through each colum
     for j in range (0, columns, 1):
 
-        # Calculate the x position of this column
+        # Calculate the y position of this column
         y = j * pixedWidth * 2.0
         print('Processing column ', j, ' of ', columns)
 
         # Loop through each row of this column
         for i in range (0, rows, 1):
             
-            # Calculate the y position of this row
+            # Calculate the x position of this row
             x = i * pixedWidth * 2.0
 
             # Calculate the height of this pixel
