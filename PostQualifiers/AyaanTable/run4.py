@@ -36,9 +36,9 @@ def museumwithpedestaloutside():
        
     #wait(5000)
     # Now turn to drop off at museum
-    angle = -35
+    angle = -30
     turnToAngle(targetAngle=angle,speed=600)
-    gyroStraightWithDriveWithAccurateDistance(distance=29, speed=1000, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=27, speed=1000, targetAngle=angle)
     # Drop off the expert and audience
     
     left_med_motor.run_angle(speed=500, rotation_angle=500)
@@ -56,7 +56,7 @@ def lightShow():
     # speed 1000 - time ->3.5 sec
     
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
     gyroStraightWithDriveWithAccurateDistance(distance=8, speed=500, targetAngle=angle,backward=True)
     wait(100)
     # Now we are at the light show, spin the lightshow from the back spinny arm.
@@ -68,7 +68,7 @@ def lightShow():
 def immersiveExperience():
     # Now move ahead from the light show
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=500, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=500, targetAngle=angle)
     # Turn towards immersive experience
     angle=170
     turnToAngle(targetAngle=angle, speed=300)

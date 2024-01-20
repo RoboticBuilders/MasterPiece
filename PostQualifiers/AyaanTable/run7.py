@@ -105,11 +105,11 @@ def augmentedRealitynew():
                                                   backward = False, tillWhiteLine = True, color_sensor = left_color) == False):
         print("run7: augmentedReality: Did not find whiteline infront of augmented reality when moving forward towardsit before pulling lever.")
     #After cathing the white line move a little forward so the flippy doesnt snag against the mission model
-    drive_base.straight(50)
+    drive_base.straight(60)
     # Now open the slider to bring in the augmented reality.
     openAugmentedRealitySlider()
     #Backup to pull the lever
-    drive_base.straight(-40)
+    drive_base.straight(-50)
     closeAugmentedRealitySlider()
     #PullInTheAugmentedRealityLever()
 
@@ -149,7 +149,7 @@ def expertDropsnew():
     turnToAngle(targetAngle=angle, speed=500)
     distToWhiteLineMM = driveTillHsvRange(maxDistance=160, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100), tag="expert dropoffs")
     
-    gyroStraightWithDriveWithAccurateDistance(distance = 25, speed = 500, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 23, speed = 500, targetAngle = angle)
     
     # Now turn towards the wall and align.
     angle = 0
@@ -162,48 +162,6 @@ def expertDropsnew():
     turnToAngle(targetAngle=-38, speed=300)
     
 
-    '''
-    # Now we have caught the white line near dropoff
-    angle = -90
-    turnToAngle(targetAngle=angle, speed=300,left_correction=0.03,right_correction=0.03)
-    wait(2000)
-    gyroStraightWithDriveWithAccurateDistance(distance = 17, speed = 700, targetAngle = angle)
-    # Now open the arms
-    angle = -40
-    turnToAngle(targetAngle=angle, speed=500)
-    right_med_motor.run_angle(speed = -2000, rotation_angle = 492)
-    '''
-    
-    
-    '''
-    gyroStraightWithDriveWithAccurateDistance(distance = 29, speed = 700, targetAngle = angle, stop = Stop.COAST)
-    
-    # Now turn towards the wall and align.
-    angle = 0
-    turnToAngle(targetAngle=angle, speed=300, then = Stop.COAST)
-    gyroStraightWithDriveWithAccurateDistance(distance=19, targetAngle=angle, speed=300)
-
-    # now open the arms.
-    right_med_motor.run_angle(speed = -400, rotation_angle = 600, wait=False)
-    gyroStraightWithDriveWithAccurateDistance(distance=15, backward=True, targetAngle=0, speed=300)
-    turnToAngle(targetAngle=-38, speed=300)
-    '''
-
-    ''' NOT USED *************
-    # We want to travel a total distance of 100cm. There is a white line catch in the middle
-    # that we do to ensure that we have accurately travelled the distance of 100cm.
-    totalDistanceToTravel_MM = 1000
-    drive_base.reset()
-    startDist_MM = drive_base.distance()
-    gyroStraightWithDriveWithAccurateDistance(distance = 65, speed = 500, targetAngle = angle)
-    distToWhiteLineMM = driveTillHsvRange(maxDistance=160, sensor=right_color, hueRange = range(205, 215), saturationRange=range(11, 30), valueRange=range(80, 100), tag="expert dropoffs")
-    endDist_MM = drive_base.distance()
-    distanceTravelled_MM = endDist_MM - startDist_MM
-    distanceRemaining_MM = totalDistanceToTravel_MM - distanceTravelled_MM
-    distanceRemaining_CM = distanceRemaining_MM / 10
-    print("Run7: expertDropsnew: distanceRemaining = " + str(distanceRemaining_CM))
-    gyroStraightWithDriveWithAccurateDistance(distance = distanceRemaining_CM, speed = 500, targetAngle = angle)
-    '''
 
 def expertDropsWithCurve():
     # Travel a total of 100cm till the Sound mixer. 
