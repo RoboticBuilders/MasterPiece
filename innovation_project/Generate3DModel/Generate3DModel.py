@@ -16,12 +16,15 @@ imgName = 'innovation_project/ImageProcessingUtils/Images/Starry_Night.jpg'
 autoResize = True
 
 # The first threshold value for the Canny Edge Detection algorithm. 
+# Get from our AI model.
 threshold1 = 120
 
 # The second threshold value for the Canny Edge Detection algorithm. 
+# Get from our AI model.
 threshold2 = 240
 
 # Set the gaussian blur value. 
+# Get from our AI model.
 gaussianBlur = 3
 
 # The pixel count of the image that you want to generate. Not typical to change this. 75000 is a good value for the BambuLab P1S 3D printer.
@@ -65,7 +68,7 @@ scale_ratio = yp / img.shape[1]
 #
 def Canny(img, t1, t2):
 
-    # Convert to graycsale
+    # Convert to grayscale
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Blur the image for better edge detection
@@ -207,7 +210,7 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
     allFaces = np.array([[0,0,0]])
 
     # The width of each pixel in mm
-    pixedWidth = 0.33
+    halfPixelWidth = 0.33
 
     # The minimum thickness of the model in mm. This is to prevent the model from being too thin.
     minThickness = 0.5
@@ -216,14 +219,14 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
     for j in range (0, columns, 1):
 
         # Calculate the y position of this column
-        y = j * pixedWidth * 2.0
+        y = j * halfPixelWidth * 2.0
         print('Processing column ', j, ' of ', columns)
 
         # Loop through each row of this column
         for i in range (0, rows, 1):
             
             # Calculate the x position of this row
-            x = i * pixedWidth * 2.0
+            x = i * halfPixelWidth * 2.0
 
             # Calculate the height of this pixel
             height = (img[j, i,0] - min) / delta * maxHeight
@@ -236,14 +239,14 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
             
             # A cube has 8 vertices. Save these in an array.
             vertices = np.array([\
-                [x-pixedWidth, y-pixedWidth, minThickness],
-                [x+pixedWidth, y-pixedWidth, minThickness],
-                [x+pixedWidth, y-pixedWidth, -1 * height],
-                [x-pixedWidth, y-pixedWidth, -1 * height],
-                [x-pixedWidth, y+pixedWidth, minThickness],
-                [x+pixedWidth, y+pixedWidth, minThickness],
-                [x+pixedWidth, y+pixedWidth, -1 * height],
-                [x-pixedWidth, y+pixedWidth, -1 * height]
+                [x-halfPixelWidth, y-halfPixelWidth, minThickness],
+                [x+halfPixelWidth, y-halfPixelWidth, minThickness],
+                [x+halfPixelWidth, y-halfPixelWidth, -1 * height],
+                [x-halfPixelWidth, y-halfPixelWidth, -1 * height],
+                [x-halfPixelWidth, y+halfPixelWidth, minThickness],
+                [x+halfPixelWidth, y+halfPixelWidth, minThickness],
+                [x+halfPixelWidth, y+halfPixelWidth, -1 * height],
+                [x-halfPixelWidth, y+halfPixelWidth, -1 * height]
                 ])
                     
             allVertices = np.concatenate((allVertices, vertices), axis = 0)
