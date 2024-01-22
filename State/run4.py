@@ -39,8 +39,7 @@ def museumwithpedestaloutside():
     angle = -30
     turnToAngle(targetAngle=angle,speed=600)
     # gyroStraightWithDriveWithAccurateDistance(distance=27, speed=1000, targetAngle=angle)
-    driveTillHsvRange((49, 53), (18, 20), (78, 80), sensor=right_color, speed=600, maxDistance=300, tag="Museum dropoff line catch")
-    gyroStraightWithDriveWithAccurateDistance(distance=14, speed=1000, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=25, speed=1000, targetAngle=angle)
     # Drop off the expert and audience
     
     left_med_motor.run_angle(speed=500, rotation_angle=500)
@@ -61,7 +60,7 @@ def lightShow():
     angle=-90
     gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
     drive_base.settings(500, 500, 500, 500)
-    drive_base.straight(-80)
+    drive_base.straight(distance = -500, wait = False)
     stall_detect.load(max_load = 120, debug = True)
     # gyroStraightWithDriveWithAccurateDistance(distance=8, speed=500, targetAngle=angle,backward=True, wait = False)
     wait(100)
@@ -69,7 +68,7 @@ def lightShow():
     orgSpeed,orgAccel,orgTorque = left_med_motor.control.limits()
     left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = 1000)
     left_med_motor.run_angle(speed=1000, rotation_angle=-2500, wait = True)
-    left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = orgTorque)
+    left_med_motor.control.limits(speed = orgSpeed, acceleration = orgAccel, torque = orgTorque)
 
 def immersiveExperience():
     # Now move ahead from the light show
