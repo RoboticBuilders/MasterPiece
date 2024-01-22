@@ -151,7 +151,6 @@ def run4ayaantable():
     goHomeWithCurveAccurate()
     
 
-#run4ayaantable()
 #testBucket()
 # lightShowTestWith8ToothGear()
 #lightShowTestWithLoad()
