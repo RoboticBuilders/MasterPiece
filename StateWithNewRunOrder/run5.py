@@ -69,7 +69,7 @@ def waitForLeftMotor():
     while left_med_motor.done() == False:
         continue
 
-def run0():
+def run5():
     resetRobot()
     _doSoundMixerWithComplicatedArm()
     #_doSoundMixerWithStallDetection()

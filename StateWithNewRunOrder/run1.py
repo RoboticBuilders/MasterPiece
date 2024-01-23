@@ -10,7 +10,7 @@ def goRightHometoLeft():
     gyroStraightWithDriveWithAccurateDistance(distance = 90, speed = 1000, backward = False, targetAngle = angle)
 
 
-def dohome2home():
+def run1():
     resetRobot()
     goRightHometoLeft()
 

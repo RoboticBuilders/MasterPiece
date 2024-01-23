@@ -1,6 +1,6 @@
 from Utilities import *
 
-def run5():
+def run7():
     def _doRollingCameraAndDropOffAtMovieSet():
         angle = 2
         # Drive forward to do rolling camera
@@ -19,13 +19,10 @@ def run5():
         # audience. 
         gyroStraightWithDrive(distanceInCm = 65, speed = 1000, targetAngle = angle, backward=True)
         
-    def _dorun5():
+    def _dorun7():
         _doRollingCameraAndDropOffAtMovieSet()
         _goHomeAfterRollingCamera()
         #_resetAttachmentForNextRun()
 
     resetRobot()
-    _dorun5()
-
-waitForButtonPress()
-run5()
+    _dorun7()

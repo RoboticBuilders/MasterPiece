@@ -268,7 +268,7 @@ def testSliderOpenAndClose():
     #    wait(1000)
     #    PullInTheAugmentedRealityLever()
 
-def run7():
+def run8():
     resetRobot()
     musicconcert()
     augmentedRealitynew()
@@ -276,14 +276,14 @@ def run7():
     #dropexpertsFromlefthome()
     #expertDropsnew()
 
-def mainRun7():
+def mainRun8():
     initializeAndWaitForRobotReady()
 
     print("BATTERY = " + str(hub.battery.voltage()))
     stopwatch = StopWatch()
     start_time = stopwatch.time()
 
-    run7()
+    run8()
 
     end_time = stopwatch.time()
     print("Time is " + str((end_time-start_time)/1000) + " seconds")

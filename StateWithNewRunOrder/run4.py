@@ -7,7 +7,7 @@ def _3dCinemaAndTwoFacesDropoff():
     gyroStraightWithDrive(distanceInCm = 25, speed = 300, targetAngle = angle) 
     gyroStraightWithDrive(distanceInCm = 20, speed = 300, targetAngle = angle,backward=True) 
 
-def run1():
+def run4():
     resetRobot()
     _3dCinemaAndTwoFacesDropoff()
 

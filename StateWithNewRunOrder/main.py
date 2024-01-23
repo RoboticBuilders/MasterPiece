@@ -1,5 +1,4 @@
 from Utilities import *
-from goRightHometoLeftHome import *
 from run0 import *
 from run1 import *
 from run2 import *
@@ -8,6 +7,7 @@ from run4 import *
 from run5 import *
 from run6 import *
 from run7 import *
+from run8 import *
 
 # ************** IMPORTANT ********************************
 # The right bucket design should be such that it is 4.5 centimeters outside from the bucket wall.
@@ -45,33 +45,24 @@ def _maindriver():
             print("Time for arm change time(ms): {}".format(str(arm_change_end_time- arm_change_start_time)))
 
         if counter == 0:
-            # Craft creator & Virtual reality run
             start_time = stopwatch.time()
-            runWithTiming(run6, "run6")
+            runWithTiming(run0, "CraftCreator+Chicken")
         if counter == 1:
-            # Go from right home to left home
-            runWithTiming(dohome2home, "dohome2home")
+            runWithTiming(run1, "Home1ToHome2")
         if counter == 2:
-            # lever
             runWithTiming(run2,"lever")
         if counter == 3:
-            # Theater scene change run
             runWithTiming(run3,"SceneChange")
         if counter == 4:
-            # Immersive experience run
-            runWithTiming(run1,"3d cinema")
+            runWithTiming(run4, "3d cinema")
         if counter == 5:
-            # sound mixer
-            runWithTiming(run0, "Sound mixer")
+            runWithTiming(run5, "Sound mixer")
         if counter == 6:
-            # Craft creator & Virtual reality run
-            runWithTiming(run4,"run4")
+            runWithTiming(run6, "LightShow+Immersive")
         if counter == 7:
-            # Music concert run
-            runWithTiming(run5,"run5")
+            runWithTiming(run7, "Rolling Camera")
         if counter == 8:
-            # Music concert run
-            runWithTiming(run7,"run7")
+            runWithTiming(run8, "Music Concert")
         
         
         counter = counter + 1

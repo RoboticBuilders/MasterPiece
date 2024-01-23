@@ -1,6 +1,6 @@
 from Utilities import *
 
-def run6():
+def run0():
     
     def _positionChicken():
         left_med_motor.run_angle(-500, 950)
@@ -44,7 +44,7 @@ def run6():
         angle = 0
         gyroStraightWithDrive(distanceInCm = 30, speed = 1000, targetAngle = angle, backward=True)
 
-    def _dorun6():
+    def _dorun0():
         _pickupExpert()
         _doChickenAndCraftCretor()
         _goHome()
@@ -52,6 +52,6 @@ def run6():
     
 
     resetRobot()
-    _dorun6() 
+    _dorun0() 
 
 
