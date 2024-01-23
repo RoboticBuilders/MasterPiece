@@ -5,7 +5,7 @@ TURN_SPEED = 300
 def _doSoundMixerWithComplicatedArm():
     angle = 0
     gyroStraightWithDriveWithAccurateDistance(distance = 32, speed = 800, targetAngle = angle, stop = Stop.COAST)
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 150, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 120, targetAngle = angle)
     # Turn the motor to remove the lock for the left sound mixer.
     # Do this in parallel with the expert pick up.
     left_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=False)
@@ -26,14 +26,14 @@ def _doSoundMixerWithComplicatedArm():
     # attachment
     _resetLeftMotor(wait = False)
     drive_base.settings(500, 1000, 500, 1000)
-    drive_base.curve(radius = -530, angle = -40)
+    drive_base.curve(radius = -420, angle = -50)
 
 
 def _doSoundMixerWithStallDetection():
     angle = 0
-    drive_base.straight(distance = 570, wait = False)
-    stall_detect.load(max_load = 190, debug = True)
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 200, targetAngle = angle)
+    drive_base.straight(distance = 400, wait = False)
+    stall_detect.load(max_load = 150, debug = True)
+    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 100, targetAngle = angle)
 
     # Turn the motor to remove the lock for the left sound mixer.
     # Do this in parallel with the expert pick up.
@@ -72,6 +72,7 @@ def waitForLeftMotor():
 def run0():
     resetRobot()
     _doSoundMixerWithComplicatedArm()
+    #_doSoundMixerWithStallDetection()
     _resetBucket()
 
 #runWithTiming(run0, "Sound Mixer")

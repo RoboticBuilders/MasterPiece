@@ -124,7 +124,9 @@ def augmentedRealitynew():
     # then backoff till the white line and turn back to our heading.
     angle = -30
     turnToAngle(targetAngle = angle, speed = 1000)
-    gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 500, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 8, speed = 500, targetAngle = angle)
+
+    '''
     wait(150)
     # Note that this is a white line catch.
     if (gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 300, targetAngle = angle, 
@@ -132,6 +134,7 @@ def augmentedRealitynew():
         print("run7: augmentedReality: Did not find whiteline infront of augmented reality when backing up at the end.")
    
     turnToAngle(targetAngle = -90, speed = 500)   
+    '''
     
 def expertDropsnew():
     # Travel a total of 100cm till the Sound mixer. 

@@ -107,6 +107,17 @@ def goHomeWithCurve():
                                               useSlowerAccelerationForBackward = False)
 
 
+def goHomeBetweenChickenAndAugmentedReality():
+    # Backoff from the Immersive experience. Turn towards home2 and then go home.
+    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=800, targetAngle=270, backward=True)
+    angle = 0
+    turnToAngle(targetAngle = angle, speed = 300)
+    gyroStraightWithDriveWithAccurateDistance(distance=75, speed=1000, targetAngle=angle)
+
+    angle = 60
+    turnToAngle(targetAngle = angle, speed = 300)
+    gyroStraightWithDriveWithAccurateDistance(distance=50, speed=1000, targetAngle=angle)
+
 def goHomeWithCurveAccurate():
     # Backoff from the Immersive experience.
     gyroStraightWithDriveWithAccurateDistance(distance=28, speed=800, targetAngle=270, backward=True)

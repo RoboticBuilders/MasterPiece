@@ -16,7 +16,7 @@ def run6():
 
         # drive forward before picking up arm
         #gyroStraightWithDrive(distanceInCm = 22, speed = 500, targetAngle = angle)
-        gyroStraightWithDriveWithAccurateDistance(distance = 30, speed = 500, backward = False, targetAngle = 0)
+        gyroStraightWithDriveWithAccurateDistance(distance = 28, speed = 500, backward = False, targetAngle = 0)
 
         # Pickup the expert
         run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150)
