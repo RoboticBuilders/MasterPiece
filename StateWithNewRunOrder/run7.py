@@ -265,13 +265,11 @@ def testSliderOpenAndClose():
     #    wait(1000)
     #    PullInTheAugmentedRealityLever()
 
-def run7ayaantable():
+def run7():
     resetRobot()
-    #testCrazyMovement()
-    #hub.imu.reset_heading(45)
     musicconcert()
     augmentedRealitynew()
-    goToRightHome()
+    # goToRightHome()
     #dropexpertsFromlefthome()
     #expertDropsnew()
 

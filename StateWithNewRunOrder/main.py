@@ -1,4 +1,5 @@
 from Utilities import *
+from goRightHometoLeftHome import *
 from run0 import *
 from run1 import *
 from run2 import *
@@ -51,8 +52,8 @@ def _maindriver():
             # Go from right home to left home
             runWithTiming(dohome2home, "dohome2home")
         if counter == 2:
-            # SoundMixer
-            runWithTiming(run0, "Sound mixer")
+            # lever
+            runWithTiming(run2,"lever")
         if counter == 3:
             # Theater scene change run
             runWithTiming(run3,"SceneChange")
@@ -60,8 +61,8 @@ def _maindriver():
             # Immersive experience run
             runWithTiming(run1,"3d cinema")
         if counter == 5:
-            # Rolling camera run 
-            runWithTiming(run2,"lever")
+            # sound mixer
+            runWithTiming(run0, "Sound mixer")
         if counter == 6:
             # Craft creator & Virtual reality run
             runWithTiming(run4,"run4")
@@ -81,6 +82,6 @@ def _maindriver():
 
 
 initializeAndWaitForRobotReady()
-#_maindriver()
+_maindriver()
 
 #testHsv()

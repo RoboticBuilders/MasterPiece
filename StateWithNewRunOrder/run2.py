@@ -6,7 +6,7 @@ def _pushRollingCameraLever():
     angle = 0
     right_med_motor.run_angle(speed=2000, rotation_angle=-600)
     
-    right_med_motor.run_angle(speed=2000, rotation_angle=600)
+    #right_med_motor.run_angle(speed=2000, rotation_angle=600)
 
 def run2():
     _pushRollingCameraLever()

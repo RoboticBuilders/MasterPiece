@@ -3,9 +3,11 @@ from Utilities import *
 TURN_SPEED = 300
 
 def _doSoundMixerWithComplicatedArm():
+    # This was 35 and 30
     angle = 0
-    gyroStraightWithDriveWithAccurateDistance(distance = 35, speed = 800, targetAngle = angle, stop = Stop.COAST)
-    gyroStraightWithDriveWithAccurateDistance(distance = 30, speed = 400, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 32, speed = 800, targetAngle = angle, stop = Stop.COAST)
+    wait(1000)
+    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 150, targetAngle = angle)
 
     # Turn the motor to remove the lock for the left sound mixer.
     # Do this in parallel with the expert pick up.
@@ -45,5 +47,6 @@ def run0():
     _doSoundMixerWithComplicatedArm()
     _resetBucket()
 
-#runWithTiming(run0, "Sound Mixer")
+waitForButtonPress()
+runWithTiming(run0, "Sound Mixer")
 #_resetBucket()

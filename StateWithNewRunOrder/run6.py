@@ -6,6 +6,9 @@ def run6():
         left_med_motor.run_angle(-500, 950)
     
     def _pickupExpert():
+        right_med_motor.run_target(300, 150, Stop.HOLD, True)
+        right_med_motor.reset_angle(0)
+
         angle = 0
 
         # Bring down attachment.

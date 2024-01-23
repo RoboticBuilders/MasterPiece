@@ -142,7 +142,7 @@ def testBucket():
         right_med_motor.run_angle(speed=2000, rotation_angle=800)
         wait(2000)
 
-def run4ayaantable():
+def run4():
     resetRobot()
     rollingCamera()
     museumwithpedestaloutside()
