@@ -1,0 +1,22 @@
+
+What can we use this timings for? We could calculate the remaining time we need based 
+on the turns and the straights that we need to go. This means at any point in Time
+we know how much time is left in the run and how much time we have. We could choose to
+speed up and give up on accuracy of skip some missions automatically.
+
+--------------Timings for Turn----------------
+Turn for 55d at speed 500 -> Time 900
+
+--------------Timings for Drive Straight----------------
+gyroStraightWithDriveWithAccurateDistance speed = 2000, Angle = 10d -> Time = 1370
+
+--------------Timings for Bucket----------------
+For 800d turn to bring bucket down from up position.
+Speed = 2000 -> Time 1332 
+Speed = 1000 -> Time 1338 
+
+--------------Timings for Light show----------------
+Currently the lightshow is set to run at 1000 speed. In the speed testing for lightshow the times taken were:
+speed 600 - time->4.8sec
+speed 800 - time-> 3.8 sec
+speed 1000 - time ->3.5 sec
