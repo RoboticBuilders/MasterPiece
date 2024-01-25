@@ -4,3 +4,5 @@ certifi==2022.12.7
 opencv-python==4.8.0.76
 Pillow==9.4.0
 python-utils==3.7.0
+transformers @ git+https://github.com/huggingface/transformers.git
+torch==2.0.1

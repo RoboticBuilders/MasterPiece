@@ -10,7 +10,7 @@ from stl import mesh
 ## Parameters
 
 # Point to the image that you want to process
-imgName = 'innovation_project/ImageProcessingUtils/Images/Starry_Night.jpg'
+imgName = 'out/Starry_Night/Original.jpeg'
 
 # Set to true to auto resize the image to target pixel count (default 75000). Else, will use the resolution of the original imag
 autoResize = True
@@ -53,7 +53,7 @@ aspect_ratio = img.shape[0] / img.shape[1]
 
 # Figure out the scale ratio of the target image given the target pixel count.
 # This will give you a target image of 75000 pixels without distorting it.
-yp = math.sqrt(75000 / aspect_ratio)
+yp = math.sqrt(targetPixelCount / aspect_ratio)
 scale_ratio = yp / img.shape[1]
 
 ### Functions
@@ -64,9 +64,10 @@ scale_ratio = yp / img.shape[1]
 #   img: The image to process
 #   t1: The first threshold value
 #   t2: The second threshold value
+#   fileName: The name of the output file
 # Returns: An image with edges detected
 #
-def Canny(img, t1, t2):
+def Canny(img, t1, t2, fileName):
 
     # Convert to grayscale
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -81,9 +82,8 @@ def Canny(img, t1, t2):
     final = cv2.merge([edges, edges, edges])    
 
     # Save the image
-    fileName = os.path.basename(imgName).split('/')[-1]
-    p1 = os.path.join(folder, "Canny.jpeg")
-    cv2.imwrite(p1, final)
+
+    cv2.imwrite(fileName, final)
 
     return final
 
@@ -117,8 +117,13 @@ def Resize(img, scale_ratio):
 # Returns: An image with the depth map
 def DepthMap(image):
 
-    # Setup the model
+    # Setup the Dense Prediction Trasnformer (DPT) model for monocular depth estimation
+    # This code is inspired by the sample the sample at https://huggingface.co/Intel/dpt-large
+
+    # Setup feature extractor for preprocessing
     feature_extractor = DPTFeatureExtractor.from_pretrained("Intel/dpt-large")
+
+    # Setup our depth estimation model
     model = DPTForDepthEstimation.from_pretrained("Intel/dpt-large")
 
     # Get the pixel values
@@ -313,10 +318,20 @@ d = os.path.join(folder, "Resized.jpeg")
 cv2.imwrite(d, resized)
 
 # Generate the edge map
-edgeImg = Canny(resized, threshold1, threshold2)
+cannyFile = os.path.join(folder, "Canny.jpeg")
+canny = Canny(resized, threshold1, threshold2, cannyFile)
 
 # Generate the depth map
 depthImg = DepthMap(pil_image)
+
+cod = os.path.join(folder, "Canny_on_depth.jpeg")
+cannyOnDepth = Canny(depthImg, 0, 200, cod)
+
+# Take out canny edges already accounted for in the depth map
+edgeImg = cv2.addWeighted(canny, 1, cannyOnDepth, -1, 0)
+
+cc = os.path.join(folder, "Canny_corrected.jpeg")
+cv2.imwrite(cc, edgeImg)
 
 # Combine the depth map and edge map. Use the edgeRatio variable to control the amount of edge details to show.
 # Say the edgeRatio is 0.1, then the final image will be 90% depth map and 10% edge map.
