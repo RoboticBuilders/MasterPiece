@@ -10,7 +10,7 @@ from stl import mesh
 ## Parameters
 
 # Point to the image that you want to process
-imgName = 'innovation_project/ImageProcessingUtils/Images/Starry_Night.jpg'
+imgName = 'out/Starry_Night/Original.jpeg'
 
 # Set to true to auto resize the image to target pixel count (default 75000). Else, will use the resolution of the original imag
 autoResize = True
