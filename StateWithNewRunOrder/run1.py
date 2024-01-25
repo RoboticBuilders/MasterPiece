@@ -2,12 +2,11 @@ from Utilities import *
 
 def goRightHometoLeft():
     angle = 10
-    gyroStraightWithDriveWithAccurateDistance(distance = 75, speed = 500, backward = False, targetAngle = angle,stop=Stop.COAST,slowDown=False)
+    gyroStraightWithDriveWithAccurateDistance(distance = 60, speed = 1000, backward = False, targetAngle = angle)
     # Pickup the expert
     
-    angle = -20
-   
-    gyroStraightWithDriveWithAccurateDistance(distance = 90, speed = 1000, backward = False, targetAngle = angle)
+    angle = -2
+    gyroStraightWithDriveWithAccurateDistance(distance = 110, speed = 1000, backward = False, targetAngle = angle,stop=Stop.COAST,slowDown=False)
 
 
 def run1():

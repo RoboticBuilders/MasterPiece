@@ -31,7 +31,8 @@ def rollingCamera():
 def museumwithpedestaloutside():
     #Use a curve to reach in front of the immersive experience
     drive_base.curve(radius = 610, angle = -50)
-
+    # Added this to drop the bucket so pedestal doesnt move out near the expert.
+    right_med_motor.run_angle(speed=2000, rotation_angle=-200)
     gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)
        
     #wait(5000)
@@ -39,6 +40,7 @@ def museumwithpedestaloutside():
     angle = -30
     turnToAngle(targetAngle=angle,speed=600)
     # gyroStraightWithDriveWithAccurateDistance(distance=27, speed=1000, targetAngle=angle)
+    
     gyroStraightWithDriveWithAccurateDistance(distance=25, speed=1000, targetAngle=angle)
     # Drop off the expert and audience
     
@@ -46,9 +48,11 @@ def museumwithpedestaloutside():
 
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
+    
     # wait(5000)
-    #gyroStraightWithDriveWithAccurateDistance(distance=5, speed=650, targetAngle=angle)
-    right_med_motor.run_angle(speed=2000, rotation_angle=400)
+    drive_base.straight(50)
+    # Increased this from 400 to 600 as we are now bringing the bucket down to not let pedestal move
+    right_med_motor.run_angle(speed=2000, rotation_angle=600)
   
 def lightShow():
     # Now after the pedestal drop off, drive backwards towards the light show. Using drivebase.straight as its more accurate for distance
@@ -58,11 +62,13 @@ def lightShow():
     # speed 1000 - time ->3.5 sec
     
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
-    drive_base.settings(500, 500, 500, 500)
+    gyroStraightWithDriveWithAccurateDistance(distance=17, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
+    '''STALL DETECTION CODE: IMPLEMENT IF IT WORKS / MUCH CLEANER'''
+    drive_base.settings(300, 500, 300, 500)
     drive_base.straight(distance = -500, wait = False)
     stall_detect.load(max_load = 120, debug = True)
-    # gyroStraightWithDriveWithAccurateDistance(distance=8, speed=500, targetAngle=angle,backward=True, wait = False)
+    '''DRIVE FOR TIME CODE: IMPLEMENT IF STALL DETECT DOESN'T WORK'''
+    # driveForTime(500, stopAtEnd=True, speed=-500, turnRate=0)
     wait(100)
     # Now we are at the light show, spin the lightshow from the back spinny arm.
     orgSpeed,orgAccel,orgTorque = left_med_motor.control.limits()
