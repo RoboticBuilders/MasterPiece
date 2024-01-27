@@ -16,6 +16,8 @@ def musicconcert():
                                     tillBlackLine = True,
                                     color_sensor = right_color) == False):
         print("Run7: musicconcertnew: Missed black line catch infront of music concert")
+
+    wait(5000)
     
     # Now turn towards the wall to flush
     angle = 0
@@ -24,6 +26,7 @@ def musicconcert():
     # Now drop off the experts
     gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=0, speed=1000, stop=Stop.COAST)
     gyroStraightWithDriveWithAccurateDistance(distance=8, targetAngle=0, speed=300)
+    driveForTime(timeInMS = 500, stopAtEnd = True, speed = 300, turnRate = 0)
 
     # Now dropoff is done, lets do music concert. Backoff first at an angle to ensure
     # the experts are in.
