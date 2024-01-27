@@ -10,7 +10,7 @@ from stl import mesh
 ## Parameters
 
 # Point to the image that you want to process
-imgName = 'out/Starry_Night/Original.jpeg'
+imgName = 'innovation_project/Generate3DModel/Images/Great_Wave.jpeg'
 
 # Set to true to auto resize the image to target pixel count (default 75000). Else, will use the resolution of the original imag
 autoResize = True
@@ -28,7 +28,13 @@ threshold2 = 240
 gaussianBlur = 3
 
 # The pixel count of the image that you want to generate. Not typical to change this. 75000 is a good value for the BambuLab P1S 3D printer.
-targetPixelCount = 75000
+targetPixelCount = 300000
+
+# Set to true to create a composite image with 4 tiles of the original image.
+createComposite = False
+
+# Set the maximum depth of the model in mm. Default is 5mm.
+maxDepth = 5
 
 ## Processing
 
@@ -190,16 +196,17 @@ def SaveAsThermal(inputFileName, outFileName):
 # Save the depth & edge map as a 3D model that can be printed. 
 #
 # Parameters:
-#   depthImg: Image with he depth map
-#   edgeImg: Image with the edge details
+#   img: Image with he depth information
+#   modelFileame: The name to use in the output file. The file will be saved as Model.<modelFileame>.stl
+#   max: The maximum depth value in the image
+#   min: The minimum depth value in the image
+#   halfPixelWidth: The half-width of a pixel in mm. Default is 0.33mm.
 #   maxHeight: The maximum height of the model. Default is 5mm.
 #   invertHeight: Set to true to invert the height of the model. If true, the farthest parts are higher than the lower ones. Default is false.
 # 
-def SaveAsStl(img, maxHeight = 5, invertHeight = False):
+def SaveAsStl(img, modelFileame, max, min, halfPixelWidth = 0.33, maxHeight = 5, invertHeight = False):
 
     # Normalize the depth
-    max = np.max(img)
-    min = np.min(img)
     delta = max - min
 
     # Some initializations
@@ -213,9 +220,6 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
 
     # Collect faces from all pixels here. We will use this to create the mesh.
     allFaces = np.array([[0,0,0]])
-
-    # The width of each pixel in mm
-    halfPixelWidth = 0.33
 
     # The minimum thickness of the model in mm. This is to prevent the model from being too thin.
     minThickness = 0.5
@@ -258,7 +262,6 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
             
             offset = verticesPerCube * i + verticesPerCube * rows * j
             
-                   
             # STL objects are composed of triangles. A cube which has 6 faces is made of 12 triangles.
             # Define the 12 triangles composing the cube. We got the vertices offset from a online sample.
             faces = np.array([\
@@ -294,12 +297,12 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
     cube.rotate([1, 0, 0], math.radians(180))
 
     # Save the mesh to a STL file
-    p1 = os.path.join(folder, "Model.stl")
+    p1 = os.path.join(folder, "Model." + modelFileame + ".stl")
     
     if invertHeight:
-        p1 = os.path.join(folder, "Model.inverted.stl")
+        p1 = os.path.join(folder, "Model." + modelFileame + ".inverted.stl")
     else:
-        p1 = os.path.join(folder, 'Model.stl')
+        p1 = os.path.join(folder, "Model." + modelFileame + '.stl')
 
     cube.save(p1)
     print('Saved: ', p1)
@@ -345,5 +348,36 @@ cv2.imwrite(p2, img)
 # Also save as a thermal image because it looks cool 
 SaveAsThermal(p2, "Final_Thermal.jpeg")
 
-# Save the depth & edge map as a 3D model that can be printed.
-SaveAsStl(img, maxHeight = 5)
+max = np.max(img)
+min = np.min(img)
+
+if(createComposite == False):
+    # Save the depth & edge map as a 3D model that can be printed.
+    SaveAsStl(img, "Full", max, min, maxHeight = maxDepth)
+else:
+    (h, w) = img.shape[:2]
+
+    (cX, cY) = (w // 2, h // 2)
+
+    topLeft = img[0:cY, 0:cX]
+    topRight = img[0:cY, cX:w]
+    bottomLeft = img[cY:h, 0:cX]
+    bottomRight = img[cY:h, cX:w]
+
+    p2 = os.path.join(folder, "topLeft.jpeg")
+    cv2.imwrite(p2, topLeft)
+
+    p2 = os.path.join(folder, "topRight.jpeg")
+    cv2.imwrite(p2, topRight)
+
+    p2 = os.path.join(folder, "bottomLeft.jpeg")
+    cv2.imwrite(p2, bottomLeft)
+
+    p2 = os.path.join(folder, "bottomRight.jpeg")
+    cv2.imwrite(p2, bottomRight)
+
+    # Save the depth & edge map as a 3D model that can be printed.
+    SaveAsStl(topLeft, "Topleft", max, min, maxHeight = maxDepth)
+    SaveAsStl(topRight, "TopRight", max, min, maxHeight = maxDepth)
+    SaveAsStl(bottomLeft, "BottomLeft", max, min, maxHeight = maxDepth)
+    SaveAsStl(bottomRight, "BottomRight", max, min, maxHeight = maxDepth)
