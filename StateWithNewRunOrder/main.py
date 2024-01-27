@@ -7,7 +7,7 @@ from run4 import *
 from run5 import *
 from run6 import *
 from run7 import *
-from run8_without_slider import *
+from run8 import *
 
 # ************** IMPORTANT ********************************
 # The right bucket design should be such that it is 4.5 centimeters outside from the bucket wall.
@@ -63,7 +63,7 @@ def _maindriver():
         if counter == 7:
             runWithTiming(run7, "run7")
         if counter == 8:
-            runWithTiming(mainRun8, "run8")
+            runWithTiming(run8, "run8")
         
         
         counter = counter + 1

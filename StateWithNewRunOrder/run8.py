@@ -30,6 +30,7 @@ def musicconcert(userV2Flippy = False):
                                     color_sensor = right_color) == False):
         print("Run7: musicconcertnew: Missed black line catch infront of music concert")
    
+    drive_base.straight(20)
 
     '''
     angle = -20
@@ -103,9 +104,13 @@ def augmentedRealitynew(userV2Flippy = False):
 
     # go to Augmented Reality
     gyroStraightWithDriveWithAccurateDistance(distance = 24, speed =500, targetAngle = angle,stop=Stop.COAST) 
+    gyroStraightWithDriveWithAccurateDistance(distance=14,speed=300,targetAngle=angle)
+    '''
     if (gyroStraightWithDriveWithAccurateDistance(distance = 14, speed = 300, targetAngle = angle, 
                                                   backward = False, tillWhiteLine = True, color_sensor = left_color) == False):
         print("run8: augmentedReality: Did not find whiteline infront of augmented reality when moving forward towardsit before pulling lever.")
+    '''
+    
     #After cathing the white line move a little forward so the flippy doesnt snag against the mission model
     drive_base.straight(60)
     # Now open the slider to bring in the augmented reality.
@@ -298,5 +303,5 @@ def mainRun8():
 
     print("DONE")
 
-#waitForButtonPress()
-#mainRun8()
+waitForButtonPress()
+mainRun8()

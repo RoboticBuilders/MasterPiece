@@ -271,5 +271,5 @@ def mainRun8():
 
     print("DONE")
 
-waitForButtonPress()
-mainRun8()
+# waitForButtonPress()
+# mainRun8()
