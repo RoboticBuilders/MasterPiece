@@ -2,10 +2,10 @@ from pybricks.tools import wait, StopWatch
 from Utilities import *
 
 def openFlippyV2():
-    left_med_motor.run_angle(2000, 1800)
+    left_med_motor.run_angle(speed = 2000, rotation_angle = 2400)
 
 def closeFlippyV2withoutWait():
-     left_med_motor.run_angle(speed = -2000, rotation_angle = 1800, wait = False)
+     left_med_motor.run_angle(speed = -2000, rotation_angle = 2400, wait = False)
 
 def openFlippy():
     left_med_motor.run_angle(-2000, 1800)
@@ -15,10 +15,7 @@ def closeFlippywithoutWait():
 
 
 def musicconcert(userV2Flippy = False):
-
     # Changed 1/26/2024: In order to fix the incorrect line catches now going straight then turning to catch the correct line
-
-   
     angle = 0
     # First go forward at an angle to catch the black spur line in front
     # of the music concernt.
@@ -29,21 +26,12 @@ def musicconcert(userV2Flippy = False):
                                     tillBlackLine = True,
                                     color_sensor = right_color) == False):
         print("Run7: musicconcertnew: Missed black line catch infront of music concert")
-   
+    gyroStraightWithDriveWithAccurateDistance(distance=6, targetAngle=angle, speed=200)
 
-    '''
-    angle = -20
-    # First go forward at an angle to catch the black spur line in front
-    # of the music concernt.
-    gyroStraightWithDriveWithAccurateDistance(distance=55, targetAngle=angle, speed=1000, stop=Stop.COAST)
-    if (gyroStraightWithDriveWithAccurateDistance(distance=15, targetAngle = angle, speed=1000, 
-                                    tillBlackLine = True,
-                                    color_sensor = right_color) == False):
-        print("Run7: musicconcertnew: Missed black line catch infront of music concert")
-   '''
     # Now turn towards the wall to flush
     angle = 0
     turnToAngle(targetAngle = angle, speed = 500)
+    
 
     # Now drop off the experts
     gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=0, speed=1000, stop=Stop.COAST)
@@ -100,45 +88,30 @@ def augmentedRealitynew(userV2Flippy = False):
     # Now drive towars the augmented reality
     angle = -90
     turnToAngle(targetAngle = angle, speed = 500)
+    gyroStraightWithDriveWithAccurateDistance(distance=35, targetAngle=angle, speed = 300)
 
-    # go to Augmented Reality
-    gyroStraightWithDriveWithAccurateDistance(distance = 24, speed =500, targetAngle = angle,stop=Stop.COAST) 
-    if (gyroStraightWithDriveWithAccurateDistance(distance = 14, speed = 300, targetAngle = angle, 
-                                                  backward = False, tillWhiteLine = True, color_sensor = left_color) == False):
-        print("run8: augmentedReality: Did not find whiteline infront of augmented reality when moving forward towardsit before pulling lever.")
-    #After cathing the white line move a little forward so the flippy doesnt snag against the mission model
-    drive_base.straight(60)
-    # Now open the slider to bring in the augmented reality.
-    openAugmentedRealitySlider()
-    #Backup to pull the lever
-    drive_base.straight(-40)
-    #closeAugmentedRealitySlider()
-    closeAugmentedRealitySliderFully()
-    #PullInTheAugmentedRealityLever()
+    # wait(augmentedRealityWaitTime)
+    angle = -45
+    turnToAngle(targetAngle=angle, oneWheelTurn=True)
 
-    
-    # Now backoff to push the lever in and turn to ensure the lever is turned
-    # We backoff at an angle, because the augmented reality opens 
-    # and we want to make sure we dont hit it.
-    angle = -90
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 1000, targetAngle = angle, backward = True)
-    #closeAugmentedRealitySliderCompletely()
-    # Now turn to ensure that we have pushed in the augmented reality. We turn and drive forward
-    # then backoff till the white line and turn back to our heading.
-    angle = -30
-    turnToAngle(targetAngle = angle, speed = 1000)
-    gyroStraightWithDriveWithAccurateDistance(distance = 8, speed = 500, targetAngle = angle)
+    # back up to pull Augmented Reality lever
+    gyroStraightWithDriveWithAccurateDistance(distance=3, targetAngle=angle, speed = 300)
 
-    '''
-    wait(150)
-    # Note that this is a white line catch.
-    if (gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 300, targetAngle = angle, 
-                                                  backward = True, tillWhiteLine = True, color_sensor = left_color) == False):
-        print("run7: augmentedReality: Did not find whiteline infront of augmented reality when backing up at the end.")
-   
-    turnToAngle(targetAngle = -90, speed = 500)   
-    '''
-    
+    # turn a little more and back up again to make sure the lever caught
+    angle = 25
+    turnToAngle(targetAngle=angle, oneWheelTurn=True, speed = 300)
+    gyroStraightWithDriveWithAccurateDistance(distance=10, targetAngle=angle, backward=True, speed = 300)
+
+    # go forward to fully push the lever
+    angle = 45
+    turnToAngle(targetAngle=angle,oneWheelTurn=True)
+    gyroStraightWithDriveWithAccurateDistance(distance=12, targetAngle=angle, speed = 300)
+
+    # back up from Augmented Reality
+    angle=30
+    turnToAngle(targetAngle=angle,oneWheelTurn=True, forceTurn=FORCETURN_LEFT)
+    gyroStraightWithDriveWithAccurateDistance(distance=14, targetAngle=angle, backward=True, speed = 300)
+
 def expertDropsnew():
     # Travel a total of 100cm till the Sound mixer. 
     # We travel straight first, to get past the light show, then
@@ -277,7 +250,7 @@ def testSliderOpenAndClose():
 
 def run8():
     resetRobot()
-    useFlippyV2 = False
+    useFlippyV2 = True
     musicconcert(userV2Flippy = useFlippyV2)
     augmentedRealitynew(userV2Flippy = useFlippyV2)
     # goToRightHome()
@@ -298,5 +271,5 @@ def mainRun8():
 
     print("DONE")
 
-#waitForButtonPress()
-#mainRun8()
+waitForButtonPress()
+mainRun8()

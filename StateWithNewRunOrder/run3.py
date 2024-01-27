@@ -7,9 +7,9 @@ def goToExpertDropOffFromHomeFaster():
     right_med_motor.run_angle(speed=2000, rotation_angle = -800, wait = True)
    
     # Drive towards the scene change, catch the line.
-    angle = 25
+    angle = 23
     gyroStraightWithDriveWithAccurateDistance(distance=50, speed=500, targetAngle=angle, gradualAcceleration = False,
-                                              backward=False, stop=Stop.COAST, slowDown = False)
+                                              backward=False)
 
     # Drive till the black line. Notice the tillBlackLine = True.                                              
     if(gyroStraightWithDriveWithAccurateDistance(distance=15, speed=500, targetAngle=angle,

@@ -75,7 +75,7 @@ def lightShow():
     left_med_motor.control.limits(speed = orgSpeed,acceleration = orgAccel,torque = 1000)
     left_med_motor.run_angle(speed=1000, rotation_angle=-2500, wait = True)
     left_med_motor.control.limits(speed = orgSpeed, acceleration = orgAccel, torque = orgTorque)
-
+  
 def immersiveExperience():
     # Now move ahead from the light show
     angle=-90
@@ -106,6 +106,7 @@ def goHomeWithCurve():
     gyroStraightWithDriveWithAccurateDistance(distance=23, speed=1000, targetAngle=angle, 
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False, stop = Stop.COAST)
+    
     
     angle = 180
     gyroStraightWithDriveWithAccurateDistance(distance=20, speed=1000, targetAngle=angle, 
