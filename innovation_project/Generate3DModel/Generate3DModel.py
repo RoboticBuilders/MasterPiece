@@ -355,6 +355,7 @@ if(createComposite == False):
     # Save the depth & edge map as a 3D model that can be printed.
     SaveAsStl(img, "Full", max, min, maxHeight = maxDepth)
 else:
+    # Save 4 composite models instead of one.
     (h, w) = img.shape[:2]
 
     (cX, cY) = (w // 2, h // 2)
@@ -364,6 +365,7 @@ else:
     bottomLeft = img[cY:h, 0:cX]
     bottomRight = img[cY:h, cX:w]
 
+    # Save images
     p2 = os.path.join(folder, "topLeft.jpeg")
     cv2.imwrite(p2, topLeft)
 
