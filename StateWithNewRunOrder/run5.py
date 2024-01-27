@@ -32,7 +32,7 @@ def _doSoundMixerWithComplicatedArm():
 def _doSoundMixerWithStallDetection():
     angle = 0
     drive_base.straight(distance = 400, wait = False)
-    stall_detect.load(max_load = 150, debug = True)
+    stall_detect.load(max_load = 150, debug = False)
     gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 100, targetAngle = angle)
 
     # Turn the motor to remove the lock for the left sound mixer.
@@ -75,6 +75,7 @@ def run5():
     #_doSoundMixerWithStallDetection()
     _resetBucket()
 
-#runWithTiming(run0, "Sound Mixer")
-#_doSoundMixerWithStallDetection()
+# waitForButtonPress()
+# runWithTiming(run5, "Sound Mixer")
+# _doSoundMixerWithStallDetection()
 #_resetBucket()

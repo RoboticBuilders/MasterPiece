@@ -2,6 +2,10 @@ from Utilities import *
 
 
 def goToExpertDropOffFromHomeFaster():
+
+    # First bring down the bucket.
+    right_med_motor.run_angle(speed=2000, rotation_angle = -800, wait = True)
+   
     # Drive towards the scene change, catch the line.
     angle = 25
     gyroStraightWithDriveWithAccurateDistance(distance=50, speed=500, targetAngle=angle, gradualAcceleration = False,
@@ -15,7 +19,7 @@ def goToExpertDropOffFromHomeFaster():
     # Go forward a litle more
     gyroStraightWithDrive(distanceInCm=7, targetAngle=angle, speed=300)
     # Now dropoff experts...
-    right_med_motor.run_angle(speed=2000, rotation_angle = 800,wait=False)
+    right_med_motor.run_angle(speed=2000, rotation_angle = 800,wait=True)
 
 
 def _doexpertdropoff():
@@ -28,7 +32,9 @@ def _doSceneChange():
     angle = 25
     # Backup after expert dropoff
     #gyroStraightWithDriveWithAccurateDistance(distance=5, speed=500, targetAngle=angle,backward=True)
-    drive_base.straight(distance=-70)
+    #was -70 changed to -100 due to making wait true for bucket raising after experts dropoff
+    #Changed 1/26/2024 - increased baclup from 9 to 10
+    drive_base.straight(distance=-100)
 
 
     # Start bringing down the bucket when we move forward to push the scene.
@@ -44,16 +50,16 @@ def _doSceneChange():
 def goHome():
     # Go home with curve
     drive_base.settings(1000, 1000, 1000, 1000)
-    drive_base.curve(radius = -155, angle = -45, then=Stop.COAST)
+    #Change 1/24/2024: radius change from -155
+    drive_base.curve(radius = -130, angle = -45, then=Stop.COAST)
     #Radius was -650 and angle was -50
-    drive_base.curve(radius = -740, angle = -55)
+    drive_base.curve(radius = -720, angle = -55)
 
     # Raise the arm
     right_med_motor.run_angle(speed=2000, rotation_angle = 800, wait = False)
 
 def run3():
     resetRobot()
-
     goToExpertDropOffFromHomeFaster()
     #_doexpertdropoff()
     _doSceneChange()

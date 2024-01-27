@@ -57,6 +57,7 @@ WHEEL_RADIUS_CM = 4.4
 
 GLOBAL_LEVEL = 1
 
+
 def resetRobot():
     robot.settings(straight_speed=DEFAULT_SPEED, straight_acceleration=DEFAULT_ACCELERATION, turn_rate=DEFAULT_TURN_RATE, turn_acceleration=DEFAULT_TURN_ACCEL)
     robot.reset()
@@ -80,13 +81,13 @@ def initializeAndWaitForRobotReady():
     print("voltage: " + str(hub.battery.voltage()))
     hub.speaker.beep()
 
-def runWithTiming(function,name):
+def runWithTiming(function, name):
     sw = StopWatch()
     sw.resume()
     startTime = sw.time()
     function()
     endTime = sw.time()
-    print(name + " : " + str(endTime - startTime))
+    print("RunTime : " + name + " : " + str(endTime - startTime))
     sw.pause()
     return endTime - startTime
 

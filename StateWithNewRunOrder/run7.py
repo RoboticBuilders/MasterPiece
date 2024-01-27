@@ -7,7 +7,7 @@ def run7():
         gyroStraightWithDrive(distanceInCm = 27, speed = 300, targetAngle = angle)
         gyroStraightWithDrive(distanceInCm = 5, speed = 100, targetAngle = angle)
         
-        angle = -4
+        angle = -6
         # Drive towards the dropoff at movie set
         gyroStraightWithDrive(distanceInCm = 30, speed = 800, targetAngle = angle)
 
@@ -26,3 +26,4 @@ def run7():
 
     resetRobot()
     _dorun7()
+

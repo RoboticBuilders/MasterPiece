@@ -16,6 +16,8 @@ def musicconcert():
                                     tillBlackLine = True,
                                     color_sensor = right_color) == False):
         print("Run7: musicconcertnew: Missed black line catch infront of music concert")
+
+    wait(5000)
     
     # Now turn towards the wall to flush
     angle = 0
@@ -24,6 +26,7 @@ def musicconcert():
     # Now drop off the experts
     gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=0, speed=1000, stop=Stop.COAST)
     gyroStraightWithDriveWithAccurateDistance(distance=8, targetAngle=0, speed=300)
+    driveForTime(timeInMS = 500, stopAtEnd = True, speed = 300, turnRate = 0)
 
     # Now dropoff is done, lets do music concert. Backoff first at an angle to ensure
     # the experts are in.
@@ -36,64 +39,34 @@ def musicconcert():
     wait(100)
 
     # Push the HP and align against it, and turn circular motion arm to do sounds lever
-    gyroStraightWithDriveWithAccurateDistance(distance=27, targetAngle=angle, speed=300)
+    gyroStraightWithDriveWithAccurateDistance(distance=13, targetAngle=angle, speed=300)
+    driveForTime(timeInMS = 750, stopAtEnd=True, speed=200, turnRate=0)
     #driveForTime(timeInMS=500, speed=200)
 
     # Wait for a little and run Flippy to turn the speakers
     wait(100)
     openFlippy()
+    drive_base.reset()
     wait(100)
+    hub.imu.reset_heading(angle)
     
-def augmentedReality():
-    # Back up from music concert and turn towards Augmented Reality
-    angle = 45
-    if (gyroStraightWithDriveWithAccurateDistance(distance=15, targetAngle = angle, speed=300, 
-                                    tillBlackLine = True, backward=True,
-                                    color_sensor = left_color) == False):
-        print("Missed black line catch when backing from music concert")
-
-    # Bring up flippy.
-    clsoeFlippywithoutWait()
-    gyroStraightWithDriveWithAccurateDistance(distance = 3, speed = 200, targetAngle = angle, backward=True)
-
-    # Now drive towars the augmented reality
-    angle = -90
-    turnToAngle(targetAngle = angle, speed = 500)
-
-    # go to Augmented Reality
-    gyroStraightWithDriveWithAccurateDistance(distance = 36, speed =300, targetAngle = angle) 
-    # Now open the slider to bring in the augmented reality.
-    PullInTheAugmentedRealityLever()
-
-    # Now backoff to push the lever in and turn to ensure the lever is turned
-    # We backoff at an angle, because the augmented reality opens 
-    # and we want to make sure we dont hit it.
-    angle = -88
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 1000, targetAngle = angle, backward = True)
-
-    # Now turn to ensure that we have pushed in the augmented reality. We turn and drive forward
-    # then backoff till the white line and turn back to our heading.
-    angle = -30
-    turnToAngle(targetAngle = angle, speed = 1000)
-    gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 500, targetAngle = angle)
-    wait(150)
-    # Note that this is a white line catch.
-    if (gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 300, targetAngle = angle, 
-                                                  backward = True, tillWhiteLine = True, color_sensor = left_color) == False):
-        print("run7: augmentedReality: Did not find whiteline infront of augmented reality when backing up at the end.")
-   
-    turnToAngle(targetAngle = -90, speed = 750)
-
+    
+    
 def augmentedRealitynew():
     # Back up from music concert and turn towards Augmented Reality
+    
     angle = 45
-    if (gyroStraightWithDriveWithAccurateDistance(distance=15, targetAngle = angle, speed=300, 
+    
+    drive_base.straight(-70)
+    if (gyroStraightWithDriveWithAccurateDistance(distance=8, targetAngle = angle, speed=300, 
                                     tillBlackLine = True, backward=True,
                                     color_sensor = left_color) == False):
         print("Missed black line catch when backing from music concert")
+    #turnToAngle(targetAngle = angle, speed = 400)
+    wait(100)
     closeFlippywithoutWait()
-    gyroStraightWithDriveWithAccurateDistance(distance = 3, speed = 200, targetAngle = angle, backward=True)
-
+    
+    gyroStraightWithDriveWithAccurateDistance(distance = 6, speed = 200, targetAngle = angle, backward=True)
 
     # Now drive towars the augmented reality
     angle = -90
@@ -103,23 +76,24 @@ def augmentedRealitynew():
     gyroStraightWithDriveWithAccurateDistance(distance = 24, speed =500, targetAngle = angle,stop=Stop.COAST) 
     if (gyroStraightWithDriveWithAccurateDistance(distance = 14, speed = 300, targetAngle = angle, 
                                                   backward = False, tillWhiteLine = True, color_sensor = left_color) == False):
-        print("run7: augmentedReality: Did not find whiteline infront of augmented reality when moving forward towardsit before pulling lever.")
+        print("run8: augmentedReality: Did not find whiteline infront of augmented reality when moving forward towardsit before pulling lever.")
     #After cathing the white line move a little forward so the flippy doesnt snag against the mission model
     drive_base.straight(60)
     # Now open the slider to bring in the augmented reality.
     openAugmentedRealitySlider()
     #Backup to pull the lever
-    drive_base.straight(-50)
-    closeAugmentedRealitySlider()
+    drive_base.straight(-40)
+    #closeAugmentedRealitySlider()
+    closeAugmentedRealitySliderFully()
     #PullInTheAugmentedRealityLever()
 
     
     # Now backoff to push the lever in and turn to ensure the lever is turned
     # We backoff at an angle, because the augmented reality opens 
     # and we want to make sure we dont hit it.
-    angle = -85
+    angle = -90
     gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 1000, targetAngle = angle, backward = True)
-    closeAugmentedRealitySliderCompletely()
+    #closeAugmentedRealitySliderCompletely()
     # Now turn to ensure that we have pushed in the augmented reality. We turn and drive forward
     # then backoff till the white line and turn back to our heading.
     angle = -30
@@ -232,6 +206,10 @@ def closeAugmentedRealitySliderCompletely():
     # Close slider to open the augmented reality.
     right_med_motor.run_angle(speed = 400, rotation_angle = 50)
 
+def closeAugmentedRealitySliderFully():
+    # Close slider to open the augmented reality.
+    right_med_motor.run_angle(speed = 400, rotation_angle = 492)
+
 def PullInTheAugmentedRealityLever():
     # Now open the slider to bring in the augmented reality.
     #Changed from 550 to 540 since it was stalling sometimes
@@ -290,3 +268,5 @@ def mainRun8():
 
     print("DONE")
 
+#waitForButtonPress()
+#mainRun8()
