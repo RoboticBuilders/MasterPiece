@@ -18,10 +18,17 @@ def run7():
         # Backoff from the movie set to drop off the expert and orange 
         # audience. 
         gyroStraightWithDrive(distanceInCm = 65, speed = 1000, targetAngle = angle, backward=True)
-        
+
+    def _goHomeAfterRollingCameraWithCurve():
+        angle = -8
+        gyroStraightWithDrive(distanceInCm = 20, speed = 1000, backward = True, targetAngle = angle, slowDown = False)
+        drive_base.settings(1000, 1000, 1000, 1000)
+        #drive_base.curve(radius = -1750, angle = -20)
+        drive_base.curve(radius = -300, angle = -80)
+
     def _dorun7():
         _doRollingCameraAndDropOffAtMovieSet()
-        _goHomeAfterRollingCamera()
+        _goHomeAfterRollingCameraWithCurve()
         #_resetAttachmentForNextRun()
 
     resetRobot()
