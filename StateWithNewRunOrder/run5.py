@@ -8,8 +8,8 @@ def _doSoundMixerWithComplicatedArm():
     # gyroStraightWithDriveWithAccurateDistance(distance = 32, speed = 800, targetAngle = angle, stop = Stop.COAST)
     # gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 150, targetAngle = angle)
     drive_base.straight(distance = 450, wait = False)
-    # stall_detect.avg_load(max_load_change = 1, min_stopping_condition = 30, avg_length = 15, debug = False)
-    stall_detect.load(max_load = 190, debug = True)
+    stall_detect.avg_load(max_load_change = 1, min_stopping_condition = 30, avg_length = 15, debug = False)
+    # stall_detect.load(max_load = 150, debug = True)
 
     # Turn the right motor to pick up the expert
     right_med_motor.run_angle(speed=2000, rotation_angle=-800)
