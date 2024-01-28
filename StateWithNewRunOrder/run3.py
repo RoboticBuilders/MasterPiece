@@ -31,11 +31,7 @@ def _doexpertdropoff():
 def _doSceneChange():
     angle = 25
     # Backup after expert dropoff
-    #gyroStraightWithDriveWithAccurateDistance(distance=5, speed=500, targetAngle=angle,backward=True)
-    #was -70 changed to -100 due to making wait true for bucket raising after experts dropoff
-    #Changed 1/26/2024 - increased baclup from 9 to 10
-    drive_base.straight(distance=-100)
-
+    drive_base.straight(distance=-80)
 
     # Start bringing down the bucket when we move forward to push the scene.
     angle = -45
