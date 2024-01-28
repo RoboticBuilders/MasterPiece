@@ -66,7 +66,7 @@ def lightShow():
     '''STALL DETECTION CODE: IMPLEMENT IF IT WORKS / MUCH CLEANER'''
     drive_base.settings(300, 500, 300, 500)
     drive_base.straight(distance = -500, wait = False)
-    stall_detect.load(max_load = 120, debug = True)
+    stall_detect.load(max_load = 120, debug = False)
     '''DRIVE FOR TIME CODE: IMPLEMENT IF STALL DETECT DOESN'T WORK'''
     # driveForTime(500, stopAtEnd=True, speed=-500, turnRate=0)
     wait(100)

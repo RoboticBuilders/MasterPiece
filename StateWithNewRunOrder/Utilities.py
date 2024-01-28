@@ -981,12 +981,10 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
 ### New stall detection by Rishabh:
 class stall_detect:
     # stalls based on load
-    def load(max_load = 100, debug = False):
+    def load(max_load = 100, min_stopping_condition = 40, debug = False):
 
         while drive_base.done() == False: # while either motor is still moving
-            left_load = abs(left_motor.load())
-            right_load = abs(right_motor.load())
-            load = int((left_load + right_load) / 2)
+            load = stall_detect.getCurrentLoad(3, minAllowedLoad = min_stopping_condition)
             if load  > max_load: # if there is extra load
                 if debug == True:
                     print("Stopping stall detection with " + str(load) + " load.") # print debug messages
@@ -1005,13 +1003,21 @@ class stall_detect:
                 continue # keep running the loop
 
     # stalls based on running average of load
-    def avg_load(max_load_change = 0.5, min_stopping_condition = 100, avg_length = 5, debug = False):
+    def avg_load(max_load_change = 0.5, min_stopping_condition = 100, avg_length = 5, min_dist = 0, debug = False):
         loadArr = []
         currLoadArr = [0, 0, 0]
 
         main_counter = 0
 
+        init_dist = left_motor.angle()
+
         while drive_base.done() == False: # while the code is still running
+
+            dist_diff = left_motor.angle() - init_dist
+
+            if convertDegToCM(dist_diff) <= min_dist:
+                continue
+
             # calculate load
             currLoad = stall_detect.getCurrentLoad(3, min_stopping_condition)
 
@@ -1061,8 +1067,7 @@ class stall_detect:
                 left_load = abs(left_motor.load())
                 right_load = abs(right_motor.load())
                 currLoad = int((left_load + right_load) / 2)
-                print("Current load {} is less than min {}".format(currLoad, minAllowedLoad))
-                continue
+                #print("Current load {} is less than min {}".format(currLoad, minAllowedLoad))
             totalLoad = totalLoad + currLoad
             wait(delayBetweenReadingsMs)
         return int(totalLoad/numObs)
