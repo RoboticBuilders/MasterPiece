@@ -62,7 +62,7 @@ SoftwareSerial BTSerial(10, 11); // RX | TX
 #ifdef  GANTRY_IMAGE
 int subStartWireAddress = 8;
 #else
-int subStartWireAddress = 20;
+int subStartWireAddress = 21;
 #endif
 
 #ifdef LCD_AVAILABLE
