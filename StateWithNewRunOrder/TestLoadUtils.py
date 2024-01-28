@@ -978,7 +978,7 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
 
 
 ### New stall detection by Rishabh:
-class stall_detect:
+class stall_detect_1:
     '''
     example use case:
     drive_base.straight(distance = -100, wait = False)
@@ -1010,45 +1010,67 @@ class stall_detect:
 
     # stalls based on running average of load
     def avg_load(max_load_change = 0.5, min_stopping_condition = 100, avg_length = 5, debug = False):
-        running_avg = []
+        loadArr = []
+        currLoadArr = [0, 0, 0]
+
+        main_counter = 0
 
         while drive_base.done() == False: # while the code is still running
             # calculate load
-            left_load = abs(left_motor.load())
-            right_load = abs(right_motor.load())
-            load = int((left_load + right_load) / 2)
+            currLoad = stall_detect_1.getCurrentLoad(3, min_stopping_condition)
 
-            # calculate average of running average
-            total_avg = 0
-            for i in range(len(running_avg)):
-                total_avg = total_avg + running_avg[i]
+            if(currLoad < min_stopping_condition):
+                continue
 
-            total_avg = total_avg / avg_length
+            if(len(loadArr)>avg_length):
+                # calculate average of running average
+                load_sum = 0
+                for i in range(len(loadArr)):
+                    load_sum = load_sum + loadArr[i]
 
-            # if the load is greater than 50% more than the running average
-            if load >= int(total_avg * (max_load_change + 1)) and len(running_avg) >= avg_length and load > min_stopping_condition:
-                # stop the motors
-                left_motor.stop()
-                right_motor.stop()
+                avgLoad = load_sum / (1+len(loadArr))
 
-                if debug == True:
-                    print("Stopping stall detection with " + str(load) + " load and " + str(int(total_avg * (max_load_change / 100))) + " running average.") # print debug messages
+                # if the load is greater than 50% more than the running average
+                if len(loadArr) > avg_length and currLoad >= int(avgLoad * (max_load_change + 1)) and currLoad > min_stopping_condition:
 
-                # exit the function
-                break
+                    # stop the motors
+                    left_motor.stop()
+                    right_motor.stop()
 
+                    if debug == True:
+                        print("Stopping stall detection with " + str(currLoad) + " load and " + str(int(avgLoad * (max_load_change + 1))) + " running average.") # print debug messages
+
+                    # exit the function
+                    break
+
+                else:
+                    if debug == True:
+                        print("Continuing stall detection with " + str(currLoad) + " load and " + str(avgLoad) + " running average.") # print debug messages
+                        print(loadArr)
+
+            if len(loadArr) > avg_length:
+                loadArr[main_counter % 5] = currLoad
             else:
-                if debug == True:
-                    print("Continuing stall detection with " + str(load) + " load and " + str(total_avg) + " running average.") # print debug messages
-                    print(running_avg)
+                loadArr.append(currLoad)
 
-            # delete the first element to make space
-            if len(running_avg) == avg_length:
-                del running_avg [0]
+            main_counter += 1
 
-            # add the new calculated load to the load list
-            running_avg.append(load) 
+            wait(10)
 
+    def getCurrentLoad(numObs, minAllowedLoad, delayBetweenReadingsMs=10):
+        totalLoad = 0
+        for i in range(0, numObs):
+            currLoad = 0
+            while(currLoad < minAllowedLoad):
+                left_load = abs(left_motor.load())
+                right_load = abs(right_motor.load())
+                currLoad = int((left_load + right_load) / 2)
+                print("Current load {} is less than min {}".format(currLoad, minAllowedLoad))
+                continue
+            totalLoad = totalLoad + currLoad
+            wait(delayBetweenReadingsMs)
+        return int(totalLoad/numObs)
+    
     # stalls based on angle change
     def angle_change(max_iterations = 5, deadzone = 10, debug = False):
         # define reading arrays
@@ -1090,6 +1112,12 @@ class stall_detect:
                 right_readings.append(right_motor.angle())
                 left_readings.append(left_motor.angle())
 
-drive_base.settings(320, 120, 120, 120)
-drive_base.straight(distance = 1000, wait = False)
-stall_detect.avg_load(max_load_change = 0.57, min_stopping_condition = 130, avg_length = 15, debug = True)
+# drive_base.settings(320, 120, 120, 120)
+# drive_base.straight(distance = 1000, wait = False)
+# stall_detect_1.avg_load(max_load_change = 1, min_stopping_condition = 30, avg_length = 15, debug = True)
+# right_med_motor.run_angle(speed=2000, rotation_angle=-800)
+# right_med_motor.run(speed=-200)
+# drive_base.straight(distance = 100, wait = False)
+# wait(1000)
+# right_med_motor.run_angle(speed=2000, rotation_angle=800, wait = False)
+# # stall_detect.load(max_load=190, debug = True)
