@@ -980,11 +980,18 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
 
 ### New stall detection by Rishabh:
 class stall_detect:
+    def getLoad():
+        left_load = abs(left_motor.load())
+        right_load = abs(right_motor.load())
+        currLoad = int((left_load + right_load) / 2)
+        return currLoad
+                
     # stalls based on load
     def load(max_load = 100, min_stopping_condition = 40, debug = False):
 
         while drive_base.done() == False: # while either motor is still moving
-            load = stall_detect.getCurrentLoad(3, minAllowedLoad = min_stopping_condition)
+            #load = stall_detect.getCurrentLoad(3, minAllowedLoad = min_stopping_condition)
+            load = stall_detect.getLoad()
             if load  > max_load: # if there is extra load
                 if debug == True:
                     print("Stopping stall detection with " + str(load) + " load.") # print debug messages
