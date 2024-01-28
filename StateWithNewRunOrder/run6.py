@@ -62,10 +62,10 @@ def lightShow():
     # speed 1000 - time ->3.5 sec
     
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=17, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=15, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
     '''STALL DETECTION CODE: IMPLEMENT IF IT WORKS / MUCH CLEANER'''
     drive_base.settings(300, 500, 300, 500)
-    drive_base.straight(distance = -500, wait = False)
+    drive_base.straight(distance = -200, wait = False)
     stall_detect.load(max_load = 120, debug = False)
     '''DRIVE FOR TIME CODE: IMPLEMENT IF STALL DETECT DOESN'T WORK'''
     # driveForTime(500, stopAtEnd=True, speed=-500, turnRate=0)
@@ -132,19 +132,15 @@ def goHomeWithCurveAccurate():
     # Curve around the light show to avoid hitting the camera and also go home.
     drive_base.curve(radius = -200, angle = 90)
   
-    # Drive backward at a slight angle to ensure that we are catching the
-    # expert when going home.
-
-    #Changed angle from 187 to 190 to make sure it always catches the expert    1/15
-    angle = 190
-    gyroStraightWithDriveWithAccurateDistance(distance=40, speed=1000, targetAngle=angle, 
+    # Drive backward at a slight angle
+    angle = 185
+    gyroStraightWithDriveWithAccurateDistance(distance=85, speed=1000, targetAngle=angle, 
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False,stop=Stop.COAST)
-    #Changed angle from 160 to 157 since changed the agle in the gyroStraight above    1/15
-    angle = 157
-    gyroStraightWithDriveWithAccurateDistance(distance=45, speed=1000, targetAngle=angle, 
-                                              slowDown = False, backward = True,
-                                              useSlowerAccelerationForBackward = False, stop = Stop.COAST)
+    #angle = 157
+    #gyroStraightWithDriveWithAccurateDistance(distance=45, speed=1000, targetAngle=angle, 
+    #                                          slowDown = False, backward = True,
+    #                                          useSlowerAccelerationForBackward = False, stop = Stop.COAST)
 
     
 def resetBucket(angle = 800):
@@ -168,11 +164,6 @@ def run6():
     immersiveExperience()
     goHomeWithCurveAccurate()
     
+waitForButtonPress()
+runWithTiming(run6, "Light Show")
 
-#testBucket()
-# lightShowTestWith8ToothGear()
-#lightShowTestWithLoad()
-#runWithTiming(lightShowTest, "Light Show")
-#resetBucket(angle = 400)
-#testAudienceDropOffAtLightShow()
-#runWithTiming(testlightShowtime, "lightshowtime")

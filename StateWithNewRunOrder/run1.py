@@ -5,8 +5,9 @@ def goRightHometoLeft():
     gyroStraightWithDriveWithAccurateDistance(distance = 60, speed = 1000, backward = False, targetAngle = angle)
 
     # Pickup the expert
-    angle = -2
-    gyroStraightWithDriveWithAccurateDistance(distance = 110, speed = 1000, backward = False, targetAngle = angle,stop=Stop.COAST,slowDown=False)
+    angle = -4
+    #Changed from 110 to 100 to make sure it doesn't hit into aligner
+    gyroStraightWithDriveWithAccurateDistance(distance = 100, speed = 1000, backward = False, targetAngle = angle,stop=Stop.COAST,slowDown=False)
 
 
 def goRightHometoLeftPickUpNoah():
@@ -31,5 +32,5 @@ def run1():
     resetRobot()
     goRightHometoLeft()
 
-# waitForButtonPress()
-# runWithTiming(goRightHometoLeftPickUpNoah,"home2home")
+#waitForButtonPress()
+#runWithTiming(run1,"run1")
