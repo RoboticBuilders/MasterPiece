@@ -6,8 +6,8 @@ def goRightHometoLeft():
 
     # Pickup the expert
     angle = -4
-    #Changed from 110 to 100 to make sure it doesn't hit into aligner
-    gyroStraightWithDriveWithAccurateDistance(distance = 100, speed = 1000, backward = False, targetAngle = angle,stop=Stop.COAST,slowDown=False)
+    #Changed from 110 to 105 to make sure it doesn't hit into aligner
+    gyroStraightWithDriveWithAccurateDistance(distance = 110, speed = 1000, backward = False, targetAngle = angle,stop=Stop.COAST,slowDown=False)
 
 
 def goRightHometoLeftPickUpNoah():

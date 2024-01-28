@@ -164,6 +164,6 @@ def run6():
     immersiveExperience()
     goHomeWithCurveAccurate()
     
-waitForButtonPress()
-runWithTiming(run6, "Light Show")
+#waitForButtonPress()
+#runWithTiming(run6, "Light Show")
 
