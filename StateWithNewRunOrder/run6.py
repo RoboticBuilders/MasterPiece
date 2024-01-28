@@ -13,7 +13,7 @@ def rollingCamera():
     # Now drive towards the rolling camera and bring down the bucket
     # We bring down the motor slightly more, to ensure that
     # the camera is caught.
-    gyroStraightWithDriveWithAccurateDistance(distance=41, speed=800, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=40, speed=800, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=-420)
     
     # Now backup and pull the camera and turn it into its place.
@@ -62,7 +62,7 @@ def lightShow():
     # speed 1000 - time ->3.5 sec
     
     angle=-90
-    gyroStraightWithDriveWithAccurateDistance(distance=15, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
     '''STALL DETECTION CODE: IMPLEMENT IF IT WORKS / MUCH CLEANER'''
     drive_base.settings(300, 500, 300, 500)
     drive_base.straight(distance = -200, wait = False)
@@ -133,7 +133,7 @@ def goHomeWithCurveAccurate():
     drive_base.curve(radius = -200, angle = 90)
   
     # Drive backward at a slight angle
-    angle = 185
+    angle = 195
     gyroStraightWithDriveWithAccurateDistance(distance=85, speed=1000, targetAngle=angle, 
                                               slowDown = False, backward = True,
                                               useSlowerAccelerationForBackward = False,stop=Stop.COAST)
