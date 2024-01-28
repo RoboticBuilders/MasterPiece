@@ -663,6 +663,7 @@ def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DO
 
 
 def driveForTime(timeInMS, stopAtEnd=True, speed=DEFAULT_SPEED, turnRate=0):
+    drive_base.use_gyro(False)
     stopwatch = StopWatch()
     start = stopwatch.time()
     end = 0
@@ -672,8 +673,8 @@ def driveForTime(timeInMS, stopAtEnd=True, speed=DEFAULT_SPEED, turnRate=0):
     
     if(stopAtEnd):
         robot.drive(speed=0, turn_rate=0)
-
-
+    
+    drive_base.use_gyro(True)
 
 # # This version does not use abs() as we were seeing some weird behavior where drive base reset takes
 # # a while, which causes the next gyroStraight call to fail if going backwards or a small distance

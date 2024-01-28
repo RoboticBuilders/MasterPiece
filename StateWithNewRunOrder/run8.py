@@ -8,10 +8,10 @@ def closeFlippyV2withoutWait():
      left_med_motor.run_angle(speed = -2000, rotation_angle = 1800, wait = False)
 
 def openFlippy():
-    left_med_motor.run_angle(rotation_angle=-2500, speed=2000)
+    left_med_motor.run_angle(rotation_angle=-3000, speed=2000)
 
 def closeFlippywithoutWait():
-     left_med_motor.run_angle(speed = 2000, rotation_angle = 2500, wait = False)
+     left_med_motor.run_angle(speed = 2000, rotation_angle = 3000, wait = False)
 
 
 def musicconcert(userV2Flippy = False):
