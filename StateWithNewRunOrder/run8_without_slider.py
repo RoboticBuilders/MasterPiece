@@ -233,6 +233,6 @@ def mainRun8():
 
     print("DONE")
 
-waitForButtonPress()
-runWithTiming(run8,"run8")
+# waitForButtonPress()
+# runWithTiming(run8,"run8")
 # openFlippyV2()

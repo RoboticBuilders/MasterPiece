@@ -7,7 +7,7 @@ from run4 import *
 from run5 import *
 from run6 import *
 from run7 import *
-from run8 import *
+from run8_without_slider import *
 
 # ************** IMPORTANT ********************************
 # The right bucket design should be such that it is 4.5 centimeters outside from the bucket wall.

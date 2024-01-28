@@ -82,7 +82,7 @@ def run5():
     _resetBucket()
 
 # waitForButtonPress()
-runWithTiming(run5, "Sound Mixer")
+# runWithTiming(run5, "Sound Mixer")
 # _doSoundMixerWithStallDetection()
 #_resetBucket()
     

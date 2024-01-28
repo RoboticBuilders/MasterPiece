@@ -31,6 +31,5 @@ def run1():
     resetRobot()
     goRightHometoLeft()
 
-waitForButtonPress()
-runWithTiming(goRightHometoLeftPickUpNoah,"home2home")
-
+# waitForButtonPress()
+# runWithTiming(goRightHometoLeftPickUpNoah,"home2home")
