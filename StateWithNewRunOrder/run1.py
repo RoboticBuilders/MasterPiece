@@ -10,17 +10,17 @@ def goRightHometoLeft():
 
 
 def goRightHometoLeftPickUpNoah():
-    angle = 10
+    angle = 25
     gyroStraightWithDriveWithAccurateDistance(distance = 60, speed = 1000, backward = False, targetAngle = angle)
-    angle=5
+    angle=0
     gyroStraightWithDriveWithAccurateDistance(distance = 25, speed = 400, backward = False, targetAngle = angle, tillBlackLine=True)
 
-    waitForButtonPress()
+    #waitForButtonPress()
 
-    angle=5
-    gyroStraightWithDriveWithAccurateDistance(distance = 30, speed = 1000, backward = False, targetAngle = angle)
+    angle=10
+    gyroStraightWithDriveWithAccurateDistance(distance = 31, speed = 1000, backward = False, targetAngle = angle)
 
-    waitForButtonPress()
+    #waitForButtonPress()
 
     # Pickup the expert 
     angle = -20

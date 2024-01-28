@@ -122,7 +122,7 @@ def augmentedRealitynew(userV2Flippy = False):
     # then backoff till the white line and turn back to our heading.
     angle = -30
     turnToAngle(targetAngle = angle, speed = 1000)
-    gyroStraightWithDriveWithAccurateDistance(distance = 15, speed = 250, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 17, speed = 250, targetAngle = angle)
     
 
 def augmentedRealityWithCurve(userV2Flippy = False):
