@@ -1010,28 +1010,28 @@ class stall_detect:
                 continue # keep running the loop
 
     # stalls based on running average of load
-    def avg_load(max_load_change = 0.5, min_stopping_condition = 100, avg_length = 5, min_dist = 0, debug = False):
+    def avg_load(max_load_change = 0.5, minValidLoad = 100, minObservationsRequired = 5, min_dist = 0, debug = False):
         loadArr = []
         currLoadArr = [0, 0, 0]
 
         main_counter = 0
 
-        init_dist = left_motor.angle()
+        # init_dist = left_motor.angle()
 
         while drive_base.done() == False: # while the code is still running
 
-            dist_diff = left_motor.angle() - init_dist
+            # dist_diff = left_motor.angle() - init_dist
 
-            if convertDegToCM(dist_diff) <= min_dist:
-                continue
+            # if convertDegToCM(dist_diff) <= min_dist:
+            #     continue
 
             # calculate load
-            currLoad = stall_detect.getCurrentLoad(3, min_stopping_condition)
+            currLoad = stall_detect.getCurrentLoad(3, minValidLoad)
 
-            if(currLoad < min_stopping_condition):
+            if(currLoad < minValidLoad):
                 continue
 
-            if(len(loadArr)>avg_length):
+            if(len(loadArr)>minObservationsRequired):
                 # calculate average of running average
                 load_sum = 0
                 for i in range(len(loadArr)):
@@ -1040,7 +1040,7 @@ class stall_detect:
                 avgLoad = load_sum / (1+len(loadArr))
 
                 # if the load is greater than 50% more than the running average
-                if len(loadArr) > avg_length and currLoad >= int(avgLoad * (max_load_change + 1)) and currLoad > min_stopping_condition:
+                if len(loadArr) > minObservationsRequired and currLoad >= int(avgLoad * (max_load_change + 1)) and currLoad > minValidLoad:
 
                     # stop the motors
                     left_motor.stop()
@@ -1057,10 +1057,11 @@ class stall_detect:
                         print("Continuing stall detection with " + str(currLoad) + " load and " + str(avgLoad) + " running average.") # print debug messages
                         print(loadArr)
 
-            if len(loadArr) > avg_length:
+            if len(loadArr) > minObservationsRequired:
                 loadArr[main_counter % 5] = currLoad
             else:
                 loadArr.append(currLoad)
+                print("not enough observations. Adding {} to the array.".format(currLoad))
 
             main_counter += 1
 

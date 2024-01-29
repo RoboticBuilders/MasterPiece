@@ -8,7 +8,7 @@ def _doSoundMixerWithComplicatedArm():
     # gyroStraightWithDriveWithAccurateDistance(distance = 32, speed = 800, targetAngle = angle, stop = Stop.COAST)
     # gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 150, targetAngle = angle)
     drive_base.straight(distance = 450, wait = False)
-    stall_detect.avg_load(max_load_change = 1, min_stopping_condition = 30, avg_length = 15, debug = False)
+    stall_detect.avg_load(max_load_change = 1, minValidLoad = 30, minObservationsRequired = 15, debug = True)
     # stall_detect.load(max_load = 150, debug = True)
 
     # Turn the right motor to pick up the expert
@@ -25,7 +25,7 @@ def _doSoundMixerWithComplicatedArm():
         continue
 
     # Now backoff.
-    gyroStraightWithDriveWithAccurateDistance(distance = 23, speed = 1000, targetAngle = angle, backward=True,
+    gyroStraightWithDriveWithAccurateDistance(distance = 22, speed = 1000, targetAngle = angle, backward=True,
                                               stop = Stop.COAST)
 
     # Now drive back home.
