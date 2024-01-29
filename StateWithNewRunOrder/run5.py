@@ -76,14 +76,36 @@ def waitForLeftMotor():
     while left_med_motor.done() == False:
         continue
 
+def _doSoundMixerWithoutStallDetect():
+    angle = 0
+    gyroStraightWithDriveWithAccurateDistance(distance=45, speed=600, targetAngle=angle)
+    right_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=False)
+    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=200, targetAngle=angle)
+    left_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=True)
+    # Now backoff.
+    gyroStraightWithDriveWithAccurateDistance(distance = 22, speed = 1000, targetAngle = angle, backward=True,
+                                              stop = Stop.COAST)
+
+    # Now drive back home.
+    # We start resetting the left motor when we curve home, because we want to be able to change the 
+    # attachment
+    _resetLeftMotor(wait = False)
+    drive_base.settings(500, 1000, 500, 1000)
+    drive_base.curve(radius = -420, angle = -50)
+
+
+
+
 def run5():
     resetRobot()
-    _doSoundMixerWithComplicatedArm()
+    # _doSoundMixerWithComplicatedArm()
     #_doSoundMixerWithStallDetection()
-    _resetBucket()
+    _doSoundMixerWithoutStallDetect()
+    # _resetBucket()    
 
 # waitForButtonPress()
 # runWithTiming(run5, "Sound Mixer")
 # _doSoundMixerWithStallDetection()
 #_resetBucket()
+# run5()
     
