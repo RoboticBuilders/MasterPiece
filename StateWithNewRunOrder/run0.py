@@ -3,11 +3,11 @@ from Utilities import *
 def run0():
     
     def _positionChicken():
-        left_med_motor.run_angle(-500, 950)
+        left_med_motor.run_angle(-1000, 950)
     
     def _pickupExpert():
-        right_med_motor.run_target(300, 150, Stop.HOLD, True)
-        right_med_motor.reset_angle(0)
+        right_med_motor.run_target(300, 150, Stop.HOLD, wait = True)
+        #right_med_motor.reset_angle(0)
 
         angle = 0
 
@@ -53,5 +53,4 @@ def run0():
 
     resetRobot()
     _dorun0() 
-
 

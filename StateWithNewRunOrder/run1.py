@@ -2,7 +2,7 @@ from Utilities import *
 
 def goRightHometoLeft():
     angle = 10
-    gyroStraightWithDriveWithAccurateDistance(distance = 60, speed = 1000, backward = False, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 60, speed = 1000, backward = False, targetAngle = angle,stop=Stop.COAST)
 
     # Pickup the expert
     angle = -4
@@ -32,5 +32,3 @@ def run1():
     resetRobot()
     goRightHometoLeft()
 
-#waitForButtonPress()
-#runWithTiming(run1,"run1")

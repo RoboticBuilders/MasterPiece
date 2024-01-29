@@ -657,9 +657,9 @@ RUN6_PICKUP_EXPERT_ATTACHMENT_UP = 2
 # Expects the arm to start down.
 def run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN, wait=True, speed = 300):
     if position == RUN6_PICKUP_EXPERT_ATTACHMENT_DOWN:
-        right_med_motor.run_target(speed + 200, 0, Stop.HOLD, wait)
+        right_med_motor.run_target(speed + 200, 150, Stop.HOLD, wait)
     else:
-        right_med_motor.run_target(speed, -150, Stop.HOLD, wait)
+        right_med_motor.run_target(speed, 0, Stop.HOLD, wait)
 
 
 def driveForTime(timeInMS, stopAtEnd=True, speed=DEFAULT_SPEED, turnRate=0):
@@ -1054,7 +1054,7 @@ class stall_detect:
 
                 else:
                     if debug == True:
-                        print("Continuing stall detection with " + str(currLoad) + " load and " + str(int(avgLoad * (max_load_change + 1)) + " stopping condition.") # print debug messages
+                        print("Continuing stall detection with " + str(currLoad) + " load and " + str(int(avgLoad * (max_load_change + 1))) + " stopping condition.") # print debug messages
                         print(loadArr)
 
             if len(loadArr) >= minObservationsRequired:
@@ -1120,5 +1120,3 @@ class stall_detect:
                 # append new readings
                 right_readings.append(right_motor.angle())
                 left_readings.append(left_motor.angle())
-
-
