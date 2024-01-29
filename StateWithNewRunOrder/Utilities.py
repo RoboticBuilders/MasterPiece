@@ -1031,7 +1031,7 @@ class stall_detect:
             if(currLoad < minValidLoad):
                 continue
 
-            if(len(loadArr)>minObservationsRequired):
+            if(len(loadArr)>=minObservationsRequired):
                 # calculate average of running average
                 load_sum = 0
                 for i in range(len(loadArr)):
@@ -1040,25 +1040,25 @@ class stall_detect:
                 avgLoad = load_sum / (1+len(loadArr))
 
                 # if the load is greater than 50% more than the running average
-                if len(loadArr) > minObservationsRequired and currLoad >= int(avgLoad * (max_load_change + 1)) and currLoad > minValidLoad:
+                if len(loadArr) >= minObservationsRequired and currLoad >= int(avgLoad * (max_load_change + 1)) and currLoad > minValidLoad:
 
                     # stop the motors
                     left_motor.stop()
                     right_motor.stop()
 
                     if debug == True:
-                        print("Stopping stall detection with " + str(currLoad) + " load and " + str(int(avgLoad * (max_load_change + 1))) + " running average.") # print debug messages
+                        print("Stopping stall detection with " + str(currLoad) + " load and " + str(int(avgLoad * (max_load_change + 1))) + " stopping condition.") # print debug messages
 
                     # exit the function
                     break
 
                 else:
                     if debug == True:
-                        print("Continuing stall detection with " + str(currLoad) + " load and " + str(avgLoad) + " running average.") # print debug messages
+                        print("Continuing stall detection with " + str(currLoad) + " load and " + str(int(avgLoad * (max_load_change + 1)) + " stopping condition.") # print debug messages
                         print(loadArr)
 
-            if len(loadArr) > minObservationsRequired:
-                loadArr[main_counter % 5] = currLoad
+            if len(loadArr) >= minObservationsRequired:
+                loadArr[main_counter % minObservationsRequired] = currLoad
             else:
                 loadArr.append(currLoad)
                 print("not enough observations. Adding {} to the array.".format(currLoad))
