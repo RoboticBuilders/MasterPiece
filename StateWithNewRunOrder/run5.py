@@ -109,9 +109,9 @@ def waitForLeftMotor():
 
 def _doSoundMixerWithoutStallDetect():
     angle = 0
-    gyroStraightWithDriveWithAccurateDistance(distance=45, speed=600, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=35, speed=400, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=False)
-    gyroStraightWithDriveWithAccurateDistance(distance=5, speed=200, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=200, targetAngle=angle)
     left_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=True)
     # Now backoff.
     gyroStraightWithDriveWithAccurateDistance(distance = 22, speed = 1000, targetAngle = angle, backward=True,
@@ -131,12 +131,12 @@ def run5():
     resetRobot()
     # _doSoundMixerWithComplicatedArm()
     # _doSoundMixerWithStallDetection()
-    _doSoundMixerWithAvgLoad()
-    # _doSoundMixerWithoutStallDetect()
+    #_doSoundMixerWithAvgLoad()
+    _doSoundMixerWithoutStallDetect()
     _resetBucket()    
 
-# waitForButtonPress()
-# runWithTiming(run5, "Sound Mixer")
+#waitForButtonPress()
+#runWithTiming(run5, "Sound Mixer")
 # _doSoundMixerWithStallDetection()
 #_resetBucket()
 # run5()
