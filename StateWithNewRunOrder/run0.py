@@ -3,7 +3,7 @@ from Utilities import *
 def run0():
     
     def _positionChicken():
-        left_med_motor.run_angle(-1000, 950)
+        left_med_motor.run_angle(-1000, 1500)
     
     def _pickupExpert():
         right_med_motor.run_target(300, 150, Stop.HOLD, wait = True)
