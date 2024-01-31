@@ -10,22 +10,31 @@ from stl import mesh
 ## Parameters
 
 # Point to the image that you want to process
-imgName = 'innovation_project/ImageProcessingUtils/Images/Starry_Night.jpg'
+imgName = 'innovation_project/Generate3DModel/Images/Great_Wave.jpeg'
 
 # Set to true to auto resize the image to target pixel count (default 75000). Else, will use the resolution of the original imag
 autoResize = True
 
 # The first threshold value for the Canny Edge Detection algorithm. 
+# Get from our AI model.
 threshold1 = 120
 
 # The second threshold value for the Canny Edge Detection algorithm. 
+# Get from our AI model.
 threshold2 = 240
 
 # Set the gaussian blur value. 
+# Get from our AI model.
 gaussianBlur = 3
 
 # The pixel count of the image that you want to generate. Not typical to change this. 75000 is a good value for the BambuLab P1S 3D printer.
-targetPixelCount = 75000
+targetPixelCount = 300000
+
+# Set to true to create a composite image with 4 tiles of the original image.
+createComposite = False
+
+# Set the maximum depth of the model in mm. Default is 5mm.
+maxDepth = 5
 
 ## Processing
 
@@ -50,7 +59,7 @@ aspect_ratio = img.shape[0] / img.shape[1]
 
 # Figure out the scale ratio of the target image given the target pixel count.
 # This will give you a target image of 75000 pixels without distorting it.
-yp = math.sqrt(75000 / aspect_ratio)
+yp = math.sqrt(targetPixelCount / aspect_ratio)
 scale_ratio = yp / img.shape[1]
 
 ### Functions
@@ -61,11 +70,12 @@ scale_ratio = yp / img.shape[1]
 #   img: The image to process
 #   t1: The first threshold value
 #   t2: The second threshold value
+#   fileName: The name of the output file
 # Returns: An image with edges detected
 #
-def Canny(img, t1, t2):
+def Canny(img, t1, t2, fileName):
 
-    # Convert to graycsale
+    # Convert to grayscale
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Blur the image for better edge detection
@@ -78,9 +88,8 @@ def Canny(img, t1, t2):
     final = cv2.merge([edges, edges, edges])    
 
     # Save the image
-    fileName = os.path.basename(imgName).split('/')[-1]
-    p1 = os.path.join(folder, "Canny.jpeg")
-    cv2.imwrite(p1, final)
+
+    cv2.imwrite(fileName, final)
 
     return final
 
@@ -114,8 +123,13 @@ def Resize(img, scale_ratio):
 # Returns: An image with the depth map
 def DepthMap(image):
 
-    # Setup the model
+    # Setup the Dense Prediction Trasnformer (DPT) model for monocular depth estimation
+    # This code is inspired by the sample the sample at https://huggingface.co/Intel/dpt-large
+
+    # Setup feature extractor for preprocessing
     feature_extractor = DPTFeatureExtractor.from_pretrained("Intel/dpt-large")
+
+    # Setup our depth estimation model
     model = DPTForDepthEstimation.from_pretrained("Intel/dpt-large")
 
     # Get the pixel values
@@ -182,16 +196,17 @@ def SaveAsThermal(inputFileName, outFileName):
 # Save the depth & edge map as a 3D model that can be printed. 
 #
 # Parameters:
-#   depthImg: Image with he depth map
-#   edgeImg: Image with the edge details
+#   img: Image with he depth information
+#   modelFileame: The name to use in the output file. The file will be saved as Model.<modelFileame>.stl
+#   max: The maximum depth value in the image
+#   min: The minimum depth value in the image
+#   halfPixelWidth: The half-width of a pixel in mm. Default is 0.33mm.
 #   maxHeight: The maximum height of the model. Default is 5mm.
 #   invertHeight: Set to true to invert the height of the model. If true, the farthest parts are higher than the lower ones. Default is false.
 # 
-def SaveAsStl(img, maxHeight = 5, invertHeight = False):
+def SaveAsStl(img, modelFileame, max, min, halfPixelWidth = 0.33, maxHeight = 5, invertHeight = False):
 
     # Normalize the depth
-    max = np.max(img)
-    min = np.min(img)
     delta = max - min
 
     # Some initializations
@@ -206,24 +221,21 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
     # Collect faces from all pixels here. We will use this to create the mesh.
     allFaces = np.array([[0,0,0]])
 
-    # The width of each pixel in mm
-    pixedWidth = 0.33
-
     # The minimum thickness of the model in mm. This is to prevent the model from being too thin.
     minThickness = 0.5
 
     # Loop through each colum
     for j in range (0, columns, 1):
 
-        # Calculate the x position of this column
-        y = j * pixedWidth * 2.0
+        # Calculate the y position of this column
+        y = j * halfPixelWidth * 2.0
         print('Processing column ', j, ' of ', columns)
 
         # Loop through each row of this column
         for i in range (0, rows, 1):
             
-            # Calculate the y position of this row
-            x = i * pixedWidth * 2.0
+            # Calculate the x position of this row
+            x = i * halfPixelWidth * 2.0
 
             # Calculate the height of this pixel
             height = (img[j, i,0] - min) / delta * maxHeight
@@ -236,21 +248,20 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
             
             # A cube has 8 vertices. Save these in an array.
             vertices = np.array([\
-                [x-pixedWidth, y-pixedWidth, minThickness],
-                [x+pixedWidth, y-pixedWidth, minThickness],
-                [x+pixedWidth, y-pixedWidth, -1 * height],
-                [x-pixedWidth, y-pixedWidth, -1 * height],
-                [x-pixedWidth, y+pixedWidth, minThickness],
-                [x+pixedWidth, y+pixedWidth, minThickness],
-                [x+pixedWidth, y+pixedWidth, -1 * height],
-                [x-pixedWidth, y+pixedWidth, -1 * height]
+                [x-halfPixelWidth, y-halfPixelWidth, minThickness],
+                [x+halfPixelWidth, y-halfPixelWidth, minThickness],
+                [x+halfPixelWidth, y-halfPixelWidth, -1 * height],
+                [x-halfPixelWidth, y-halfPixelWidth, -1 * height],
+                [x-halfPixelWidth, y+halfPixelWidth, minThickness],
+                [x+halfPixelWidth, y+halfPixelWidth, minThickness],
+                [x+halfPixelWidth, y+halfPixelWidth, -1 * height],
+                [x-halfPixelWidth, y+halfPixelWidth, -1 * height]
                 ])
                     
             allVertices = np.concatenate((allVertices, vertices), axis = 0)
             
             offset = verticesPerCube * i + verticesPerCube * rows * j
             
-                   
             # STL objects are composed of triangles. A cube which has 6 faces is made of 12 triangles.
             # Define the 12 triangles composing the cube. We got the vertices offset from a online sample.
             faces = np.array([\
@@ -286,12 +297,12 @@ def SaveAsStl(img, maxHeight = 5, invertHeight = False):
     cube.rotate([1, 0, 0], math.radians(180))
 
     # Save the mesh to a STL file
-    p1 = os.path.join(folder, "Model.stl")
+    p1 = os.path.join(folder, "Model." + modelFileame + ".stl")
     
     if invertHeight:
-        p1 = os.path.join(folder, "Model.inverted.stl")
+        p1 = os.path.join(folder, "Model." + modelFileame + ".inverted.stl")
     else:
-        p1 = os.path.join(folder, 'Model.stl')
+        p1 = os.path.join(folder, "Model." + modelFileame + '.stl')
 
     cube.save(p1)
     print('Saved: ', p1)
@@ -310,10 +321,20 @@ d = os.path.join(folder, "Resized.jpeg")
 cv2.imwrite(d, resized)
 
 # Generate the edge map
-edgeImg = Canny(resized, threshold1, threshold2)
+cannyFile = os.path.join(folder, "Canny.jpeg")
+canny = Canny(resized, threshold1, threshold2, cannyFile)
 
 # Generate the depth map
 depthImg = DepthMap(pil_image)
+
+cod = os.path.join(folder, "Canny_on_depth.jpeg")
+cannyOnDepth = Canny(depthImg, 0, 200, cod)
+
+# Take out canny edges already accounted for in the depth map
+edgeImg = cv2.addWeighted(canny, 1, cannyOnDepth, -1, 0)
+
+cc = os.path.join(folder, "Canny_corrected.jpeg")
+cv2.imwrite(cc, edgeImg)
 
 # Combine the depth map and edge map. Use the edgeRatio variable to control the amount of edge details to show.
 # Say the edgeRatio is 0.1, then the final image will be 90% depth map and 10% edge map.
@@ -327,5 +348,38 @@ cv2.imwrite(p2, img)
 # Also save as a thermal image because it looks cool 
 SaveAsThermal(p2, "Final_Thermal.jpeg")
 
-# Save the depth & edge map as a 3D model that can be printed.
-SaveAsStl(img, maxHeight = 5)
+max = np.max(img)
+min = np.min(img)
+
+if(createComposite == False):
+    # Save the depth & edge map as a 3D model that can be printed.
+    SaveAsStl(img, "Full", max, min, maxHeight = maxDepth)
+else:
+    # Save 4 composite models instead of one.
+    (h, w) = img.shape[:2]
+
+    (cX, cY) = (w // 2, h // 2)
+
+    topLeft = img[0:cY, 0:cX]
+    topRight = img[0:cY, cX:w]
+    bottomLeft = img[cY:h, 0:cX]
+    bottomRight = img[cY:h, cX:w]
+
+    # Save images
+    p2 = os.path.join(folder, "topLeft.jpeg")
+    cv2.imwrite(p2, topLeft)
+
+    p2 = os.path.join(folder, "topRight.jpeg")
+    cv2.imwrite(p2, topRight)
+
+    p2 = os.path.join(folder, "bottomLeft.jpeg")
+    cv2.imwrite(p2, bottomLeft)
+
+    p2 = os.path.join(folder, "bottomRight.jpeg")
+    cv2.imwrite(p2, bottomRight)
+
+    # Save the depth & edge map as a 3D model that can be printed.
+    SaveAsStl(topLeft, "Topleft", max, min, maxHeight = maxDepth)
+    SaveAsStl(topRight, "TopRight", max, min, maxHeight = maxDepth)
+    SaveAsStl(bottomLeft, "BottomLeft", max, min, maxHeight = maxDepth)
+    SaveAsStl(bottomRight, "BottomRight", max, min, maxHeight = maxDepth)
