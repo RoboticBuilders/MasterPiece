@@ -1079,6 +1079,25 @@ class stall_detect:
             totalLoad = totalLoad + currLoad
             wait(delayBetweenReadingsMs)
         return int(totalLoad/numObs)
+    
+     
+    def collectAndLogLoadData(timeBetweenLoadReadigsMs, timeIntervalToReportLoadReadingsMs):
+        # Start a timer
+        loadArr=[]
+        # until robot is done driving every 100 ms print "Not done yet"
+        while drive_base.done() == False: 
+            stuff = stall_detect.getCurrentLoad(7 , 30)
+            # print(stuff)
+            loadArr.append(stuff)
+            print(loadArr)
+            wait(timeBetweenLoadReadigsMs)
+        load_sum = 0
+        for i in range(len(loadArr)):
+            load_sum = load_sum + loadArr[i]
+
+            avgLoad = load_sum / (1+len(loadArr))
+        print(avgLoad)
+
 
     # stalls based on angle change
     def angle_change(max_iterations = 5, deadzone = 10, debug = False):
