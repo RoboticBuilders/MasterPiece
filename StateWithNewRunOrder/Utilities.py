@@ -1114,7 +1114,8 @@ class stall_detect:
                     break
 
                 else:
-                    print("Continuing stall detection with angle change of " + str(reading_diff) + " degrees.")
+                    if debug == True:
+                        print("Continuing stall detection with angle change of " + str(reading_diff) + " degrees.")
 
             else: # if there are less than 5 readings
                 # append new readings

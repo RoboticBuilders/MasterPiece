@@ -83,7 +83,7 @@ def immersiveExperience():
     # Turn towards immersive experience
     angle=170
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=21.5, speed=400, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=400, targetAngle=angle)
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed=400, targetAngle=angle)

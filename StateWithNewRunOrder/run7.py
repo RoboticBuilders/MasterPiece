@@ -2,7 +2,7 @@ from Utilities import *
 
 def run7():
     def _doRollingCameraAndDropOffAtMovieSet():
-        angle = 2
+        angle = 0
         # Drive forward to do rolling camera
         gyroStraightWithDrive(distanceInCm = 27, speed = 300, targetAngle = angle)
         gyroStraightWithDrive(distanceInCm = 5, speed = 100, targetAngle = angle)

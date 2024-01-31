@@ -3,10 +3,10 @@ from Utilities import *
 
 def openFlippyV2():
     # changed from 1900(24 tooth gear) to 700(8 tooth gear)
-    left_med_motor.run_angle(speed = 2000, rotation_angle=1000)
+    left_med_motor.run_angle(speed = 2000, rotation_angle=1100)
 
 def closeFlippyV2withoutWait():
-     left_med_motor.run_angle(speed = -2000, rotation_angle = 1000, wait = False)
+     left_med_motor.run_angle(speed = -2000, rotation_angle = 1100, wait = False)
 
 def openFlippy():
     left_med_motor.run_angle(rotation_angle=-2400, speed=2000)
