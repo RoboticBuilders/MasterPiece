@@ -31,7 +31,7 @@ def rollingCamera():
 def museumwithpedestaloutside():
     #Use a curve to reach in front of the immersive experience
     # 1/30/204: Increased curve from 610 to 650
-    drive_base.curve(radius = 610, angle = -50)
+    drive_base.curve(radius = 650, angle = -50)
     # Added this to drop the bucket so pedestal doesnt move out near the expert.
     right_med_motor.run_angle(speed=2000, rotation_angle=-200)
     gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)
@@ -42,7 +42,7 @@ def museumwithpedestaloutside():
     turnToAngle(targetAngle=angle,speed=600)
     # gyroStraightWithDriveWithAccurateDistance(distance=27, speed=1000, targetAngle=angle)
      # 1/30/204: Reduced distance from 25 to 22
-    gyroStraightWithDriveWithAccurateDistance(distance=25, speed=1000, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=22, speed=1000, targetAngle=angle)
     # Drop off the expert and audience
     
     left_med_motor.run_angle(speed=500, rotation_angle=500)
@@ -51,7 +51,8 @@ def museumwithpedestaloutside():
     turnToAngle(targetAngle=angle, speed=800)
     
     # wait(5000)
-    drive_base.straight(50)
+    #1/30/2024: Removed forward to museum
+    #drive_base.straight(50)
     # Increased this from 400 to 600 as we are now bringing the bucket down to not let pedestal move
     right_med_motor.run_angle(speed=2000, rotation_angle=600)
   
