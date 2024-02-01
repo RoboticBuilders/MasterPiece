@@ -1048,7 +1048,7 @@ class stall_detect:
 
                     if debug == True:
                         print("Stopping stall detection with " + str(currLoad) + " load and " + str(int(avgLoad * (max_load_change + 1))) + " running average.") # print debug messages
-
+                        hub.speaker.play_notes(["G4/4", "G4/4"]) # "C4/4", "C4/4"
                     # exit the function
                     break
 
