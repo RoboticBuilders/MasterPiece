@@ -90,32 +90,7 @@ def immersiveExperience():
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed=400, targetAngle=angle)
-    
-def goHomeWithCurve():
-    # Backoff from the Immersive experience.
-    gyroStraightWithDriveWithAccurateDistance(distance=28, speed=800, targetAngle=270, backward=True)
-
-    # Curve around the light show to avoid hitting the camera and also go home.
-    drive_base.curve(radius = -200, angle = 90)
-  
-    # Drive backward at a slight angle to ensure that we are catching the
-    # expert when going home.
-
-    angle = 187
-    gyroStraightWithDriveWithAccurateDistance(distance=40, speed=1000, targetAngle=angle, 
-                                              slowDown = False, backward = True,
-                                              useSlowerAccelerationForBackward = False,stop=Stop.COAST)
-    angle = 160
-    gyroStraightWithDriveWithAccurateDistance(distance=23, speed=1000, targetAngle=angle, 
-                                              slowDown = False, backward = True,
-                                              useSlowerAccelerationForBackward = False, stop = Stop.COAST)
-    
-    
-    angle = 180
-    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=1000, targetAngle=angle, 
-                                              slowDown = False, backward = True,
-                                              useSlowerAccelerationForBackward = False)
-
+ 
 
 def goHomeBetweenChickenAndAugmentedReality():
     # Backoff from the Immersive experience. Turn towards home2 and then go home.

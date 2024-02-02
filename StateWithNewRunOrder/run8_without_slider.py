@@ -123,62 +123,6 @@ def augmentedRealitynew(userV2Flippy = False):
     angle = -30
     turnToAngle(targetAngle = angle, speed = 1000)
     gyroStraightWithDriveWithAccurateDistance(distance = 17, speed = 250, targetAngle = angle)
-    
-
-def augmentedRealityWithCurve(userV2Flippy = False):
-    # Back up from music concert and turn towards Augmented Reality
-    # We set the angle to the one that we are at currently, since we dont
-    # want the robot to backup at an angle, we want to just
-    # backup at the same angle it is at.
-    #angle = 45
-    angle = hub.imu.heading()
-    
-    drive_base.straight(-70)
-    if (gyroStraightWithDriveWithAccurateDistance(distance=8, targetAngle = angle, speed=300, 
-                                    tillBlackLine = True, backward=True,
-                                    color_sensor = left_color) == False):
-        print("Missed black line catch when backing from music concert")
-    if userV2Flippy == True:
-        closeFlippyV2withoutWait()
-    else:
-        closeFlippywithoutWait()
-    
-    gyroStraightWithDriveWithAccurateDistance(distance = 6, speed = 200, targetAngle = angle, backward=True)
-
-    # Now drive towars the augmented reality
-    angle = -90
-    turnToAngle(targetAngle = angle, speed = 500)
-    #waitForButtonPress()
-
-    # go to Augmented Reality
-    gyroStraightWithDriveWithAccurateDistance(distance = 42, speed = 500, targetAngle = angle) 
-    
-    # Now open the slider to bring in the augmented reality.
-    openAugmentedRealitySlider()
-
-    #waitForButtonPress()
-
-    # Backup to pull the lever
-    drive_base.straight(-40)
-    
-    closeAugmentedRealitySlider()
-    #closeAugmentedRealitySliderFully()
-    drive_base.curve(angle = 90, radius = -300)
-    
-    '''
-    # Now backoff to push the lever in and turn to ensure the lever is turned
-    # We backoff at an angle, because the augmented reality opens 
-    # and we want to make sure we dont hit it.
-    angle = -90
-    gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 1000, targetAngle = angle, backward = True)
-    #closeAugmentedRealitySliderCompletely()
-    
-    # Now turn to ensure that we have pushed in the augmented reality. We turn and drive forward
-    # then backoff till the white line and turn back to our heading.
-    angle = -30
-    turnToAngle(targetAngle = angle, speed = 1000)
-    gyroStraightWithDriveWithAccurateDistance(distance = 8, speed = 500, targetAngle = angle)
-    '''
 
 def testFlippy():
     while(True):
@@ -217,7 +161,6 @@ def run8():
     useFlippyV2 = True
     musicconcert(userV2Flippy = useFlippyV2)
     augmentedRealitynew(userV2Flippy = useFlippyV2)
-    #augmentedRealityWithCurve(userV2Flippy = useFlippyV2)
     
 def mainRun8():
     initializeAndWaitForRobotReady()

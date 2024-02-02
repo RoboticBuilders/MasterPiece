@@ -21,13 +21,6 @@ def goToExpertDropOffFromHomeFaster():
     # Now dropoff experts...
     right_med_motor.run_angle(speed=2000, rotation_angle = 800,wait=True)
 
-
-def _doexpertdropoff():
-    angle = 30
-    turnToAngle(targetAngle=angle, speed=500)
-    gyroStraightWithDrive(distanceInCm=5, targetAngle=angle, speed=500)
-    right_med_motor.run_angle(speed=2000, rotation_angle = 800)
-
 def _doSceneChange():
     angle = 25
     # Backup after expert dropoff
@@ -57,7 +50,6 @@ def goHome():
 def run3():
     resetRobot()
     goToExpertDropOffFromHomeFaster()
-    #_doexpertdropoff()
     _doSceneChange()
     goHome()
 
