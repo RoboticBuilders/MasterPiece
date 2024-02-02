@@ -34,7 +34,8 @@ def museumwithpedestaloutside():
     drive_base.curve(radius = 610, angle = -50)
     # Added this to drop the bucket so pedestal doesnt move out near the expert.
     right_med_motor.run_angle(speed=2000, rotation_angle=-200)
-    gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)
+    #gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)
+    gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 400, targetAngle = -90)
        
     #wait(5000)
     # Now turn to drop off at museum
@@ -85,7 +86,7 @@ def immersiveExperience():
     # Turn towards immersive experience
     angle=170
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=400, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=21.5, speed=400, targetAngle=angle)
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed=400, targetAngle=angle)
