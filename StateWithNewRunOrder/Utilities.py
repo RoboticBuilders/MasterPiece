@@ -702,7 +702,7 @@ class stall_detect:
                 avgLoad = int(load_sum / (1+len(loadArr)))
 
                 # if the load is greater than 50% more than the running average
-                if len(loadArr) >= minObservationsRequired and currLoad >= int(avgLoad * (max_load_change + 1)) and currLoad > minValidLoad:
+                if len(loadArr) >= minObservationsRequired and currLoad >= int(avgLoad * (max_load_change + 1)) and currLoad > minValidLoad and drive_base.distance() > min_dist:
 
                     # stop the motors
                     left_motor.stop()
