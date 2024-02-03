@@ -397,6 +397,7 @@ def driveTillHsvRange(hueRange, saturationRange=None, valueRange=None, sensor=le
 def testHsv(sensor=left_color):
     while  True:
         print("(h,s,v) = {}".format(sensor.hsv()))
+        wait(100)
 
 def testColor(sensor=left_color):
     while  True:

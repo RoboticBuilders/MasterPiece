@@ -8,6 +8,6 @@ from Utilities import *
 def run():
     resetRobot()
     drive_base.straight(distance = 1000, wait = False)
-    stall_detect.avg_load(max_load_change = 1, minValidLoad = 30, minObservationsRequired = 15, debug = True)
+    stall_detect.avg_load(max_load_change = 1, minValidLoad = 30, minObservationsRequired = 15, debug = False)
 
 run()
