@@ -122,7 +122,7 @@ def _doSoundMixerWithoutStallDetect():
     # attachment
     _resetLeftMotor(wait = False)
     drive_base.settings(500, 1000, 500, 1000)
-    drive_base.curve(radius = -420, angle = -50)
+    drive_base.curve(radius = -420, angle = -40)
 
 
 
@@ -131,8 +131,8 @@ def run5():
     resetRobot()
     # _doSoundMixerWithComplicatedArm()
     # _doSoundMixerWithStallDetection()
-    _doSoundMixerWithAvgLoad()
-    #_doSoundMixerWithoutStallDetect()
+    #_doSoundMixerWithAvgLoad()
+    _doSoundMixerWithoutStallDetect()
     _resetBucket()    
 
 #waitForButtonPress()

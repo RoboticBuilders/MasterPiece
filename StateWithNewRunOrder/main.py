@@ -47,23 +47,23 @@ def _maindriver():
 
         if counter == 0:
             start_time = stopwatch.time()
-            runWithTiming(run0, "run0")
+            run0()
         if counter == 1:
-            runWithTiming(run1, "run1")
+            run1()
         if counter == 2:
-            runWithTiming(run2, "run2")
+            run2()
         if counter == 3:
-            runWithTiming(run3, "run3")
+            run3()
         if counter == 4:
-            runWithTiming(run4, "run4")
+            run4()
         if counter == 5:
-            runWithTiming(run5, "run5")
+            run5()
         if counter == 6:
-            runWithTiming(run6, "run6")
+            run6()
         if counter == 7:
-            runWithTiming(run7, "run7")
+            run7()
         if counter == 8:
-            runWithTiming(run8, "run8")
+            run8()
         
         
         counter = counter + 1
