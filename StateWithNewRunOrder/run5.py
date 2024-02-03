@@ -76,9 +76,9 @@ def waitForLeftMotor():
 
 def _doSoundMixerWithoutStallDetect():
     angle = 0
-    gyroStraightWithDriveWithAccurateDistance(distance=35, speed=400, targetAngle=angle, stop=Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=40, speed=400, targetAngle=angle, stop=Stop.COAST)
+    gyroStraightWithDriveWithAccurateDistance(distance=15, speed=200, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=False)
-    gyroStraightWithDriveWithAccurateDistance(distance=20, speed=200, targetAngle=angle)
     left_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=True)
     # Now backoff.
     gyroStraightWithDriveWithAccurateDistance(distance = 22, speed = 1000, targetAngle = angle, backward=True,
