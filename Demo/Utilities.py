@@ -1080,23 +1080,35 @@ class stall_detect:
             wait(delayBetweenReadingsMs)
         return int(totalLoad/numObs)
     
-     
-    def collectAndLogLoadData(timeBetweenLoadReadigsMs, timeIntervalToReportLoadReadingsMs):
+    # This function takes two parameters: time between readings (controls how long we wait between getCurrentLoad readings)
+    # and time interval to report load readings (controls how long we collect getCurrentLoad readings before averaging them 
+    # together and adding that average value to the reporting array). In the end, after time t ms, you will have 
+    # t/timeIntervalToReportLoadReadingsMs values in the reporting array.
+    def collectAndLogLoadData(timeBetweenLoadReadingsMs=10, timeIntervalToReportLoadReadingsMs=1000):
         # Start a timer
         loadArr=[]
+        lenOfLoadArrPerReportingInterval = int(timeIntervalToReportLoadReadingsMs/timeBetweenLoadReadingsMs) # remame to num of load readings
+        perIntervalAverageLoadArr=[]
         # until robot is done driving every 100 ms print "Not done yet"
         while drive_base.done() == False: 
-            stuff = stall_detect.getCurrentLoad(7 , 30)
-            # print(stuff)
-            loadArr.append(stuff)
+            currentLoad = stall_detect.getCurrentLoad(3 , 30)
+            loadArr.append(currentLoad)
             print(loadArr)
-            wait(timeBetweenLoadReadigsMs)
+            wait(timeBetweenLoadReadingsMs)
+
+            # Do we have enough data for one reporting interval?
+            if(len(loadArr) >= lenOfLoadArrPerReportingInterval):
+                perIntervalAverageLoadArr.append(stall_detect.calcAverage(loadArr))
+                loadArr=[]
+        return perIntervalAverageLoadArr
+
+    def calcAverage(loadArr):
         load_sum = 0
-        for i in range(len(loadArr)):
+        for i in range(0, len(loadArr)):
             load_sum = load_sum + loadArr[i]
 
-            avgLoad = load_sum / (1+len(loadArr))
-        print(avgLoad)
+        avgLoad = load_sum / len(loadArr)
+        return int(avgLoad)
 
 
     # stalls based on angle change
