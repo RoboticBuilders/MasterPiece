@@ -30,5 +30,5 @@ def goRightHometoLeftBackward():
 
 def run1():
     resetRobot()
-    goRightHometoLeftBackward()
+    goRightHometoLeft()
 
