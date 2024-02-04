@@ -32,8 +32,10 @@ def musicconcert(userV2Flippy = False):
         print("Run8: musicconcertnew: Missed black line catch infront of music concert")
 
    
-    # Now drive forward 2cm, we use drive_base.
-    drive_base.straight(50)
+    # Used to be 5cm before the night change.
+    # If this does not work, then put this back to 5cm.
+    #drive_base.straight(50)
+    drive_base.straight(80)
 
     # Now turn towards the wall to flush
     angle = 0
@@ -92,7 +94,7 @@ def augmentedRealitynew(userV2Flippy = False):
         closeFlippywithoutWait()
     
     #gyroStraightWithDriveWithAccurateDistance(distance = 6, speed = 200, targetAngle = angle, backward=True)
-    drive_base.straight(-60)
+    drive_base.straight(-70)
 
     # Now drive towars the augmented reality
     angle = -90
