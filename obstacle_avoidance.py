@@ -512,6 +512,7 @@ def drawPath(coordinates, color, runName):
             #print(str(coordinates[coordinate].getX()) + ", " + str(coordinates[coordinate].getY()))
             turtle.goto(coordinates[coordinate].getX(), coordinates[coordinate].getY())
     os.system("cls")
+
 def checkIfEndInMission(endX, endY, missions):
     for row in missions:
         if endX >= row[1] and endX <= row[3] and endY >= row[2] and endY <= row[4]:
