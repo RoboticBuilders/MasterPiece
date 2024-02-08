@@ -170,7 +170,7 @@ for (int i = 0; i < 12; i++)
 #endif  
   // Wait for the next cycle
   //WriteLcdAndWait("Sent image: " + String(imageIndex), 20);
-
+  Serial.println(F("All data sent"));
   delay(300);
 }
 

@@ -18,6 +18,9 @@ volatile bool motor3_running = false;
 volatile bool motor4_running = false;
 volatile bool resetPins = false;
 
+bool executeTest = false;
+bool testExecuted = false;
+
 void setup() {
   // Set motor speeds
   motor1.setSpeed(255);
@@ -32,14 +35,14 @@ void setup() {
   Serial.println("Reseting pins");
 
   // Reset all pins to lowest point
-  ResetPins();
+  //ResetPins(1000);
   
   Serial.println("Pins are reset");
 
   // read EEPROM for i2cWireAddress
   int wireAddress = readWireAddress();
   i2cWireAddress = wireAddress;
-  Serial.print("Wire address ");
+  Serial.print(F("Wire address "));
   Serial.println(wireAddress);
 
   // join I2C bus with the address for this sub Arduino
@@ -47,24 +50,36 @@ void setup() {
 
   // Register a handler for data receive
   Wire.onReceive(receiveEvent);  
-  Serial.println("Setup completed");   
+  Serial.println(F("Setup completed"));   
 }
 
-void ResetPins() {
+void ResetPins(int milliseconds) {
   // FORWARD | BACKWARD
   motor1.run(BACKWARD);
   motor2.run(BACKWARD);
   motor3.run(BACKWARD);
   motor4.run(BACKWARD);
 
-  delay(9000);
+  delay(milliseconds);
 
   ReleaseAllMotors();
 }
 
 void loop() {
+    if (executeTest == true) {
+      if (testExecuted == false) {
+        Serial.println(F("Starting test..."));
+        TestMotors();
+        //TestMotor(motor1);
+        Serial.println(F("Test completed..."));
+        testExecuted = true;
+      }
+      delay(1000);
+      return;
+  }
+
   if (resetPins) {
-    ResetPins();
+    ResetPins(5000);
     resetPins = false;
     return;   
   }
@@ -75,41 +90,41 @@ void loop() {
     // ResetPins(); is not called as it is the master who calls for it.
 
     if (motor1_running) {
-      Serial.print("Forward | ");
+      Serial.print(F("Forward | "));
       motor1.run(FORWARD);
     } else {
-      Serial.print("Released | ");
+      Serial.print(F("Released | "));
       motor1.run(RELEASE);
     }
 
     if (motor2_running) {
-      Serial.print("Forward | ");
+      Serial.print(F("Forward | "));
       motor2.run(FORWARD);
     } else {
-      Serial.print("Released | ");
+      Serial.print(F("Released | "));
       motor2.run(RELEASE);
     }
 
     if (motor3_running) {
-      Serial.print("Forward | ");
+      Serial.print(F("Forward | "));
       motor3.run(FORWARD);
     } else {
-      Serial.print("Released | ");
+      Serial.print(F("Released | "));
       motor3.run(RELEASE);
     }
 
     if (motor4_running) {
-      Serial.print("Forward | ");
+      Serial.print(F("Forward | "));
       motor4.run(FORWARD);
     } else {
-      Serial.print("Released");
+      Serial.print(F("Released"));
       motor4.run(RELEASE);
     }
 
-      Serial.println("Loop");
+    Serial.println(F("Loop"));
 
     // Run motors for specified time
-    delay(7000);
+    delay(5000);
 
     // Reset motor state now that time has elapsed
     motor1_running = false;
@@ -143,7 +158,7 @@ void ReleaseAllMotors() {
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
-  Serial.print("receive event");
+  Serial.print(F("receive event"));
   Serial.println(howMany);
   while (1 < Wire.available()) {  // loop through all but the last
     char c = Wire.read();         // receive byte as a character
@@ -151,7 +166,7 @@ void receiveEvent(int howMany) {
   }
 
   int x = Wire.read();           // receive byte as an integer
-  Serial.print("Sub reads: ");   // print the integer
+  Serial.print(F("Sub reads: "));   // print the integer
   Serial.println(x);             // print the integer
 
   if (x == -1)
@@ -162,7 +177,7 @@ void receiveEvent(int howMany) {
 
   // if the command is to reset Pins (all 0s then we can call ResetPins)
   if (x == 0) {
-    Serial.println("Command to reset pins");
+    Serial.println(F("Command to reset pins"));
     resetPins = true;
   }
 
@@ -220,8 +235,8 @@ void TestMotors()
 void TestMotor(AF_DCMotor motor)
 {
   motor.run(FORWARD);
-  delay(7000);
+  delay(5000);
   motor.run(BACKWARD);
-  delay(7000);
+  delay(5000);
   ReleaseAllMotors();
 }
