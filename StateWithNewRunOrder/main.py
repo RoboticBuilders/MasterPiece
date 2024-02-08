@@ -14,12 +14,7 @@ from run8_without_slider import *
 
 def _maindriver():
     counter = 0
-    arm_change_start_time = 0
-    arm_change_end_time = 0
-    stopwatch = StopWatch()
-    # This start time is going to get overridden in the main loop.
-    start_time = stopwatch.time()
-
+    
     while True:
         hub.display.number(counter)
         if counter == 9: 
@@ -27,11 +22,6 @@ def _maindriver():
 
         # Beep that we are ready for button press.
         hub.speaker.beep()
-
-        # Skip printing for the first time the loop runs.
-        if (counter != 0):
-            arm_change_start_time = stopwatch.time()
-        
         button = waitForButtonPress()
         resetRobot()
 
@@ -39,39 +29,27 @@ def _maindriver():
             counter = counter + 1
             continue
 
-        # The next few lines are the else loop here it is also the case if the right button is pressed.
-        if (counter != 0):
-            arm_change_end_time = stopwatch.time()    
-            message = "Run" + str(counter - 1) + "To" + str(counter) + "AttachmentChange"
-            print("AttachmentChange: " + message + ":" + str(arm_change_end_time- arm_change_start_time))
-
         if counter == 0:
-            start_time = stopwatch.time()
-            runWithTiming(run0, "run0")
+            run0()
         if counter == 1:
-            runWithTiming(run1, "run1")
+            run1()
         if counter == 2:
-            runWithTiming(run2, "run2")
+            run2()
         if counter == 3:
-            runWithTiming(run3, "run3")
+            run3()
         if counter == 4:
-            runWithTiming(run4, "run4")
+            run4()
         if counter == 5:
-            runWithTiming(run5, "run5")
+            run5()
         if counter == 6:
-            runWithTiming(run6, "run6")
+            run6()
         if counter == 7:
-            runWithTiming(run7, "run7")
+            run7()
         if counter == 8:
-            runWithTiming(run8, "run8")
-        
+            run8()
         
         counter = counter + 1
         drive_base.straight(distance=0, then=Stop.BRAKE)
-    
-    end_time = stopwatch.time()
-    print("Total Time: " + str((end_time-start_time)/1000) + " seconds")
-
 
 initializeAndWaitForRobotReady()
 _maindriver()

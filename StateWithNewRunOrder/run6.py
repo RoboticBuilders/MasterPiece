@@ -13,6 +13,7 @@ def rollingCamera():
     # Now drive towards the rolling camera and bring down the bucket
     # We bring down the motor slightly more, to ensure that
     # the camera is caught.
+
     gyroStraightWithDriveWithAccurateDistance(distance=40, speed=800, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=-420)
     
@@ -20,7 +21,8 @@ def rollingCamera():
     # We do a back and forth before turn, so we get give in the thread, so we dont have resistance
     # when we turn.
     gyroStraightWithDriveWithAccurateDistance(distance=20, speed=800, targetAngle=angle, backward = True)
-    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=800, targetAngle=angle)
+    # Changed 2/2/2024: Decreased from 7 to 6
+    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=800, targetAngle=angle)
     angle = -25
     turnToAngle(targetAngle=angle,speed=400)
     
@@ -30,8 +32,8 @@ def rollingCamera():
     
 def museumwithpedestaloutside():
     #Use a curve to reach in front of the immersive experience
-    
-    drive_base.curve(radius = 610, angle = -50)
+    # Changed 2/2/2024: Increased from 610 to 630
+    drive_base.curve(radius = 630, angle = -50)
     # Added this to drop the bucket so pedestal doesnt move out near the expert.
     right_med_motor.run_angle(speed=2000, rotation_angle=-200)
     #gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)

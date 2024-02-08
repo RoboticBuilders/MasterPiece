@@ -3,7 +3,7 @@ from Utilities import *
 def run0():
     
     def _positionChicken():
-        left_med_motor.run_angle(-1000, 1500)
+        left_med_motor.run_angle(1000, 1500)
     
     def _pickupExpert():
         right_med_motor.run_target(300, 150, Stop.HOLD, wait = True)
@@ -16,7 +16,7 @@ def run0():
 
         # drive forward before picking up arm
         #gyroStraightWithDrive(distanceInCm = 22, speed = 500, targetAngle = angle)
-        gyroStraightWithDriveWithAccurateDistance(distance = 28, speed = 500, backward = False, targetAngle = 0)
+        gyroStraightWithDriveWithAccurateDistance(distance = 29, speed = 300, backward = False, targetAngle = 0)
 
         # Pickup the expert
         run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150)

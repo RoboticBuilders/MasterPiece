@@ -34,7 +34,7 @@ targetPixelCount = 300000
 createComposite = False
 
 # Set the maximum depth of the model in mm. Default is 5mm.
-maxDepth = 5
+maxDepthMM = 5
 
 ## Processing
 
@@ -54,13 +54,9 @@ if not os.path.exists(folder):
 img = cv2.imread(imgName)
 pil_image = image = Image.open(imgName)
 
-# Get aspect ratio of original image
-aspect_ratio = img.shape[0] / img.shape[1]
-
 # Figure out the scale ratio of the target image given the target pixel count.
 # This will give you a target image of 75000 pixels without distorting it.
-yp = math.sqrt(targetPixelCount / aspect_ratio)
-scale_ratio = yp / img.shape[1]
+scale_ratio = math.sqrt(targetPixelCount/(img.shape[0]*img.shape[1]))
 
 ### Functions
 
@@ -353,7 +349,7 @@ min = np.min(img)
 
 if(createComposite == False):
     # Save the depth & edge map as a 3D model that can be printed.
-    SaveAsStl(img, "Full", max, min, maxHeight = maxDepth)
+    SaveAsStl(img, "Full", max, min, maxHeight = maxDepthMM)
 else:
     # Save 4 composite models instead of one.
     (h, w) = img.shape[:2]
@@ -379,7 +375,7 @@ else:
     cv2.imwrite(p2, bottomRight)
 
     # Save the depth & edge map as a 3D model that can be printed.
-    SaveAsStl(topLeft, "Topleft", max, min, maxHeight = maxDepth)
-    SaveAsStl(topRight, "TopRight", max, min, maxHeight = maxDepth)
-    SaveAsStl(bottomLeft, "BottomLeft", max, min, maxHeight = maxDepth)
-    SaveAsStl(bottomRight, "BottomRight", max, min, maxHeight = maxDepth)
+    SaveAsStl(topLeft, "Topleft", max, min, maxHeight = maxDepthMM)
+    SaveAsStl(topRight, "TopRight", max, min, maxHeight = maxDepthMM)
+    SaveAsStl(bottomLeft, "BottomLeft", max, min, maxHeight = maxDepthMM)
+    SaveAsStl(bottomRight, "BottomRight", max, min, maxHeight = maxDepthMM)
