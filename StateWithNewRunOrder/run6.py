@@ -22,7 +22,7 @@ def rollingCamera():
     # when we turn.
     gyroStraightWithDriveWithAccurateDistance(distance=20, speed=800, targetAngle=angle, backward = True)
     # Changed 2/2/2024: Decreased from 7 to 6
-    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=800, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=800, targetAngle=angle)
     angle = -25
     turnToAngle(targetAngle=angle,speed=400)
     
@@ -32,8 +32,8 @@ def rollingCamera():
     
 def museumwithpedestaloutside():
     #Use a curve to reach in front of the immersive experience
-    # Changed 2/2/2024: Increased from 610 to 630
-    drive_base.curve(radius = 630, angle = -50)
+    # Changed 2/4/2024: Increased from 630 to 640
+    drive_base.curve(radius = 650, angle = -50)
     # Added this to drop the bucket so pedestal doesnt move out near the expert.
     right_med_motor.run_angle(speed=2000, rotation_angle=-200)
     #gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)
@@ -88,7 +88,7 @@ def immersiveExperience():
     # Turn towards immersive experience
     angle=170
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=21.5, speed=400, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=20.5, speed=400, targetAngle=angle)
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed=400, targetAngle=angle)
@@ -107,7 +107,7 @@ def goHomeBetweenChickenAndAugmentedReality():
 
 def goHomeWithCurveAccurate():
     # Backoff from the Immersive experience.
-    gyroStraightWithDriveWithAccurateDistance(distance=28, speed=800, targetAngle=270, backward=True)
+    gyroStraightWithDriveWithAccurateDistance(distance=27, speed=800, targetAngle=270, backward=True)
 
     # Curve around the light show to avoid hitting the camera and also go home.
     drive_base.curve(radius = -200, angle = 90)

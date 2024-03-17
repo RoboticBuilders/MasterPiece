@@ -14,10 +14,11 @@ def _doSoundMixerWithAvgLoad():
     right_med_motor.run_angle(speed=2000, rotation_angle=-800,wait=False)
     # right_med_motor.run(speed=-200)
 
-    gyroStraightWithDriveWithAccurateDistance(distance = 10, speed = 100, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 10, speed = 150, targetAngle = angle)
     # Turn the motor to remove the lock for the left sound mixer.
     # Do this in parallel with the expert pick up.
-    left_med_motor.run_angle(speed=2000, rotation_angle=-800)
+    # changed on 2/4/24 from 800 to 1600
+    left_med_motor.run_angle(speed=2000, rotation_angle=-1600)
 
     # Make sure that the stopper has been removed.
     while left_med_motor.done() == False:
@@ -68,7 +69,7 @@ def _resetBucket():
     right_med_motor.run_angle(speed=2000, rotation_angle=800)
 
 def _resetLeftMotor(wait):
-    left_med_motor.run_angle(speed=2000, rotation_angle=800, wait=wait)
+    left_med_motor.run_angle(speed=2000, rotation_angle=1600, wait=wait)
 
 def waitForLeftMotor():
     while left_med_motor.done() == False:
