@@ -48,9 +48,9 @@ def _doSceneChangeBackup():
     angle = -45
     turnToAngle(targetAngle=angle, speed=500)
     gyroStraightWithDrive(distanceInCm=8, targetAngle=angle, speed=300)
+    drive_base.straight(-20)
     right_med_motor.run_angle(speed=2000, rotation_angle = -800, wait = False)
     #waitForButtonPress()
-    drive_base.straight(-40)
     # wait for the bucket to come down.
 
     while (right_med_motor.done() == False):
@@ -80,8 +80,8 @@ def run3():
 
 # First bring bucket down:
 #waitForButtonPress()
-resetRobot()
+
 #right_med_motor.run_angle(speed=2000, rotation_angle = -800, wait = True)
 
-runWithTiming(run3,"SceneChange")
+
 #waitForButtonPress()
