@@ -142,7 +142,7 @@ def resetFlippy():
 
 def openAugmentedRealitySlider():
     # Now open the slider to bring in the augmented reality.
-     right_med_motor.run_angle(speed = -2000, rotation_angle = 730)
+     right_med_motor.run_angle(speed = -2000, rotation_angle = 700)
 
 def closeAugmentedRealitySlider():
     # Close slider to open the augmented reality.
