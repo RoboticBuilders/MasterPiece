@@ -16,7 +16,7 @@ def rollingCamera():
 
     gyroStraightWithDriveWithAccurateDistance(distance=40, speed=800, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=-420)
-    
+
     # Now backup and pull the camera and turn it into its place.
     # We do a back and forth before turn, so we get give in the thread, so we dont have resistance
     # when we turn.
@@ -25,7 +25,6 @@ def rollingCamera():
     gyroStraightWithDriveWithAccurateDistance(distance=7, speed=800, targetAngle=angle)
     angle = -25
     turnToAngle(targetAngle=angle,speed=400)
-    
     # Now bring up the bucket, before driving away.
     # TODO consider doing part of this in parallel.
     right_med_motor.run_angle(speed=2000, rotation_angle=420)
@@ -33,13 +32,12 @@ def rollingCamera():
 def museumwithpedestaloutside():
     #Use a curve to reach in front of the immersive experience
     # Changed 2/4/2024: Increased from 630 to 640
-    drive_base.curve(radius = 650, angle = -50)
+    drive_base.curve(radius = 640, angle = -50)
     # Added this to drop the bucket so pedestal doesnt move out near the expert.
     right_med_motor.run_angle(speed=2000, rotation_angle=-200)
     #gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)
     gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 400, targetAngle = -90)
        
-    #wait(5000)
     # Now turn to drop off at museum
     angle = -30
     turnToAngle(targetAngle=angle,speed=600)
@@ -53,7 +51,6 @@ def museumwithpedestaloutside():
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
     
-    # wait(5000)
     
     drive_base.straight(50)
     # Increased this from 400 to 600 as we are now bringing the bucket down to not let pedestal move
@@ -71,7 +68,7 @@ def lightShow():
     '''STALL DETECTION CODE: IMPLEMENT IF IT WORKS / MUCH CLEANER'''
     drive_base.settings(300, 500, 300, 500)
     drive_base.straight(distance = -200, wait = False)
-    stall_detect.load(max_load = 120, debug = False)
+    stall_detect.load(max_load = 200, debug = False)
     '''DRIVE FOR TIME CODE: IMPLEMENT IF STALL DETECT DOESN'T WORK'''
     # driveForTime(500, stopAtEnd=True, speed=-500, turnRate=0)
     wait(100)
@@ -88,7 +85,12 @@ def immersiveExperience():
     # Turn towards immersive experience
     angle=170
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=20.5, speed=400, targetAngle=angle)
+    # gyroStraightWithDriveWithAccurateDistance(distance=20.5, speed=400, targetAngle=angle, tillHsv=True,
+    #                                           Hue_range = range(310,330), # Hue range
+    #                                           Saturation_range = range(30, 40), # Saturation range
+    #                                           Value_range = range(50, 60) # Value range
+    #                                           )
+    gyroStraightWithDriveWithAccurateDistance(distance=20.5, speed=400, targetAngle=angle)#replacing line with drive till hsv!!!!!!!!!!!!
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed=400, targetAngle=angle)
@@ -147,3 +149,5 @@ def run6():
 #waitForButtonPress()
 #runWithTiming(run6, "Light Show")
 
+# while True:
+#     print(ultrasonic.distance())

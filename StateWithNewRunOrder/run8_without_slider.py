@@ -50,7 +50,9 @@ def musicconcert(userV2Flippy = False):
     # Now dropoff is done, lets do music concert. Backoff first at an angle to ensure
     # the experts are in.
     angle = 5
-    gyroStraightWithDriveWithAccurateDistance(distance=23, targetAngle=angle, backward=True, speed=300)
+    # gyroStraightWithDriveWithAccurateDistance(distance=23, targetAngle=angle, backward=True, speed=300)
+    # drive_base.straight(distance = -100, wait = False)
+    # stall_detect.avg_load(max_load_change = 1, minValidLoad = 30, minObservationsRequired = 15, min_dist = 80, debug = True, motor=left_motor)
 
     # turn towards the Music Concert
     angle = 45

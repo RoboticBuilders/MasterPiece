@@ -14,7 +14,7 @@ def _doSoundMixerWithAvgLoad():
     right_med_motor.run_angle(speed=2000, rotation_angle=-800,wait=False)
     # right_med_motor.run(speed=-200)
 
-    gyroStraightWithDriveWithAccurateDistance(distance = 10, speed = 150, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 10, speed = 200, targetAngle = angle)
     # Turn the motor to remove the lock for the left sound mixer.
     # Do this in parallel with the expert pick up.
     # changed on 2/4/24 from 800 to 1600
