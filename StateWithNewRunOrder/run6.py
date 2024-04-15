@@ -66,7 +66,9 @@ def lightShow():
     angle=-90
     gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
     '''STALL DETECTION CODE: IMPLEMENT IF IT WORKS / MUCH CLEANER'''
-    drive_base.settings(300, 500, 300, 500)
+    # Change 4/14/24: Reduced speed from 300 to 200 to avoid flinging the audience member 
+    # out of target area
+    drive_base.settings(straight_speed=200, straight_acceleration=500, turn_rate=300, turn_acceleration=500)
     drive_base.straight(distance = -200, wait = False)
     stall_detect.load(max_load = 200, debug = False)
     '''DRIVE FOR TIME CODE: IMPLEMENT IF STALL DETECT DOESN'T WORK'''
