@@ -45,12 +45,15 @@ def musicconcert(userV2Flippy = False):
     gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=0, speed=500)
     driveForTime(timeInMS = 500, stopAtEnd = True, speed = 300, turnRate = 0)
 
-    wait(200)
+    # wait(200)
   
     # Now dropoff is done, lets do music concert. Backoff first at an angle to ensure
     # the experts are in.
     angle = 5
-    gyroStraightWithDriveWithAccurateDistance(distance=23, targetAngle=angle, backward=True, speed=300)
+    gyroStraightWithDriveWithAccurateDistance(distance=23, targetAngle=angle, backward=True, speed=300, tillBlackLine = True, color_sensor = left_color)
+    # wait(5000)
+    gyroStraightWithDriveWithAccurateDistance(distance = 2, targetAngle = angle, backward = True, speed = 100)
+    # wait(5000)
     # drive_base.straight(distance = -100, wait = False)
     # stall_detect.avg_load(max_load_change = 1, minValidLoad = 30, minObservationsRequired = 15, min_dist = 80, debug = True, motor=left_motor)
 
@@ -121,7 +124,7 @@ def augmentedRealitynew(userV2Flippy = False):
     # Now backoff to push the lever in and turn to ensure the lever is turned
     # We backoff at an angle, because the augmented reality opens 
     # and we want to make sure we dont hit it.
-    angle = -82
+    angle = -87  # was -82
     turnToAngle(targetAngle = angle, speed = 700)
     gyroStraightWithDriveWithAccurateDistance(distance = 33, speed = 1000, targetAngle = angle, backward = True)
     #closeAugmentedRealitySliderCompletely()
@@ -144,7 +147,9 @@ def resetFlippy():
 
 def openAugmentedRealitySlider():
     # Now open the slider to bring in the augmented reality.
-     right_med_motor.run_angle(speed = -2000, rotation_angle = 700)
+    #  right_med_motor.run_angle(speed = -2000, rotation_angle = 730)
+    right_med_motor.run_angle(speed = -2000, rotation_angle = 700)
+    right_med_motor.run_time(speed = -2000, time = 200, wait=True)
 
 def closeAugmentedRealitySlider():
     # Close slider to open the augmented reality.
@@ -156,7 +161,8 @@ def closeAugmentedRealitySliderCompletely():
 
 def closeAugmentedRealitySliderFully():
     # Close slider to open the augmented reality.
-    right_med_motor.run_angle(speed = 650, rotation_angle = 730)
+    right_med_motor.run_angle(speed = 650, rotation_angle = 700) # rotation_angle used to be 730
+    right_med_motor.run_time(speed = 650, time = 200, wait=True)
 
 def testSliderOpenAndClose():
      right_med_motor.run_angle(speed = -400, rotation_angle = 492)
@@ -169,6 +175,8 @@ def run8():
     useFlippyV2 = True
     musicconcert(userV2Flippy = useFlippyV2)
     augmentedRealitynew(userV2Flippy = useFlippyV2)
+    # openAugmentedRealitySlider()
+    # closeAugmentedRealitySlider()
     
 def mainRun8():
     initializeAndWaitForRobotReady()
@@ -185,6 +193,6 @@ def mainRun8():
     print("DONE")
 
 #waitForButtonPress()
-#runWithTiming(run8,"run8")
+# runWithTiming(run8,"run8")
 # openFlippyV2()
 # testHsv()
