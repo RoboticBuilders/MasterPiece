@@ -33,7 +33,8 @@ def _doSoundMixerWithAvgLoad():
     # attachment
     _resetLeftMotor(wait = False)
     drive_base.settings(500, 1000, 500, 1000)
-    drive_base.curve(radius = -420, angle = -40)
+    # Changed from -40 to -60 on 4/17/24 to make the attachment change easier
+    drive_base.curve(radius = -420, angle = -55)
 
 def _doSoundMixerWithStallDetection():
     angle = 0
