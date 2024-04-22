@@ -47,7 +47,7 @@ def goHome():
     #Change 1/24/2024: radius change from -155
     drive_base.curve(radius = -130, angle = -45, then=Stop.COAST)
     #Radius was -650 and angle was -50
-    drive_base.curve(radius = -720, angle = -55)
+    drive_base.curve(radius = -730, angle = -75)
 
     # Raise the arm
     right_med_motor.run_angle(speed=2000, rotation_angle = 800, wait = False)
