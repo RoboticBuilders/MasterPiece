@@ -6,7 +6,7 @@ def run0():
         left_med_motor.run_angle(1000, 1500)
     
     def _pickupExpert():
-        right_med_motor.run_target(300, 150, Stop.HOLD, wait = True)
+        right_med_motor.run_target(speed=300, target_angle=150, then=Stop.HOLD, wait = True)
         #right_med_motor.reset_angle(0)
 
         angle = 0
@@ -19,7 +19,10 @@ def run0():
         gyroStraightWithDriveWithAccurateDistance(distance = 29, speed = 300, backward = False, targetAngle = angle)
 
         # Pickup the expert
-        # run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150, wait = False)
+        run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150)
+
+        # This code is commented out to try the load to pick up izzy.
+        #run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150, wait = False)
         # passed_load_threshold = False
         # while right_med_motor.done() == False:
         #     if right_med_motor.load() > 40:
