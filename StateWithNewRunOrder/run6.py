@@ -22,7 +22,7 @@ def rollingCamera():
     # when we turn.
     gyroStraightWithDriveWithAccurateDistance(distance=20, speed=800, targetAngle=angle, backward = True)
     # Changed 2/2/2024: Decreased from 7 to 6
-    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=800, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=800, targetAngle=angle)
     angle = -25
     turnToAngle(targetAngle=angle,speed=400)
     # Now bring up the bucket, before driving away.
@@ -30,29 +30,24 @@ def rollingCamera():
     right_med_motor.run_angle(speed=2000, rotation_angle=420)
     
 def museumwithpedestaloutside():
-    #Use a curve to reach in front of the immersive experience
+    # Use a curve to reach in front of the immersive experience
     # Changed 2/4/2024: Increased from 630 to 640
-    drive_base.curve(radius = 650, angle = -50)
+    drive_base.curve(radius = 640, angle = -50)
     # Added this to drop the bucket so pedestal doesnt move out near the expert.
     right_med_motor.run_angle(speed=2000, rotation_angle=-200)
-    #gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)
     gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 400, targetAngle = -90)
        
     # Now turn to drop off at museum
     angle = -30
     turnToAngle(targetAngle=angle,speed=600)
-    # gyroStraightWithDriveWithAccurateDistance(distance=27, speed=1000, targetAngle=angle)
-     
-    gyroStraightWithDriveWithAccurateDistance(distance=25, speed=1000, targetAngle=angle)
-    # Drop off the expert and audience
+    gyroStraightWithDriveWithAccurateDistance(distance=23, speed=1000, targetAngle=angle)
     
+    # Drop off the expert and audience
     left_med_motor.run_angle(speed=500, rotation_angle=500)
-
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
-    
-    
     drive_base.straight(50)
+
     # Increased this from 400 to 600 as we are now bringing the bucket down to not let pedestal move
     right_med_motor.run_angle(speed=2000, rotation_angle=600)
   

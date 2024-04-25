@@ -15,6 +15,7 @@ right_motor = Motor(Port.E)
 left_med_motor = Motor(Port.B) 
 right_med_motor = Motor(Port.D)
 
+#left_color = None
 left_color = ColorSensor(Port.A)
 right_color = ColorSensor(Port.F)
 
@@ -731,13 +732,13 @@ class stall_detect:
         for i in range(0, numObs):
             currLoad = 0
             while(currLoad < minAllowedLoad):
-                print("Current load {} is less than min {}".format(currLoad, minAllowedLoad))
                 left_load = abs(left_motor.load())
                 right_load = abs(right_motor.load())
                 currLoad = int((left_load + right_load) / 2)
+                print("Current load {} is less than min {}".format(currLoad, minAllowedLoad))
             # totalLoad[i] = currLoad
             totalLoad = totalLoad + currLoad
-            # wait(delayBetweenReadingsMs)
+            #wait(delayBetweenReadingsMs)
         return int(totalLoad/numObs)
 
     # stalls based on angle change

@@ -34,12 +34,12 @@ def _doSoundMixerWithAvgLoad():
     _resetLeftMotor(wait = False)
     drive_base.settings(500, 1000, 500, 1000)
     # Changed from -40 to -60 on 4/17/24 to make the attachment change easier
-    drive_base.curve(radius = -400, angle = -55)
+    drive_base.curve(radius = -380, angle = -50)
 
 def _doSoundMixerWithStallDetection():
     angle = 0
     drive_base.straight(distance = 400, wait = False)
-    stall_detect.load(max_load = 150, debug = False)
+    stall_detect.load(max_load = 150, debug = True)
     gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 100, targetAngle = angle)
 
     # Turn the motor to remove the lock for the left sound mixer.
@@ -95,7 +95,7 @@ def _doSoundMixerWithoutStallDetect():
 
 def run5():
     resetRobot()
-    # _doSoundMixerWithStallDetection()
+    #_doSoundMixerWithStallDetection()
     _doSoundMixerWithAvgLoad()
     #_doSoundMixerWithoutStallDetect()
     _resetBucket()    
