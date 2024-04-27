@@ -25,15 +25,15 @@ def run0():
         run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150, wait = False)
         passed_load_threshold = False
         while right_med_motor.done() == False:
-            if right_med_motor.load() > 30:
-                hub.speaker.beep()
+            if right_med_motor.load() > 40:
+                #hub.speaker.beep()
                 passed_load_threshold = True
         if passed_load_threshold == False:
-            print("Missed Izzy")
+            #print("Missed Izzy")
             turnToAngle(targetAngle=-90, turn_acceleration=2000)
             turnToAngle(targetAngle=0)
-        else:
-            print("Picked up Izzy")
+        #else:
+        #    print("Picked up Izzy")
 
     def _doChickenAndCraftCretor():
         angle = 0
