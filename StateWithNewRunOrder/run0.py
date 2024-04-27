@@ -16,22 +16,24 @@ def run0():
 
         # drive forward before picking up arm
         #gyroStraightWithDrive(distanceInCm = 22, speed = 500, targetAngle = angle)
-        gyroStraightWithDriveWithAccurateDistance(distance = 29, speed = 300, backward = False, targetAngle = angle)
+        gyroStraightWithDriveWithAccurateDistance(distance = 29, speed = 300, backward = False, targetAngle = angle, multiplier = 1)
 
         # Pickup the expert
-        run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150)
+        # run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150)
 
         # This code is commented out to try the load to pick up izzy.
-        #run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150, wait = False)
-        # passed_load_threshold = False
-        # while right_med_motor.done() == False:
-        #     if right_med_motor.load() > 40:
-        #         hub.speaker.beep()
-        #         passed_load_threshold = True
-        # if passed_load_threshold == False:
-        #     print("Missed Izzy")
-        # else:
-        #     print("Picked up Izzy")
+        run6PositionPickUpExpertAttachment(position=RUN6_PICKUP_EXPERT_ATTACHMENT_UP, speed = 150, wait = False)
+        passed_load_threshold = False
+        while right_med_motor.done() == False:
+            if right_med_motor.load() > 30:
+                hub.speaker.beep()
+                passed_load_threshold = True
+        if passed_load_threshold == False:
+            print("Missed Izzy")
+            turnToAngle(targetAngle=-90, turn_acceleration=2000)
+            turnToAngle(targetAngle=0)
+        else:
+            print("Picked up Izzy")
 
     def _doChickenAndCraftCretor():
         angle = 0

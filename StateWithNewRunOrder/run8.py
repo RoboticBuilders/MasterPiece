@@ -50,9 +50,10 @@ def musicconcert(userV2Flippy = False):
     # Now dropoff is done, lets do music concert. Backoff first at an angle to ensure
     # the experts are in.
     angle = 5
-    gyroStraightWithDriveWithAccurateDistance(distance=23, targetAngle=angle, backward=True, speed=300, tillBlackLine = True, color_sensor = left_color)
+    gyroStraightWithDriveWithAccurateDistance(distance=15, targetAngle=angle, backward=True, speed=300)
+    gyroStraightWithDriveWithAccurateDistance(distance=6, targetAngle=angle, backward=True, speed=300, tillWhiteLine = True, color_sensor = left_color)
     # wait(5000)
-    gyroStraightWithDriveWithAccurateDistance(distance = 2, targetAngle = angle, backward = True, speed = 100)
+    gyroStraightWithDriveWithAccurateDistance(distance = 5, targetAngle = angle, backward = True, speed = 100)
     # wait(5000)
     # drive_base.straight(distance = -100, wait = False)
     # stall_detect.avg_load(max_load_change = 1, minValidLoad = 30, minObservationsRequired = 15, min_dist = 80, debug = True, motor=left_motor)
@@ -63,11 +64,15 @@ def musicconcert(userV2Flippy = False):
 
     # Push the HP and align against it, and turn circular motion arm to do sounds lever
     gyroStraightWithDriveWithAccurateDistance(distance=13, targetAngle=angle, speed=300)
-    driveForTime(timeInMS = 750, stopAtEnd=True, speed=200, turnRate=0)
+    driveForTime(timeInMS = 1000, stopAtEnd=True, speed=200, turnRate=0)
     drive_base.stop()
     left_motor.hold()
     right_motor.hold()
     wait(100)
+
+    # Push the Right motor to align better as we 
+    # tend to align slightly pointing left.
+    right_motor.run_time(speed = 700, time = 800, wait=False)
 
     # Wait for a little and run Flippy to turn the speakers
     if userV2Flippy == True:
@@ -102,12 +107,14 @@ def augmentedRealitynew(userV2Flippy = False):
     drive_base.straight(-70)
 
     # Now drive towars the augmented reality
-    angle = -90
+    # Changed from -90 to -93 on 4/26/2024
+    angle = -93
     turnToAngle(targetAngle = angle, speed = 500)
     #waitForButtonPress()
 
     # go to Augmented Reality
-    gyroStraightWithDriveWithAccurateDistance(distance = 42, speed = 500, targetAngle = angle) 
+    # Changed from 42 to 41 on 4/26/2024
+    gyroStraightWithDriveWithAccurateDistance(distance = 41, speed = 500, targetAngle = angle) 
     
     # Now open the slider to bring in the augmented reality.
     openAugmentedRealitySlider()
@@ -124,7 +131,8 @@ def augmentedRealitynew(userV2Flippy = False):
     # Now backoff to push the lever in and turn to ensure the lever is turned
     # We backoff at an angle, because the augmented reality opens 
     # and we want to make sure we dont hit it.
-    angle = -87  # was -82
+    # Changed from -87 to -90 on 4/26/2024
+    angle = -90
     turnToAngle(targetAngle = angle, speed = 700)
     gyroStraightWithDriveWithAccurateDistance(distance = 33, speed = 1000, targetAngle = angle, backward = True)
     #closeAugmentedRealitySliderCompletely()
@@ -168,7 +176,6 @@ def testSliderOpenAndClose():
      right_med_motor.run_angle(speed = -400, rotation_angle = 492)
      wait(2000)
      right_med_motor.run_angle(speed = 400, rotation_angle = 492)
-    
 
 def run8():
     resetRobot()
@@ -196,3 +203,6 @@ def mainRun8():
 # runWithTiming(run8,"run8")
 # openFlippyV2()
 # testHsv()
+#testARlineFollow()
+#testRunRightMotor()
+mainRun8()

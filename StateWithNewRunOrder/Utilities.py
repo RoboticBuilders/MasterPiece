@@ -735,7 +735,7 @@ class stall_detect:
                 left_load = abs(left_motor.load())
                 right_load = abs(right_motor.load())
                 currLoad = int((left_load + right_load) / 2)
-                print("Current load {} is less than min {}".format(currLoad, minAllowedLoad))
+                #print("Current load {} is less than min {}".format(currLoad, minAllowedLoad))
             # totalLoad[i] = currLoad
             totalLoad = totalLoad + currLoad
             #wait(delayBetweenReadingsMs)
@@ -782,3 +782,82 @@ class stall_detect:
                 # append new readings
                 right_readings.append(right_motor.angle())
                 left_readings.append(left_motor.angle())
+
+
+def followBlackLinePID(distanceInMM, speed, edge, controlColor = 63, color_sensor=right_color,
+                       kp=0.3, ki=0, kd=1, correctionBasedSpeed = False, slowStart = True, 
+                       slowDown = True, printDebugMessages=False):
+
+    # Returns: distance to accelerate for, high speed distance, distance to decelerate for.
+    def _calculateStartAndEndDistances(distanceInMM, speed):
+        accelerationDistanceMM = distanceInMM * 0.2
+        midDistanceMM = distanceInMM * 0.6
+        decelerationDistanceMM = distanceInMM * 0.2
+
+        if distanceInMM < 20:
+            return 0, distanceInMM, 0
+        else: 
+            return accelerationDistanceMM, midDistanceMM, decelerationDistanceMM
+
+    #prevStraightSpeed, prevStraightAcceleration, prevTurnSpeed, prevTurnAcceleration = drive_base.settings()
+    #drive_base.settings(straight_speed=speed,straight_acceleration=100,
+    #                    turn_rate=prevTurnSpeed,turn_acceleration=prevTurnAcceleration)
+
+    if (printDebugMessages == True):
+        print("Start followBlackLine")
+        print("followBlackLine: speed=" + str(speed))
+        print("followBlackLine: voltage=" + str(hub.battery.voltage()))
+        minSpeed = speed
+    
+    slowSpeed = 100
+    midSpeed = speed
+    accelerationDistanceMM,midDistanceMM,decelerationDistanceMM = _calculateStartAndEndDistances(distanceInMM, speed)
+
+    drive_base.reset()
+
+    # Turn on the drivebase.
+    drive_base.drive(speed = slowSpeed, turn_rate = 0)
+        
+    error_sum = 0
+    error = 0
+
+    # Start a stopwatch to measure elapsed time
+    watch = StopWatch()
+    while (drive_base.distance() < distanceInMM):
+        value = color_sensor.hsv().v
+        last_error = error
+        error = value - controlColor
+        error_sum = error_sum + error
+        error_rate = error - last_error
+
+        proportional = kp * error
+        integral = ki * error_sum 
+        derivative = kd * error_rate
+
+        correction = proportional + integral + derivative
+
+        speedToUse = midSpeed
+        if (slowStart == True and drive_base.distance() <= accelerationDistanceMM):
+            speedToUse = (((midSpeed - slowSpeed) / accelerationDistanceMM) * drive_base.distance()) + slowSpeed
+        if (slowDown == True and drive_base.distance() >= accelerationDistanceMM + midDistanceMM):
+            speedToUse = (((slowSpeed - midSpeed) / (distanceInMM - midDistanceMM - accelerationDistanceMM)) * (drive_base.distance() - distanceInMM)) + slowSpeed
+
+        turn_rate = correction
+        if edge == LINE_FOLLOWER_EDGE_LEFT:
+            turn_rate = correction
+        else:
+            turn_rate = correction * -1
+
+        if (printDebugMessages == True):
+            print("followBlackLine," + str(drive_base.distance()) + "," + str(watch.time()) + "," + str(value) + "," +
+                str(error) + "," + str(proportional) + "," + str(integral) + "," + str(derivative) + "," + str(turn_rate)+ "," + str(speedToUse))
+
+
+        drive_base.drive(speed = speedToUse, turn_rate = turn_rate)
+        wait(2)
+
+    # This is brake in pybricks. If we want hold then use drive_base.straight(0)
+    # drive_base.stop() is coast.
+    drive_base.stop()
+    drive_base.drive(0, 0)
+    drive_base.stop()
