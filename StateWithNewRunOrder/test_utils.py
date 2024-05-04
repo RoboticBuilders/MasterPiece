@@ -126,7 +126,13 @@ def turnToBlackLine(dir = "r", speed = 500, color_sensor = "left", min_dist = 0)
         left_motor.stop()
         right_motor.stop()
 
+def run6expertdropoff():
+        left_med_motor.run_angle(speed=2000, rotation_angle=500)
+def testtiming():
+        runWithTiming(run6expertdropoff,"run6expertdropoff")
+
 #testParallelCode()
 #gyroStraightWithDriveWithAccurateDistance(distance=50, targetAngle=0, backward=True, speed=300, tillWhiteLine = True, color_sensor = left_color)
 #testARlineFollow()
 #turnToBlackLine(dir = "l", speed = 150, color_sensor = "left", min_dist = 50)
+testtiming()

@@ -595,7 +595,6 @@ def gyroStraightWithDriveWithAccurateDistance(distance, speed, backward = False,
         if (tillBlackLine == True or tillWhiteLine == True):
             stopCondition = stopping_condition_function(color_sensor)
 
-
         if ((tillBlackLine == True or tillWhiteLine == True) and stopCondition == True):
             break
         elif (detectStall == True and drive_base.stalled() == True):
@@ -722,7 +721,8 @@ class stall_detect:
                 loadArr[main_counter % minObservationsRequired] = currLoad
             else:
                 loadArr.append(currLoad)
-                print("not enough observations. Adding {} to the array.".format(currLoad))
+                if debug == True:
+                    print("not enough observations. Adding {} to the array.".format(currLoad))
 
             main_counter += 1
             wait(5)

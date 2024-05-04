@@ -23,13 +23,11 @@ def musicconcert(userV2Flippy = False):
     # Turn to catch the black spur and drive till black line.
     angle = -45
     turnToAngle(targetAngle = angle, speed = 300)
-    
-    gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle = angle, speed=500)
-
-    if (gyroStraightWithDriveWithAccurateDistance(distance=7, targetAngle = angle, speed=1000, 
+    gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle = angle, speed=700)
+    if (gyroStraightWithDriveWithAccurateDistance(distance=7, targetAngle = angle, speed=400, 
                                     tillBlackLine = True,
                                     color_sensor = right_color) == False):
-        print("Run8: musicconcertnew: Missed black line catch infront of music concert")
+        print("Run8: musicconcert: Missed black line catch infront of music concert")
 
    
     # Used to be 5cm before the night change.
@@ -43,20 +41,14 @@ def musicconcert(userV2Flippy = False):
 
     # Now drop off the experts
     gyroStraightWithDriveWithAccurateDistance(distance=20, targetAngle=0, speed=500)
-    driveForTime(timeInMS = 500, stopAtEnd = True, speed = 300, turnRate = 0)
-
-    # wait(200)
+    driveForTime(timeInMS = 200, stopAtEnd = True, speed = 300, turnRate = 0)
   
     # Now dropoff is done, lets do music concert. Backoff first at an angle to ensure
     # the experts are in.
     angle = 5
-    gyroStraightWithDriveWithAccurateDistance(distance=15, targetAngle=angle, backward=True, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=6, targetAngle=angle, backward=True, speed=300, tillWhiteLine = True, color_sensor = left_color)
-    # wait(5000)
+    #gyroStraightWithDriveWithAccurateDistance(distance=15, targetAngle=angle, backward=True, speed=300)
+    gyroStraightWithDriveWithAccurateDistance(distance=21, targetAngle=angle, backward=True, speed=400, tillWhiteLine = True, color_sensor = left_color)
     gyroStraightWithDriveWithAccurateDistance(distance = 5, targetAngle = angle, backward = True, speed = 100)
-    # wait(5000)
-    # drive_base.straight(distance = -100, wait = False)
-    # stall_detect.avg_load(max_load_change = 1, minValidLoad = 30, minObservationsRequired = 15, min_dist = 80, debug = True, motor=left_motor)
 
     # turn towards the Music Concert
     angle = 45
@@ -68,11 +60,11 @@ def musicconcert(userV2Flippy = False):
     drive_base.stop()
     left_motor.hold()
     right_motor.hold()
-    wait(100)
+    #wait(50)
 
     # Push the Right motor to align better as we 
     # tend to align slightly pointing left.
-    right_motor.run_time(speed = 700, time = 800, wait=False)
+    right_motor.run_time(speed = 700, time = 500, wait=False)
 
     # Wait for a little and run Flippy to turn the speakers
     if userV2Flippy == True:
@@ -92,7 +84,7 @@ def augmentedRealitynew(userV2Flippy = False):
     #angle = 45
     angle = hub.imu.heading()
     
-    wait(50)
+    #wait(50)
     drive_base.straight(-70)
     if (gyroStraightWithDriveWithAccurateDistance(distance=7, targetAngle = angle, speed=300, 
                                     tillBlackLine = True, backward=True,
@@ -103,8 +95,8 @@ def augmentedRealitynew(userV2Flippy = False):
     else:
         closeFlippywithoutWait()
     
-    #gyroStraightWithDriveWithAccurateDistance(distance = 6, speed = 200, targetAngle = angle, backward=True)
-    drive_base.straight(-70)
+    # Backoff 6cm. Changed from 7cm on 5/1/2024
+    drive_base.straight(-60)
 
     # Now drive towars the augmented reality
     # Changed from -90 to -93 on 4/26/2024
@@ -113,8 +105,8 @@ def augmentedRealitynew(userV2Flippy = False):
     #waitForButtonPress()
 
     # go to Augmented Reality
-    # Changed from 42 to 41 on 4/26/2024
-    gyroStraightWithDriveWithAccurateDistance(distance = 41, speed = 500, targetAngle = angle) 
+    # Changed from 42 to 40 on 5/01/2024
+    gyroStraightWithDriveWithAccurateDistance(distance = 40, speed = 500, targetAngle = angle) 
     
     # Now open the slider to bring in the augmented reality.
     openAugmentedRealitySlider()

@@ -24,8 +24,8 @@ def run7():
         gyroStraightWithDrive(distanceInCm = 20, speed = 1000, backward = True, targetAngle = angle, slowDown = False)
         drive_base.settings(1000, 1000, 1000, 1000)
         #drive_base.curve(radius = -1750, angle = -20)
-        drive_base.curve(radius = -300, angle = -65, wait = False)
-        stall_detect.load(185)
+        drive_base.curve(radius = -300, angle = -80, wait = False)
+        stall_detect.load(195)
 
     def _dorun7():
         _doRollingCameraAndDropOffAtMovieSet()

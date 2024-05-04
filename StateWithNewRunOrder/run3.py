@@ -7,7 +7,7 @@ def goToExpertDropOffFromHomeFaster():
     # Drive towards the scene change, catch the line.
     angle = 23
     gyroStraightWithDriveWithAccurateDistance(distance=50, speed=500, targetAngle=angle, gradualAcceleration = False,
-                                              backward=False)
+                                              backward=False, slowDown = False, stop = Stop.COAST)
 
     # Drive till the black line. Notice the tillBlackLine = True.                                              
     if(gyroStraightWithDriveWithAccurateDistance(distance=15, speed=500, targetAngle=angle,
@@ -18,7 +18,10 @@ def goToExpertDropOffFromHomeFaster():
     gyroStraightWithDrive(distanceInCm=7, targetAngle=angle, speed=300)
 
     # Now dropoff experts...
-    right_med_motor.run_angle(speed=2000, rotation_angle = 800, wait=True)
+    # We bring up the bucket to do this. We only bring up the bucket
+    # partially since that is the only amount we need to clear the
+    # loop.
+    right_med_motor.run_angle(speed=2000, rotation_angle = 500, wait=True)
 
 '''
 def _doSceneChange():
@@ -42,7 +45,7 @@ def _doSceneChange():
 def _doSceneChangeBackup():
     angle = 25
     # Backup after expert dropoff
-    drive_base.straight(distance=-80)
+    drive_base.straight(distance=-100)
 
     # First push the theater scene, then backoff a little and before bringing the bucket down.
     angle = -45
@@ -51,7 +54,7 @@ def _doSceneChangeBackup():
     drive_base.straight(-20)
 
     # Start bringing down the bucket and wait for it to finish.
-    right_med_motor.run_angle(speed=2000, rotation_angle = -800, wait = False)
+    right_med_motor.run_angle(speed=2000, rotation_angle = -500, wait = False)
     while (right_med_motor.done() == False):
         continue
 
@@ -71,14 +74,5 @@ def goHome():
 def run3():
     resetRobot()
     goToExpertDropOffFromHomeFaster()
-    #_doSceneChange()
     _doSceneChangeBackup()
     goHome()
-
-# First bring bucket down:
-#waitForButtonPress()
-
-#right_med_motor.run_angle(speed=2000, rotation_angle = -800, wait = True)
-
-
-#waitForButtonPress()

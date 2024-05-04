@@ -43,7 +43,8 @@ def museumwithpedestaloutside():
     gyroStraightWithDriveWithAccurateDistance(distance=23, speed=1000, targetAngle=angle)
     
     # Drop off the expert and audience
-    left_med_motor.run_angle(speed=500, rotation_angle=500)
+    #increased speed from 500 to 2000 on May 3rd
+    left_med_motor.run_angle(speed=2000, rotation_angle=500)
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
     drive_base.straight(50)
