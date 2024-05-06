@@ -100,8 +100,8 @@ int images[1][16][16] =
 int imageIndex = -1;
 int imageIndexForResettingPins = 100;
 
-String btInput = String("");
-String lastBTInput = String("");
+String input = String("");
+String lastInput = String("");
 SoftwareSerial BTSerial(10, 11); // RX | TX
 
 int secondaryStartWireAddress = 51;
@@ -116,39 +116,55 @@ void setup() {
 
 void loop() {
   // for now we just render one image
+  // for now we just render one image
   if (BTSerial.available()) {
-    btInput = BTSerial.readString();
-    Serial.print(F("input = "));
-    Serial.println(btInput);
+    input = BTSerial.readString();
+    Serial.print("input = ");
+    Serial.println(input);
 
-    if (btInput.equals("0"))
+    if (input.equals("0"))
+    {
+      imageIndex = -1;
+      Serial.println("rectangle");
+    }
+    else if (input.equals("1"))
+    {
+      imageIndex = -1;
+      Serial.println("circle");
+    }
+    else if (input.equals("2"))
     {
       imageIndex = 0;
-      Serial.println(F("rectangle"));
+      Serial.println("house");
     }
     else
     {
      // Image data to reset pins
       imageIndex = imageIndexForResettingPins;
-      Serial.println(btInput);
-      Serial.println(F("Reset pins - clear"));
+      Serial.println(input);
+      Serial.println("Reset pins - clear");
     }
 
     delay(300);
   }
-  btInput = "0";
-  imageIndex = 0;
+  else
+  {
+    //imageIndex = 0;
+    //input = "0";
+  }
 
-  if ((lastBTInput.equals("") && btInput.equals("")) || (lastBTInput.equals(btInput)))
+  if ((lastInput.equals("") && input.equals("")) || (lastInput.equals(input)))
   {
     return;
   }
 
-  lastBTInput = btInput;
+  lastInput = input;
 
   if (imageIndex == -1)
     return;
 
+  Serial.println("image index = " + String(imageIndex));
+  
   for (int i = 5; i >= 0; i--)
   {
     // one row in 5 frames
@@ -156,7 +172,7 @@ void loop() {
     WriteToWire(imageIndex, i, secondaryStartWireAddress + 1, 4, 7);
     WriteToWire(imageIndex, i, secondaryStartWireAddress + 2, 8, 11);
     WriteToWire(imageIndex, i, secondaryStartWireAddress + 3, 12, 15);
-    //WriteToWire(imageIndex, i, secondaryStartWireAddress + 4, 16, 19);
+ 
     // Wait for all motor arrays to render the row
     delay(3000);
     moveBewelScrewInSteps(1, GantryDirection::TowardsMotor, 0);
@@ -164,15 +180,14 @@ void loop() {
 
   moveBewelScrewInSteps(6, GantryDirection::AwayFromMotor, 0);
 
-  delay(1000);
-       
+  delay(1000);       
 }
 
 // this method rotates motor to move gantry in steps
 void moveBewelScrewInSteps(int numberOfGantrySteps, GantryDirection direction, int delayBetweenSteps)
 {
     stepper.setSpeed(motorSpeed);
-    int directionMultiplier = direction == GantryDirection::AwayFromMotor ? 1 : -1;
+    int directionMultiplier = direction == GantryDirection::AwayFromMotor ? -1 : 1;
     for(int i = 0; i < numberOfGantrySteps; i++) {
       stepper.step(directionMultiplier * numberOfMotorStepsForOneGantryStep);
       delay(delayBetweenSteps);
