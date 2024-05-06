@@ -14,10 +14,11 @@ def _doSoundMixerWithAvgLoad():
     right_med_motor.run_angle(speed=2000, rotation_angle=-800,wait=False)
     # right_med_motor.run(speed=-200)
 
-    gyroStraightWithDriveWithAccurateDistance(distance = 10, speed = 100, targetAngle = angle)
+    gyroStraightWithDriveWithAccurateDistance(distance = 10, speed = 200, targetAngle = angle)
     # Turn the motor to remove the lock for the left sound mixer.
     # Do this in parallel with the expert pick up.
-    left_med_motor.run_angle(speed=2000, rotation_angle=-800)
+    # changed on 2/4/24 from 800 to 1600
+    left_med_motor.run_angle(speed=2000, rotation_angle=-1600)
 
     # Make sure that the stopper has been removed.
     while left_med_motor.done() == False:
@@ -32,12 +33,13 @@ def _doSoundMixerWithAvgLoad():
     # attachment
     _resetLeftMotor(wait = False)
     drive_base.settings(500, 1000, 500, 1000)
-    drive_base.curve(radius = -420, angle = -40)
+    # Changed from -40 to -60 on 4/17/24 to make the attachment change easier
+    drive_base.curve(radius = -380, angle = -50)
 
 def _doSoundMixerWithStallDetection():
     angle = 0
     drive_base.straight(distance = 400, wait = False)
-    stall_detect.load(max_load = 150, debug = False)
+    stall_detect.load(max_load = 150, debug = True)
     gyroStraightWithDriveWithAccurateDistance(distance = 20, speed = 100, targetAngle = angle)
 
     # Turn the motor to remove the lock for the left sound mixer.
@@ -68,7 +70,7 @@ def _resetBucket():
     right_med_motor.run_angle(speed=2000, rotation_angle=800)
 
 def _resetLeftMotor(wait):
-    left_med_motor.run_angle(speed=2000, rotation_angle=800, wait=wait)
+    left_med_motor.run_angle(speed=2000, rotation_angle=1600, wait=wait)
 
 def waitForLeftMotor():
     while left_med_motor.done() == False:
@@ -93,7 +95,7 @@ def _doSoundMixerWithoutStallDetect():
 
 def run5():
     resetRobot()
-    # _doSoundMixerWithStallDetection()
+    #_doSoundMixerWithStallDetection()
     _doSoundMixerWithAvgLoad()
     #_doSoundMixerWithoutStallDetect()
     _resetBucket()    

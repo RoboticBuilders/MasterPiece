@@ -16,46 +16,39 @@ def rollingCamera():
 
     gyroStraightWithDriveWithAccurateDistance(distance=40, speed=800, targetAngle=angle)
     right_med_motor.run_angle(speed=2000, rotation_angle=-420)
-    
+
     # Now backup and pull the camera and turn it into its place.
     # We do a back and forth before turn, so we get give in the thread, so we dont have resistance
     # when we turn.
     gyroStraightWithDriveWithAccurateDistance(distance=20, speed=800, targetAngle=angle, backward = True)
     # Changed 2/2/2024: Decreased from 7 to 6
-    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=800, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=800, targetAngle=angle)
     angle = -25
     turnToAngle(targetAngle=angle,speed=400)
-    
     # Now bring up the bucket, before driving away.
     # TODO consider doing part of this in parallel.
     right_med_motor.run_angle(speed=2000, rotation_angle=420)
     
 def museumwithpedestaloutside():
-    #Use a curve to reach in front of the immersive experience
-    # Changed 2/2/2024: Increased from 610 to 630
-    drive_base.curve(radius = 630, angle = -50)
+    # Use a curve to reach in front of the immersive experience
+    # Changed 2/4/2024: Increased from 630 to 640
+    drive_base.curve(radius = 640, angle = -50)
     # Added this to drop the bucket so pedestal doesnt move out near the expert.
     right_med_motor.run_angle(speed=2000, rotation_angle=-200)
-    #gyroStraightWithDrive(distanceInCm = 7, speed = 400, targetAngle = -90)
     gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 400, targetAngle = -90)
        
-    #wait(5000)
     # Now turn to drop off at museum
     angle = -30
     turnToAngle(targetAngle=angle,speed=600)
-    # gyroStraightWithDriveWithAccurateDistance(distance=27, speed=1000, targetAngle=angle)
-     
-    gyroStraightWithDriveWithAccurateDistance(distance=25, speed=1000, targetAngle=angle)
-    # Drop off the expert and audience
+    gyroStraightWithDriveWithAccurateDistance(distance=23, speed=1000, targetAngle=angle)
     
-    left_med_motor.run_angle(speed=500, rotation_angle=500)
-
+    # Drop off the expert and audience
+    #increased speed from 500 to 2000 on May 3rd
+    left_med_motor.run_angle(speed=2000, rotation_angle=500)
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
-    
-    # wait(5000)
-    
     drive_base.straight(50)
+
     # Increased this from 400 to 600 as we are now bringing the bucket down to not let pedestal move
     right_med_motor.run_angle(speed=2000, rotation_angle=600)
   
@@ -69,9 +62,11 @@ def lightShow():
     angle=-90
     gyroStraightWithDriveWithAccurateDistance(distance=12, speed=700, targetAngle=angle,backward=True,stop=Stop.COAST)
     '''STALL DETECTION CODE: IMPLEMENT IF IT WORKS / MUCH CLEANER'''
-    drive_base.settings(300, 500, 300, 500)
+    # Change 4/14/24: Reduced speed from 300 to 200 to avoid flinging the audience member 
+    # out of target area
+    drive_base.settings(straight_speed=200, straight_acceleration=500, turn_rate=300, turn_acceleration=500)
     drive_base.straight(distance = -200, wait = False)
-    stall_detect.load(max_load = 120, debug = False)
+    stall_detect.load(max_load = 200, debug = False)
     '''DRIVE FOR TIME CODE: IMPLEMENT IF STALL DETECT DOESN'T WORK'''
     # driveForTime(500, stopAtEnd=True, speed=-500, turnRate=0)
     wait(100)
@@ -88,7 +83,12 @@ def immersiveExperience():
     # Turn towards immersive experience
     angle=170
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=21.5, speed=400, targetAngle=angle)
+    # gyroStraightWithDriveWithAccurateDistance(distance=20.5, speed=400, targetAngle=angle, tillHsv=True,
+    #                                           Hue_range = range(310,330), # Hue range
+    #                                           Saturation_range = range(30, 40), # Saturation range
+    #                                           Value_range = range(50, 60) # Value range
+    #                                           )
+    gyroStraightWithDriveWithAccurateDistance(distance=20.5, speed=400, targetAngle=angle)#replacing line with drive till hsv!!!!!!!!!!!!
     angle=-90
     turnToAngle(targetAngle=angle, speed=300)
     gyroStraightWithDriveWithAccurateDistance(distance=13, speed=400, targetAngle=angle)
@@ -107,7 +107,7 @@ def goHomeBetweenChickenAndAugmentedReality():
 
 def goHomeWithCurveAccurate():
     # Backoff from the Immersive experience.
-    gyroStraightWithDriveWithAccurateDistance(distance=28, speed=800, targetAngle=270, backward=True)
+    gyroStraightWithDriveWithAccurateDistance(distance=27, speed=800, targetAngle=270, backward=True)
 
     # Curve around the light show to avoid hitting the camera and also go home.
     drive_base.curve(radius = -200, angle = 90)
@@ -147,3 +147,5 @@ def run6():
 #waitForButtonPress()
 #runWithTiming(run6, "Light Show")
 
+# while True:
+#     print(ultrasonic.distance())
