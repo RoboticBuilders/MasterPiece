@@ -44,7 +44,7 @@ def museumwithpedestaloutside():
     
     # Drop off the expert and audience
     #increased speed from 500 to 2000 on May 3rd
-    left_med_motor.run_angle(speed=2000, rotation_angle=500)
+    left_med_motor.run_angle(speed=500, rotation_angle=500)
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
     drive_base.straight(50)
