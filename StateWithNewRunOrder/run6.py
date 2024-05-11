@@ -21,18 +21,20 @@ def rollingCamera():
     # We do a back and forth before turn, so we get give in the thread, so we dont have resistance
     # when we turn.
     gyroStraightWithDriveWithAccurateDistance(distance=20, speed=800, targetAngle=angle, backward = True)
+
     # Changed 2/2/2024: Decreased from 7 to 6
     gyroStraightWithDriveWithAccurateDistance(distance=7, speed=800, targetAngle=angle)
     angle = -25
     turnToAngle(targetAngle=angle,speed=400)
+
     # Now bring up the bucket, before driving away.
     # TODO consider doing part of this in parallel.
     right_med_motor.run_angle(speed=2000, rotation_angle=420)
     
 def museumwithpedestaloutside():
     # Use a curve to reach in front of the immersive experience
-    # Changed 2/4/2024: Increased from 630 to 640
-    drive_base.curve(radius = 640, angle = -50)
+    # Change 5/11/2024: Increased load from 640 to 650.
+    drive_base.curve(radius = 650, angle = -50)
     # Added this to drop the bucket so pedestal doesnt move out near the expert.
     right_med_motor.run_angle(speed=2000, rotation_angle=-200)
     gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 400, targetAngle = -90)
@@ -65,8 +67,9 @@ def lightShow():
     # Change 4/14/24: Reduced speed from 300 to 200 to avoid flinging the audience member 
     # out of target area
     drive_base.settings(straight_speed=200, straight_acceleration=500, turn_rate=300, turn_acceleration=500)
-    drive_base.straight(distance = -200, wait = False)
-    stall_detect.load(max_load = 200, debug = False)
+    drive_base.straight(distance = -230, wait = False)
+    # Change 5/11/2024: Increased load to 250 from 200.
+    stall_detect.load(max_load = 250, debug = False)
     '''DRIVE FOR TIME CODE: IMPLEMENT IF STALL DETECT DOESN'T WORK'''
     # driveForTime(500, stopAtEnd=True, speed=-500, turnRate=0)
     wait(100)
