@@ -25,7 +25,6 @@ def goToExpertDropOffFromHomeFaster():
 
 '''
 def _doSceneChange():
-    angle = 25
     # Backup after expert dropoff
     drive_base.straight(distance=-80)
 
