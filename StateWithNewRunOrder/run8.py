@@ -126,11 +126,9 @@ def augmentedRealitynew(userV2Flippy = False):
     # Changed from -87 to -90 on 4/26/2024
     angle = -90
     turnToAngle(targetAngle = angle, speed = 700)
-    gyroStraightWithDriveWithAccurateDistance(distance = 33, speed = 1000, targetAngle = angle, backward = True)
-    #closeAugmentedRealitySliderCompletely()
+    gyroStraightWithDriveWithAccurateDistance(distance = 32, speed = 1000, targetAngle = angle, backward = True)
     
-    # Now turn to ensure that we have pushed in the augmented reality. We turn and drive forward
-    # then backoff till the white line and turn back to our heading.
+    # Now turn to ensure that we have pushed in the augmented reality.
     angle = -30
     turnToAngle(targetAngle = angle, speed = 1000)
     gyroStraightWithDriveWithAccurateDistance(distance = 17, speed = 250, targetAngle = angle)

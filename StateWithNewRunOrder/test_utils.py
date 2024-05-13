@@ -131,8 +131,15 @@ def run6expertdropoff():
 def testtiming():
         runWithTiming(run6expertdropoff,"run6expertdropoff")
 
+def testStallDetect():
+    drive_base.straight(distance = 450, wait = False)
+    stall_detect.avg_load(max_load_change = 1, minValidLoad = 30, minObservationsRequired = 15, min_dist = 50, debug = True)
+
+
+
 #testParallelCode()
 #gyroStraightWithDriveWithAccurateDistance(distance=50, targetAngle=0, backward=True, speed=300, tillWhiteLine = True, color_sensor = left_color)
 #testARlineFollow()
 #turnToBlackLine(dir = "l", speed = 150, color_sensor = "left", min_dist = 50)
-testtiming()
+# testtiming()
+testStallDetect()

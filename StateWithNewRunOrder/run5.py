@@ -80,8 +80,14 @@ def _doSoundMixerWithoutStallDetect():
     angle = 0
     gyroStraightWithDriveWithAccurateDistance(distance=40, speed=400, targetAngle=angle, stop=Stop.COAST)
     gyroStraightWithDriveWithAccurateDistance(distance=15, speed=200, targetAngle=angle)
-    right_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=False)
-    left_med_motor.run_angle(speed=2000, rotation_angle=-800, wait=True)
+
+    # Turn the right motor to pick up the expert
+    right_med_motor.run_angle(speed=2000, rotation_angle=-800,wait=False)
+
+    # Turn the motor to remove the lock for the left sound mixer.
+    # Do this in parallel with the expert pick up.
+    left_med_motor.run_angle(speed=2000, rotation_angle=-1600)
+
     # Now backoff.
     gyroStraightWithDriveWithAccurateDistance(distance = 22, speed = 1000, targetAngle = angle, backward=True,
                                               stop = Stop.COAST)
@@ -91,17 +97,30 @@ def _doSoundMixerWithoutStallDetect():
     # attachment
     _resetLeftMotor(wait = False)
     drive_base.settings(500, 1000, 500, 1000)
-    drive_base.curve(radius = -420, angle = -40)
+    drive_base.curve(radius = -380, angle = -50)
 
 def run5():
     resetRobot()
+    # We reset the left medium motor to zero, we want this because we want the 
+    # Anna arm to be at zero. We then reset the arm to zero at the end of the
+    # run inside the  _resetLeftMotor code.
+    left_med_motor.reset_angle(0)
+    
     #_doSoundMixerWithStallDetection()
     _doSoundMixerWithAvgLoad()
     #_doSoundMixerWithoutStallDetect()
     _resetBucket()    
 
-#waitForButtonPress()
-#runWithTiming(run5, "Sound Mixer")
+    # Reset the left medium motor to allow us to hang Anna 
+    # correctly. We do this in addition to the reset that we do
+    # in parallel to the backup because sometimes the reset is
+    # not enough.
+    # We wait to give the operator time to remove the attachment.
+    wait(1000)
+    left_med_motor.run_target(speed=2000, target_angle=0, wait = True)
+
+# waitForButtonPress()
+# runWithTiming(run5, "Sound Mixer")
 # _doSoundMixerWithStallDetection()
 #_resetBucket()
 # run5()
