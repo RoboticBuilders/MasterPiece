@@ -117,7 +117,9 @@ def run5():
     # not enough.
     # We wait to give the operator time to remove the attachment.
     wait(1000)
+
     left_med_motor.run_target(speed=2000, target_angle=0, wait = True)
+    left_med_motor.stop() # we make the motor loose so the operator can adjust the expert dropoff attachment
 
 # waitForButtonPress()
 # runWithTiming(run5, "Sound Mixer")
