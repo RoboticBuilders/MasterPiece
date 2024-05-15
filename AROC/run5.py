@@ -119,8 +119,8 @@ def run5():
     wait(1000)
 
     left_med_motor.run_target(speed=2000, target_angle=0, wait = True)
-    # left_med_motor.stop() # we make the motor loose so the operator can adjust the expert dropoff attachment
-    # #right_med_motor.stop() # same as above except for bucket 
+    left_med_motor.stop() # we make the motor loose so the operator can adjust the expert dropoff attachment
+    # right_med_motor.stop() # same as above except for bucket 
 
 # waitForButtonPress()
 # runWithTiming(run5, "Sound Mixer")
