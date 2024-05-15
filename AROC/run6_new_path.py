@@ -42,12 +42,12 @@ def museumwithpedestaloutside():
     angle = -90
     turnToAngle(targetAngle=angle, speed=300, right_correction=0, left_correction=0)
     right_med_motor.run_angle(speed=2000, rotation_angle=-200, wait=False)
-    drive_base.curve(radius = 470, angle = 55, wait=True)
+    drive_base.curve(radius = 470, angle = 60, wait=True)
    
     # Drop off the audience and the expert first.
     left_med_motor.run_angle(speed=500, rotation_angle=500, wait = True)
 
-    drive_base.curve(radius = 470, angle = 13)
+    drive_base.curve(radius = 470, angle = 8)
 
     # Now turn towards the museum to drop off the pedestal
     # We turn more and then turn back.
