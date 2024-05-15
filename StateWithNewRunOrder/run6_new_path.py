@@ -47,19 +47,28 @@ def museumwithpedestaloutside():
     angle = -90
     turnToAngle(targetAngle=angle, speed=300, right_correction=0, left_correction=0)
     right_med_motor.run_angle(speed=2000, rotation_angle=-200, wait=False)
-    drive_base.curve(radius = 470, angle = 65, wait=True)
+    drive_base.curve(radius = 470, angle = 55, wait=True)
    
     # Drop off the audience and the expert first.
-    left_med_motor.run_angle(speed=500, rotation_angle=500)
+    left_med_motor.run_angle(speed=500, rotation_angle=500, wait = True)
+
+    drive_base.curve(radius = 470, angle = 10)
 
     # Now turn towards the museum to drop off the pedestal
-    angle=-90
-    turnToAngle(targetAngle=angle, speed=800)
-
-    # Now start lifting the bucket as we push towards the drop off.
-    right_med_motor.run_angle(speed=2000, rotation_angle=600, wait=False)
-    drive_base.straight(30)
+    # We turn more and then turn back.
+    angle = -100
+    turnToAngle(targetAngle=angle, speed=1000, then = Stop.BRAKE)
     
+    
+    # Turn back to -90 and then drop off the expert and the audience member.
+    angle = -90
+    # turnToAngle(targetAngle=angle, speed=500, left_correction=0, right_correction=0)
+    # Using drive.base to turn back to 90 
+    drive_base.turn(10)
+    right_med_motor.run_angle(speed=1500, rotation_angle=600)
+
+    # Drive forward to drop off
+    #drive_base.straight(30)
     return True
   
 def lightShow():
@@ -159,7 +168,7 @@ def run6():
     return True
     
 ##waitForButtonPress()
-runWithTiming(run6, "Light Show")
+# runWithTiming(run6, "Light Show")
 
 # while True:
 #     print(ultrasonic.distance())
