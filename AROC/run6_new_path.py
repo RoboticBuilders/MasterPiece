@@ -34,7 +34,7 @@ def museumwithpedestaloutside():
     # Now turn towards the light show and move forward.
     angle = 0
     turnToAngle(targetAngle=angle, speed=300)
-    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=700, targetAngle=angle)
+    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=500, targetAngle=angle)
 
     # Now turn towards the immersive experience and curve towards the museum.
     # While we curve we also bring down the bucket in parallel to keep
@@ -42,26 +42,26 @@ def museumwithpedestaloutside():
     angle = -90
     turnToAngle(targetAngle=angle, speed=300, right_correction=0, left_correction=0)
     right_med_motor.run_angle(speed=2000, rotation_angle=-200, wait=False)
-    drive_base.curve(radius = 470, angle = 60, wait=True)
+
+    #drive_base.settings(straight_speed = 300, straight_acceleration = 300, turn_rate = 300, turn_acceleration = 300)
+    drive_base.curve(radius = 470, angle = 65, wait=True)
    
     # Drop off the audience and the expert first.
     left_med_motor.run_angle(speed=500, rotation_angle=500, wait = True)
 
-    drive_base.curve(radius = 470, angle = 8)
-
     # Now turn towards the museum to drop off the pedestal
     # We turn more and then turn back.
-    angle = -100
+    angle = -105
     turnToAngle(targetAngle=angle, speed=1000, then = Stop.BRAKE)
     
     # Turn back to -90 and then drop off the expert and the audience member.
     angle = -90
     # turnToAngle(targetAngle=angle, speed=500, left_correction=0, right_correction=0)
     # Using drive.base to turn back to 90 
-    drive_base.turn(angle = 10, then = Stop.BRAKE)
+    drive_base.turn(angle = 15, then = Stop.BRAKE)
 
     # drive slightly forward to push expert and pedestal in
-    drive_base.straight(distance = 35, then = Stop.BRAKE)
+    drive_base.straight(distance = 10, then = Stop.BRAKE)
 
     right_med_motor.run_angle(speed=1500, rotation_angle=600)
 
