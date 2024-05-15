@@ -5,7 +5,7 @@ def _3dCinemaAndTwoFacesDropoff():
     #Alignment: To the left of the third black line from the wall. The attachment's yellow L-beam is pushed against the base arms yellow slope
     angle = 0
     gyroStraightWithDrive(distanceInCm = 25, speed = 400, targetAngle = angle) 
-    gyroStraightWithDrive(distanceInCm = 20, speed = 300, targetAngle = angle,backward=True) 
+    gyroStraightWithDrive(distanceInCm = 16, speed = 300, targetAngle = angle,backward=True) 
 
 def run4():
     resetRobot()

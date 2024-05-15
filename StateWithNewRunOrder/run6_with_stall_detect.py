@@ -22,8 +22,8 @@ def rollingCamera():
     # when we turn.
     gyroStraightWithDriveWithAccurateDistance(distance=20, speed=800, targetAngle=angle, backward = True)
 
-    # Changed 2/2/2024: Decreased from 7 to 6
-    gyroStraightWithDriveWithAccurateDistance(distance=7, speed=800, targetAngle=angle)
+    # Changed 5/14/2024: Decreased from 7 to 6
+    gyroStraightWithDriveWithAccurateDistance(distance=6, speed=800, targetAngle=angle)
     angle = -25
     turnToAngle(targetAngle=angle,speed=400)
 
@@ -33,32 +33,34 @@ def rollingCamera():
     
 def museumwithpedestaloutside():
     # Use a curve to reach in front of the immersive experience
-    # Change 5/11/2024: Increased load from 640 to 650.
-    drive_base.curve(radius = 650, angle = -20, wait=False)
-    stall_detect.load_three_readings(max_load = 170, min_stopping_condition = 40, stop_motors = False, debug = True)
-    while (drive_base.done() == False):
-        pass
-    drive_base.curve(radius = 650, angle = -30, wait=False)
-    stall_detect.load_three_readings(max_load = 170, min_stopping_condition = 40, stop_motors = True, debug = True)
+    # We first curve till the sound mixer.
+    drive_base.curve(radius = 670, angle = -25, wait=True)
 
-    # Added this to drop the bucket so pedestal doesnt move out near the expert.
-    right_med_motor.run_angle(speed=2000, rotation_angle=-200)
-    gyroStraightWithDriveWithAccurateDistance(distance = 7, speed = 400, targetAngle = -90)
-       
-    # Now turn to drop off at museum
-    angle = -30
-    turnToAngle(targetAngle=angle,speed=600)
-    gyroStraightWithDriveWithAccurateDistance(distance=23, speed=1000, targetAngle=angle)
-    
-    # Drop off the expert and audience
-    #increased speed from 500 to 2000 on May 3rd
+    # Now turn towards the light show and move forward.
+    angle = 0
+    turnToAngle(targetAngle=angle, speed=300)
+    gyroStraightWithDriveWithAccurateDistance(distance=10, speed=700, targetAngle=angle)
+
+    # Now turn towards the immersive experience and curve towards the museum.
+    # While we curve we also bring down the bucket in parallel to keep
+    # the pedestal inside the bucket.
+    angle = -90
+    turnToAngle(targetAngle=angle, speed=300, right_correction=0, left_correction=0)
+    right_med_motor.run_angle(speed=2000, rotation_angle=-200, wait=False)
+    drive_base.curve(radius = 470, angle = 65, wait=True)
+   
+    # Drop off the audience and the expert first.
     left_med_motor.run_angle(speed=500, rotation_angle=500)
+
+    # Now turn towards the museum to drop off the pedestal
     angle=-90
     turnToAngle(targetAngle=angle, speed=800)
-    drive_base.straight(50)
 
-    # Increased this from 400 to 600 as we are now bringing the bucket down to not let pedestal move
-    right_med_motor.run_angle(speed=2000, rotation_angle=600)
+    # Now start lifting the bucket as we push towards the drop off.
+    right_med_motor.run_angle(speed=2000, rotation_angle=600, wait=False)
+    drive_base.straight(30)
+    
+    return True
   
 def lightShow():
     # Now after the pedestal drop off, drive backwards towards the light show. Using drivebase.straight as its more accurate for distance
@@ -73,7 +75,7 @@ def lightShow():
     # Change 4/14/24: Reduced speed from 300 to 200 to avoid flinging the audience member 
     # out of target area
     drive_base.settings(straight_speed=200, straight_acceleration=500, turn_rate=300, turn_acceleration=500)
-    drive_base.straight(distance = -230, wait = False)
+    drive_base.straight(distance = -250, wait = False)
     # Change 5/11/2024: Increased load to 250 from 200.
     stall_detect.load(max_load = 250, debug = False)
     '''DRIVE FOR TIME CODE: IMPLEMENT IF STALL DETECT DOESN'T WORK'''
@@ -148,10 +150,13 @@ def testBucket():
 def run6():
     resetRobot()
     rollingCamera()
-    museumwithpedestaloutside()
+    if (museumwithpedestaloutside() == False):
+        print("Detected the Hit.")
+        return False
     lightShow()
     immersiveExperience()
     goHomeWithCurveAccurate()
+    return True
     
 ##waitForButtonPress()
 runWithTiming(run6, "Light Show")

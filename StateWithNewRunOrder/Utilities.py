@@ -655,10 +655,23 @@ class stall_detect:
         return currLoad
 
     # stalls based on load
-    def load_three_readings(max_load = 100, min_stopping_condition = 40, stop_motors=True, debug = False):
-        while drive_base.done() == False: # while either motor is still moving
-            load = stall_detect.getCurrentLoad(3, minAllowedLoad = min_stopping_condition)
-            #load = stall_detect.getLoad()
+    def load_three_readings(max_load = 100, min_stopping_condition = 40, stop_motors=True, numObs = 10, debug = False):
+        # Initialize the load array with 40s
+        loads = []
+        for i in range(numObs):
+            loads.append(40)
+
+        cur_index = 0
+        while drive_base.done() == False:
+            currLoad = abs((abs(left_motor.load()) + abs(right_motor.load()) )/ 2)
+            if (currLoad > min_stopping_condition):
+                loads[cur_index] = currLoad
+                cur_index = cur_index + 1
+                if (cur_index == numObs):
+                    cur_index = 0
+            avg_load = sum(loads)/len(loads)
+            load = avg_load
+
             if load  > max_load: # if there is extra load
                 if debug == True:
                     print("Stopping stall detection with " + str(load) + " load.") # print debug messages
@@ -667,9 +680,10 @@ class stall_detect:
                 if (stop_motors == True):
                     left_motor.stop()
                     right_motor.stop()
+                    drive_base.stop()
 
                 # exit the loop
-                break
+                return True
 
             else: # if there is no extra load
                 if debug == True:
@@ -677,7 +691,8 @@ class stall_detect:
 
                 continue # keep running the loop
 
-                
+        return False
+
     # stalls based on load
     def load(max_load = 100, min_stopping_condition = 40, stop_motors=True, debug = False):
 
