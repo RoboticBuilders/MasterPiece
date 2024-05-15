@@ -33,22 +33,26 @@ def museumwithpedestaloutside():
 
     # Now turn towards the light show and move forward.
     angle = 0
-    turnToAngle(targetAngle=angle, speed=300)
+    #  Added 5/15/2024 Changed speed from 300 to 200
+    turnToAngle(targetAngle=angle, speed=200)
     gyroStraightWithDriveWithAccurateDistance(distance=10, speed=500, targetAngle=angle)
 
     # Now turn towards the immersive experience and curve towards the museum.
     # While we curve we also bring down the bucket in parallel to keep
     # the pedestal inside the bucket.
     angle = -90
-    turnToAngle(targetAngle=angle, speed=300, right_correction=0, left_correction=0)
+    #  Added 5/15/2024 Changed speed from 300 to 200
+    turnToAngle(targetAngle=angle, speed=200, right_correction=0, left_correction=0)
     right_med_motor.run_angle(speed=2000, rotation_angle=-200, wait=False)
 
     #drive_base.settings(straight_speed = 300, straight_acceleration = 300, turn_rate = 300, turn_acceleration = 300)
-    drive_base.curve(radius = 470, angle = 65, wait=True)
+    drive_base.curve(radius = 470, angle = 62, wait=True)
    
     # Drop off the audience and the expert first.
     left_med_motor.run_angle(speed=500, rotation_angle=500, wait = True)
 
+    # Added gyrostraight before the bucket open ## Added 5/15/2024
+    drive_base.straight(distance=35)
     # Now turn towards the museum to drop off the pedestal
     # We turn more and then turn back.
     angle = -105
