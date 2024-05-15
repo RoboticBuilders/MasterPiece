@@ -10,8 +10,8 @@ import run6
 from run7 import *
 from run8 import *
 
-# ************** IMPORTANT ********************************
-# The right bucket design should be such that it is 4.5 centimeters outside from the bucket wall.
+## Use this file on the PRACTICE TABLE
+## On counter 9, the old run6 is loaded. In case you need this. then just run that.
 
 def _maindriver():
     counter = 0
@@ -21,7 +21,7 @@ def _maindriver():
         if (counter > 0):
             startAttachmentChangeTime = sw.time()
         hub.display.number(counter)
-        if counter == 9: 
+        if counter == 10: 
             break
 
         # Beep that we are ready for button press.
@@ -53,13 +53,14 @@ def _maindriver():
         if counter == 5:
             runWithTiming(run5, "run5")
         if counter == 6:
-            #runWithTiming(run6.run6, "run6")
             runWithTiming(run6_new_path.run6, "run6")
         if counter == 7:
             runWithTiming(run7, "run7")
         if counter == 8:
             runWithTiming(run8, "run8")
-        
+        if counter == 9:
+            runWithTiming(run6.run6, "run6")
+
         counter = counter + 1
         drive_base.straight(distance=0, then=Stop.BRAKE)
 

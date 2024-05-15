@@ -5,7 +5,8 @@ from run2 import *
 from run3 import *
 from run4 import *
 from run5 import *
-from run6_new_path import *
+import run6_new_path
+import run6
 from run7 import *
 from run8 import *
 
@@ -42,7 +43,8 @@ def _maindriver():
         if counter == 5:
             run5()
         if counter == 6:
-            run6()
+            #run6.run6()
+            run6_new_path.run6()
         if counter == 7:
             run7()
         if counter == 8:
