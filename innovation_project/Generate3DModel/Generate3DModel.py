@@ -12,7 +12,7 @@ from stl import mesh
 # Point to the image that you want to process
 imgName = 'innovation_project/Generate3DModel/Images/Great_Wave.jpeg'
 
-# Set to true to auto resize the image to target pixel count (default 75000). Else, will use the resolution of the original imag
+# Set to true to auto resize the image to target pixel count (default 300000). Else, will use the resolution of the original imag
 autoResize = True
 
 # The first threshold value for the Canny Edge Detection algorithm. 
@@ -27,7 +27,7 @@ threshold2 = 240
 # Get from our AI model.
 gaussianBlur = 3
 
-# The pixel count of the image that you want to generate. Not typical to change this. 75000 is a good value for the BambuLab P1S 3D printer.
+# The pixel count of the image that you want to generate. Not typical to change this. 300000 is a good value for the BambuLab P1S 3D printer.
 targetPixelCount = 300000
 
 # Set to true to create a composite image with 4 tiles of the original image.
@@ -55,7 +55,7 @@ img = cv2.imread(imgName)
 pil_image = image = Image.open(imgName)
 
 # Figure out the scale ratio of the target image given the target pixel count.
-# This will give you a target image of 75000 pixels without distorting it.
+# This will give you a target image of 300000 pixels without distorting it.
 scale_ratio = math.sqrt(targetPixelCount/(img.shape[0]*img.shape[1]))
 
 ### Functions
@@ -234,7 +234,7 @@ def SaveAsStl(img, modelFileame, max, min, halfPixelWidth = 0.33, maxHeight = 5,
             x = i * halfPixelWidth * 2.0
 
             # Calculate the height of this pixel
-            height = (img[j, i,0] - min) / delta * maxHeight
+            height = ((img[j, i,0] - min) / delta) * maxHeight
 
             # Invert the height if needed
             if invertHeight:
