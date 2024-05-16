@@ -16,10 +16,10 @@ def _maindriver():
     counter = 0
     
     while True:
-        if counter != 3:
-            hub.display.number(counter)
-        elif counter == 3:
-            hub.display.number(6)
+        # if counter != 3:
+        hub.display.number(counter)
+        # elif counter == 3:
+        #     hub.display.number(6)
         if counter == 9: 
             break
 
@@ -32,7 +32,7 @@ def _maindriver():
             if counter == 2:
                 counter = 6
                 continue
-            elif counter!=2:
+            else:
                 counter = counter + 1
                 continue
 
@@ -42,8 +42,9 @@ def _maindriver():
             run1()
         if counter == 2:
             run2()
-        if counter == 3:
-            counter = 6
+            counter = 5
+        # if counter == 3:
+        #     counter = 6
         if counter == 6:
             run6()
         if counter == 7:
