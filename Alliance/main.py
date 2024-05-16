@@ -16,7 +16,10 @@ def _maindriver():
     counter = 0
     
     while True:
-        hub.display.number(counter)
+        if counter != 3:
+            hub.display.number(counter)
+        elif counter == 3:
+            hub.display.number(6)
         if counter == 9: 
             break
 
@@ -26,8 +29,12 @@ def _maindriver():
         resetRobot()
 
         if button == Button.LEFT:
-            counter = counter + 1
-            continue
+            if counter == 2:
+                counter = 6
+                continue
+            elif counter!=2:
+                counter = counter + 1
+                continue
 
         if counter == 0:
             run0()
@@ -35,6 +42,7 @@ def _maindriver():
             run1()
         if counter == 2:
             run2()
+        if counter == 3:
             counter = 6
         if counter == 6:
             run6()

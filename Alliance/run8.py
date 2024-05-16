@@ -171,6 +171,8 @@ def run8():
     resetRobot()
     useFlippyV2 = True
     musicconcert(userV2Flippy = useFlippyV2)
+    ##back off so that you get full points for music consert then stop.
+    drive_base.straight(-140)
     # augmentedRealitynew(userV2Flippy = useFlippyV2)
     
 def mainRun8():
