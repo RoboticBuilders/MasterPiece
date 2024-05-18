@@ -10,7 +10,7 @@ from stl import mesh
 ## Parameters
 
 # Point to the image that you want to process
-imgName = 'innovation_project/Generate3DModel/Images/Great_Wave.jpeg'
+imgName = '/Users/anya/Documents/MasterPiece/MasterPiece/innovation_project/Generate3DModel/Images/Test.jpeg'
 
 # Set to true to auto resize the image to target pixel count (default 300000). Else, will use the resolution of the original imag
 autoResize = True
