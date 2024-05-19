@@ -18,7 +18,7 @@ def _doSoundMixerWithAvgLoad():
     # Turn the motor to remove the lock for the left sound mixer.
     # Do this in parallel with the expert pick up.
     # changed on 2/4/24 from 800 to 1600
-    left_med_motor.run_angle(speed=2000, rotation_angle=-1600)
+    left_med_motor.run_angle(speed=2000, rotation_angle=-1800)
 
     # Make sure that the stopper has been removed.
     while left_med_motor.done() == False:
@@ -70,7 +70,7 @@ def _resetBucket():
     right_med_motor.run_angle(speed=2000, rotation_angle=800)
 
 def _resetLeftMotor(wait):
-    left_med_motor.run_angle(speed=2000, rotation_angle=1600, wait=wait)
+    left_med_motor.run_angle(speed=2000, rotation_angle=1800, wait=wait)
 
 def waitForLeftMotor():
     while left_med_motor.done() == False:
